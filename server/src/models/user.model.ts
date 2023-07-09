@@ -61,12 +61,18 @@ const findUserByEmail = async (email: string) => {
 
 const updatePassword = async (email: string, newPassword: string) => {
   try {
-    await UserModel.findOneAndUpdate({ email: email }, { password: newPassword });
-    return true;
+    return await UserModel.findOneAndUpdate({ email: email }, { password: newPassword });
   } catch (error) {
     console.log(error);
-    return false;
   }
 };
 
-export { createUser, findUserByEmail, updatePassword };
+const removeALandByLandId = async (landId: Schema.Types.ObjectId) => {
+  try {
+    return await UserModel.deleteOne({ lands: landId });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { createUser, findUserByEmail, updatePassword, removeALandByLandId };

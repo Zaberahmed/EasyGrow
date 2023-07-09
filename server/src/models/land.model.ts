@@ -1,10 +1,9 @@
 import { Schema, model } from './database';
-
 interface Land {
   name: string;
   size: number;
   ownerId: Schema.Types.ObjectId;
-  location: string;
+  location: number[];
   description: string;
   price: number;
   LeasedBy?: Schema.Types.ObjectId | undefined;
@@ -26,8 +25,14 @@ const LandSchema = new Schema<Land>({
     required: true,
   },
   location: {
-    type: String,
-    required: true,
+    longitude: {
+      type: Number,
+      required: true,
+    },
+    latitude: {
+      type: Number,
+      required: true,
+    },
   },
   description: {
     type: String,
@@ -104,4 +109,40 @@ const searchLandByCrops = async (crops: string[]) => {
   }
 };
 
-export { getAllLand, getLandById, addALand, removeALand, searchLandByOwner, searchLandByCrops };
+const searchLandByLocation = async (longitude: number, latitude: number) => {
+  try {
+    const distanceInDegrees = 0.09;
+    const query = {
+      location: {
+        $geoWithin: {
+          $centerSphere: [[longitude, latitude], distanceInDegrees],
+        },
+      },
+    };
+    return await LandModel.find(query);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeOfferByOfferId = async (
+  landId: Schema.Types.ObjectId,
+  offerId: Schema.Types.ObjectId
+) => {
+  try {
+    return await LandModel.updateOne({ _id: landId }, { $pull: { offerId: offerId } });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  getAllLand,
+  getLandById,
+  addALand,
+  removeALand,
+  searchLandByOwner,
+  searchLandByCrops,
+  searchLandByLocation,
+  removeOfferByOfferId,
+};

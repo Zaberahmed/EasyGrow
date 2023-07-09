@@ -20,21 +20,25 @@ router.get('/profile', accountController.profile);
 
 // *farmer controllers*
 // for land
-router.get('/getAllLand');
-router.get('/landSearchByLocation');
-router.get('/landSearchByCrop');
+router.get('/getAllLands', farmerController.getAllLands);
+router.get('/getLand', farmerController.getLand);
+router.get('/landSearchByLocation', farmerController.landSearchByLocation);
+router.get('/landSearchByCrops', farmerController.landSearchByCrops);
 
 // for offer
-router.post('/makeAnOffer');
-router.put('./changeOffer');
+router.post('/makeAnOffer', farmerController.makeAnOffer);
+router.put('/changeOffer', farmerController.changeOffer);
+router.delete('/deleteOffer', farmerController.deleteOffer);
 
 // *land Owner controllers*
 // for land
-router.post('/addALand');
-router.delete('/removeALand');
-router.get('/getLandById');
-router.get('/landSearchByOwner');
+router.post('/addLand', landOwnerController.addLand);
+router.delete('/removeLand', landOwnerController.removeLand);
+router.get('/landSearchByOwner', landOwnerController.landSearchByOwner);
 
 // for offer
+router.get('/allOffersForALand', landOwnerController.allOffersForALand);
+router.put('/acceptOffer', landOwnerController.acceptOffer);
+router.delete('/rejectOffer', landOwnerController.rejectOffer);
 
 export { router };
