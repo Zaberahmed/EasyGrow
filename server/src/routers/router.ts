@@ -21,24 +21,24 @@ router.get('/profile', accountController.profile);
 // *farmer controllers*
 // for land
 router.get('/getAllLands', farmerController.getAllLands);
-router.get('/getLand', farmerController.getLand);
-router.get('/landSearchByLocation', farmerController.landSearchByLocation);
+router.post('/getLand', farmerController.getLand);
+router.post('/landSearchByLocation', farmerController.landSearchByLocation);
 router.get('/landSearchByCrops', farmerController.landSearchByCrops);
 
 // for offer
 router.post('/makeAnOffer', farmerController.makeAnOffer);
-router.put('/changeOffer', farmerController.changeOffer);
+router.post('/changeOffer', farmerController.changeOffer);
 router.delete('/deleteOffer', farmerController.deleteOffer);
 
 // *land Owner controllers*
 // for land
 router.post('/addLand', landOwnerController.addLand);
 router.delete('/removeLand', landOwnerController.removeLand);
-router.get('/landSearchByOwner', landOwnerController.landSearchByOwner);
+router.post('/landSearchByOwner', landOwnerController.landSearchByOwner);
 
 // for offer
-router.get('/allOffersForALand', landOwnerController.allOffersForALand);
-router.put('/acceptOffer', landOwnerController.acceptOffer);
-router.delete('/rejectOffer', landOwnerController.rejectOffer);
+router.post('/allOffersForALand', landOwnerController.allOffersForALand);
+router.post('/acceptOffer', landOwnerController.acceptOffer);
+router.post('/rejectOffer', landOwnerController.rejectOffer);
 
 export { router };

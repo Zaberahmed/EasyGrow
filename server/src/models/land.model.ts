@@ -1,14 +1,19 @@
-import { Schema, model } from './database';
+import { Schema, Types, model } from './database';
+
+interface Location {
+  longitude: number;
+  latitude: number;
+}
 interface Land {
   name: string;
   size: number;
-  ownerId: Schema.Types.ObjectId;
-  location: number[];
+  ownerId?: Types.ObjectId;
+  location: Location;
   description: string;
   price: number;
-  LeasedBy?: Schema.Types.ObjectId | undefined;
+  LeasedBy?: Types.ObjectId | undefined;
   crops?: string[];
-  offers?: Schema.Types.ObjectId[] | undefined;
+  offers?: Types.ObjectId[] | undefined;
 }
 
 const LandSchema = new Schema<Land>({
@@ -21,7 +26,7 @@ const LandSchema = new Schema<Land>({
     required: true,
   },
   ownerId: {
-    type: Schema.Types.ObjectId,
+    type: Types.ObjectId,
     required: true,
   },
   location: {
@@ -43,7 +48,7 @@ const LandSchema = new Schema<Land>({
     required: true,
   },
   LeasedBy: {
-    type: Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'UserModel',
     required: false,
   },
@@ -52,7 +57,7 @@ const LandSchema = new Schema<Land>({
     required: false,
   },
   offers: {
-    type: [Schema.Types.ObjectId],
+    type: [Types.ObjectId],
     ref: 'OfferModel',
     required: false,
   },
@@ -69,9 +74,9 @@ const getAllLand = async () => {
   }
 };
 
-const getLandById = async (landId: Schema.Types.ObjectId) => {
+const getLandById = async (landId: Types.ObjectId) => {
   try {
-    return await LandModel.find({ landId });
+    return await LandModel.find({ _id: landId });
   } catch (error) {
     console.log(error);
   }
@@ -85,17 +90,17 @@ const addALand = async (landDetails: Land) => {
   }
 };
 
-const removeALand = async (landId: Schema.Types.ObjectId) => {
+const removeALand = async (landId: Types.ObjectId) => {
   try {
-    return await LandModel.deleteOne(landId);
+    return await LandModel.deleteOne({ _id: landId });
   } catch (error) {
     console.log(error);
   }
 };
 
-const searchLandByOwner = async (ownerId: Schema.Types.ObjectId) => {
+const searchLandByOwner = async (ownerId: Types.ObjectId) => {
   try {
-    return await LandModel.find({ ownerId });
+    return await LandModel.find({ ownerId: ownerId });
   } catch (error) {
     console.log(error);
   }
@@ -125,12 +130,21 @@ const searchLandByLocation = async (longitude: number, latitude: number) => {
   }
 };
 
-const removeOfferByOfferId = async (
-  landId: Schema.Types.ObjectId,
-  offerId: Schema.Types.ObjectId
-) => {
+const addOfferByOfferId = async (landId: Types.ObjectId, offerId: Types.ObjectId) => {
   try {
-    return await LandModel.updateOne({ _id: landId }, { $pull: { offerId: offerId } });
+    return await LandModel.findOneAndUpdate(
+      { _id: landId },
+      { $push: { offers: offerId } },
+      { new: true }
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const removeOfferByOfferId = async (landId: Types.ObjectId, offerId: Types.ObjectId) => {
+  try {
+    return await LandModel.findOneAndUpdate({ _id: landId }, { $pull: { offers: offerId } });
   } catch (error) {
     console.log(error);
   }
@@ -144,5 +158,6 @@ export {
   searchLandByOwner,
   searchLandByCrops,
   searchLandByLocation,
+  addOfferByOfferId,
   removeOfferByOfferId,
 };

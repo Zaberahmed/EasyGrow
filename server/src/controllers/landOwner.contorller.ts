@@ -1,25 +1,31 @@
 import { Request, Response } from 'express';
-import { addALand, removeALand } from '../models/land.model';
-import { removeALandByLandId } from '../models/user.model';
+import { addALand, removeALand, searchLandByOwner } from '../models/land.model';
+import { addALandByLandId, removeALandByLandId } from '../models/user.model';
 import { getAllOffersByLandId, changeOfferStatus } from '../models/offer.model';
 
 // Land controllers
 const addLand = async (req: Request, res: Response) => {
   try {
-    const { name, size, ownerId, longitude, latitude, description, price } = req.body;
+    const { name, size, ownerId, location, description, price } = req.body;
 
     const newLand = {
       name,
       size,
       ownerId,
-      location: [longitude, latitude],
+      location,
       description,
       price,
     };
 
     const createdLand = await addALand(newLand);
 
-    res.status(200).json(createdLand);
+    if (createdLand && createdLand._id) {
+      const landOwner = await addALandByLandId(ownerId, createdLand._id);
+
+      if (landOwner) {
+        res.status(200).send(createdLand);
+      }
+    }
   } catch (error) {
     res.status(500);
     console.log(error);
@@ -28,12 +34,12 @@ const addLand = async (req: Request, res: Response) => {
 
 const removeLand = async (req: Request, res: Response) => {
   try {
-    const { landId } = req.body;
+    const { userId, landId } = req.body;
 
-    await removeALandByLandId(landId);
+    await removeALandByLandId(userId, landId);
     await removeALand(landId);
 
-    return res.status(200).send('Land deleted successfully');
+    res.status(200).send('Land removed successfully');
   } catch (error) {
     res.status(500);
     console.log(error);
@@ -42,11 +48,11 @@ const removeLand = async (req: Request, res: Response) => {
 
 const landSearchByOwner = async (req: Request, res: Response) => {
   try {
-    const { owenerId } = req.body;
+    const { ownerId } = req.body;
 
-    const lands = await addALand(owenerId);
+    const lands = await searchLandByOwner(ownerId);
 
-    return res.status(200).send(lands);
+    res.status(200).send(lands);
   } catch (error) {
     res.status(500);
     console.log(error);
@@ -60,7 +66,7 @@ const allOffersForALand = async (req: Request, res: Response) => {
 
     const allOffers = await getAllOffersByLandId(landId);
 
-    return res.status(200).send(allOffers);
+    res.status(200).send(allOffers);
   } catch (error) {
     res.status(500);
     console.log(error);
@@ -71,9 +77,11 @@ const acceptOffer = async (req: Request, res: Response) => {
   try {
     const { offerId, status } = req.body;
 
-    await changeOfferStatus(offerId, status);
+    const newStatus = await changeOfferStatus(offerId, status);
 
-    return res.status(200).send('Offer accepted');
+    if (newStatus) {
+      res.status(200).send('Offer accepted');
+    }
   } catch (error) {
     res.status(500);
     console.log(error);
@@ -84,9 +92,11 @@ const rejectOffer = async (req: Request, res: Response) => {
   try {
     const { offerId, status } = req.body;
 
-    await changeOfferStatus(offerId, status);
+    const newStatus = await changeOfferStatus(offerId, status);
 
-    return res.status(200).send('Offer rejected');
+    if (newStatus) {
+      res.status(200).send('Offer rejected');
+    }
   } catch (error) {
     res.status(500);
     console.log(error);

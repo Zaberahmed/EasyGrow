@@ -1,4 +1,4 @@
-import { Schema, model } from './database';
+import { Schema, Types, model } from './database';
 
 interface User {
   name: string;
@@ -7,7 +7,7 @@ interface User {
   phoneNumber: string;
   address: string;
   role: string;
-  lands?: Schema.Types.ObjectId[] | undefined;
+  lands?: Types.ObjectId[] | undefined;
 }
 
 const UserSchema = new Schema<User>({
@@ -35,10 +35,12 @@ const UserSchema = new Schema<User>({
     type: String,
     required: true,
   },
-  lands: {
-    type: [Schema.Types.ObjectId],
-    required: false,
-  },
+  lands: [
+    {
+      type: Types.ObjectId,
+      required: false,
+    },
+  ],
 });
 
 const UserModel = model<User>('User', UserSchema);
@@ -67,12 +69,26 @@ const updatePassword = async (email: string, newPassword: string) => {
   }
 };
 
-const removeALandByLandId = async (landId: Schema.Types.ObjectId) => {
+const addALandByLandId = async (userId: Types.ObjectId, landId: Types.ObjectId) => {
   try {
-    return await UserModel.deleteOne({ lands: landId });
+    const user = await UserModel.findOneAndUpdate(
+      { _id: userId },
+      { $push: { lands: landId } },
+      { new: true }
+    );
+
+    return user;
   } catch (error) {
     console.log(error);
   }
 };
 
-export { createUser, findUserByEmail, updatePassword, removeALandByLandId };
+const removeALandByLandId = async (userId: Types.ObjectId, landId: Types.ObjectId) => {
+  try {
+    return await UserModel.updateOne({ _id: userId }, { $pull: { lands: landId } });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { createUser, findUserByEmail, updatePassword, addALandByLandId, removeALandByLandId };

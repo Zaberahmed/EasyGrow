@@ -4,6 +4,7 @@ import {
   getLandById,
   searchLandByCrops,
   searchLandByLocation,
+  addOfferByOfferId,
   removeOfferByOfferId,
 } from '../models/land.model';
 import { makeNewOffer, changeOfferAmount, deleteAnOffer } from '../models/offer.model';
@@ -21,9 +22,9 @@ const getAllLands = async (req: Request, res: Response) => {
 
 const getLand = async (req: Request, res: Response) => {
   try {
-    const { _id } = req.body;
+    const { landId } = req.body;
 
-    const land = await getLandById(_id);
+    const land = await getLandById(landId);
     return res.status(200).send(land);
   } catch (error) {
     res.status(500);
@@ -69,7 +70,12 @@ const makeAnOffer = async (req: Request, res: Response) => {
     };
 
     const newOffer = await makeNewOffer(offer);
-    return res.status(200).send(newOffer);
+    if (newOffer && newOffer._id) {
+      const land = await addOfferByOfferId(landId, newOffer._id);
+      if (land) {
+        return res.status(200).send(newOffer);
+      }
+    }
   } catch (error) {
     res.status(500);
     console.log(error);
@@ -78,9 +84,9 @@ const makeAnOffer = async (req: Request, res: Response) => {
 
 const changeOffer = async (req: Request, res: Response) => {
   try {
-    const { offerId, amount } = req.body;
+    const { offerId, amount, status } = req.body;
 
-    const updatedOffer = await changeOfferAmount(offerId, amount);
+    const updatedOffer = await changeOfferAmount(offerId, amount, status);
 
     return res.status(200).send(updatedOffer);
   } catch (error) {
@@ -96,7 +102,7 @@ const deleteOffer = async (req: Request, res: Response) => {
     await removeOfferByOfferId(landId, offerId);
     await deleteAnOffer(offerId);
 
-    return res.status(200).send('Offer deleted successfully');
+    res.status(200).send('Offer deleted successfully');
   } catch (error) {
     res.status(500);
     console.log(error);

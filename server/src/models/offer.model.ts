@@ -1,26 +1,26 @@
-import { Schema, model } from './database';
+import { Schema, Types, model } from './database';
 
 interface Offer {
-  landId: Schema.Types.ObjectId;
-  landOwnerId: Schema.Types.ObjectId;
-  farmerId: Schema.Types.ObjectId;
+  landId?: Types.ObjectId;
+  landOwnerId?: Types.ObjectId;
+  farmerId?: Types.ObjectId;
   amount: number;
   status: string;
 }
 
 const OfferSchema = new Schema<Offer>({
   landId: {
-    type: Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'LandModel',
     required: true,
   },
   landOwnerId: {
-    type: Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'UserModel',
     required: true,
   },
   farmerId: {
-    type: Schema.Types.ObjectId,
+    type: Types.ObjectId,
     ref: 'UserModel',
     required: true,
   },
@@ -36,7 +36,7 @@ const OfferSchema = new Schema<Offer>({
 
 const OfferModel = model<Offer>('Offer', OfferSchema);
 
-const getAllOffersByLandId = async (landId: Schema.Types.ObjectId) => {
+const getAllOffersByLandId = async (landId: Types.ObjectId) => {
   try {
     const allOffers = await OfferModel.find({ landId });
     return allOffers;
@@ -53,7 +53,7 @@ const makeNewOffer = async (offerDetails: Offer) => {
   }
 };
 
-const deleteAnOffer = async (offerId: Schema.Types.ObjectId) => {
+const deleteAnOffer = async (offerId: Types.ObjectId) => {
   try {
     return await OfferModel.deleteOne({ _id: offerId });
   } catch (error) {
@@ -61,17 +61,20 @@ const deleteAnOffer = async (offerId: Schema.Types.ObjectId) => {
   }
 };
 
-const changeOfferAmount = async (offerId: Schema.Types.ObjectId, amount: number) => {
+const changeOfferAmount = async (offerId: Types.ObjectId, amount: number, status: string) => {
   try {
-    return await OfferModel.findByIdAndUpdate({ _id: offerId }, { amount: amount });
+    const offer = await OfferModel.findOneAndUpdate({ _id: offerId }, { amount: amount });
+    if (offer) {
+      return await OfferModel.findOneAndUpdate({ _id: offerId }, { status: status });
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
-const changeOfferStatus = async (offerId: Schema.Types.ObjectId, status: string) => {
+const changeOfferStatus = async (offerId: Types.ObjectId, status: string) => {
   try {
-    return await OfferModel.findByIdAndUpdate({ _id: offerId }, { status: status });
+    return await OfferModel.findOneAndUpdate({ _id: offerId }, { status: status });
   } catch (error) {
     console.log(error);
   }

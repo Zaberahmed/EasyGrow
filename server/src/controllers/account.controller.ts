@@ -35,7 +35,7 @@ const registerUser = async (req: Request, res: Response) => {
       role,
     });
 
-    return res.status(200).send(newUser);
+    res.status(200).send(newUser);
   } catch (error) {
     res.status(500).send('Failed to register user');
   }
@@ -46,8 +46,6 @@ const login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     const user = await findUserByEmail(email);
-
-    console.log(user);
 
     if (!user) {
       return res.status(400).send('There is no user with that email!');
@@ -66,7 +64,7 @@ const login = async (req: Request, res: Response) => {
       sameSite: 'strict',
     });
 
-    return res.status(200).send({ accessToken: token });
+    res.status(200).send({ accessToken: token });
   } catch (error) {
     res.status(500);
     console.log(error);
@@ -90,7 +88,7 @@ const forgotPassword = async (req: Request, res: Response) => {
 
     await sendOTP(name, email, otp);
 
-    return res.status(200).send('OTP has been sent to your email!');
+    res.status(200).send('OTP has been sent to your email!');
   } catch (error) {
     res.status(500);
     console.log(error);
@@ -117,7 +115,7 @@ const resetPassword = async (req: Request, res: Response) => {
     await updatePassword(email, hashedPassword);
     storedOTP = null;
 
-    return res.status(200).send('Password has been reset successfully!');
+    res.status(200).send('Password has been reset successfully!');
   } catch (error) {
     res.status(500);
     console.log(error);
@@ -131,7 +129,7 @@ const profile = async (req: Request, res: Response) => {
 
     if (session) {
       const profile = await findUserByEmail(session.userEmail);
-      return res.status(200).send(profile);
+      res.status(200).send(profile);
     }
   } catch (error) {
     console.log(error);
@@ -142,10 +140,10 @@ const logout = async (req: Request, res: Response) => {
   try {
     const token = req.cookies.accessToken;
     if (!destroySession(token)) {
-      return res.status(400).send('No session to logout.');
+      res.status(400).send('No session to logout.');
     }
 
-    return res.status(200).send('successfully logged out!');
+    res.status(200).send('successfully logged out!');
   } catch (error) {
     res.status(500);
     console.log(error);

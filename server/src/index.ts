@@ -9,7 +9,7 @@ dotenv.config({ path: __dirname + '/.env' });
 const app: Application = express();
 
 const corsConfig = {
-  origin: `http://localhost:${process.env.CLIENT_PORT}`,
+  origin: process.env.CLIENT_LINK,
   credentials: true,
 };
 
