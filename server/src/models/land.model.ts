@@ -8,7 +8,7 @@ interface Land {
   name: string;
   size: number;
   ownerId?: Types.ObjectId;
-  location: Location;
+  location: Location[];
   description: string;
   price: number;
   LeasedBy?: Types.ObjectId | undefined;
@@ -29,16 +29,18 @@ const LandSchema = new Schema<Land>({
     type: Types.ObjectId,
     required: true,
   },
-  location: {
-    longitude: {
-      type: Number,
-      required: true,
+  location: [
+    {
+      longitude: {
+        type: Number,
+        required: true,
+      },
+      latitude: {
+        type: Number,
+        required: true,
+      },
     },
-    latitude: {
-      type: Number,
-      required: true,
-    },
-  },
+  ],
   description: {
     type: String,
     required: true,
