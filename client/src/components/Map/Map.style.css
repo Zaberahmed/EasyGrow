@@ -1,0 +1,28 @@
+.calculation-box {
+  height: 75px;
+  width: 150px;
+  position: absolute;
+  bottom: 40px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  text-align: center;
+}
+
+.p {
+  font-size: 0.8rem;
+}
+
+.map-btn {
+  padding: 1rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 2rem;
+}
+
+.mapboxgl-ctrl-attrib-inner,
+.mapboxgl-ctrl-attrib-button,
+.mapboxgl-ctrl-icon,
+.mapboxgl-compact {
+  display: none;
+}
