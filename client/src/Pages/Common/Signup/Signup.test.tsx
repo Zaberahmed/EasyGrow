@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen, fireEvent } from '@testing-library/react';
 import SignUp from './Signup.component';
+import '@testing-library/jest-dom';
 
 describe('Sign Up component test', () => {
 	test('all the necessary elements are present', () => {
@@ -17,11 +17,10 @@ describe('Sign Up component test', () => {
 	});
 
 	test('user inputs are being recorded', async () => {
-		const user = userEvent.setup();
-		render(<SignUp />);
-		const inputName = screen.getByPlaceholderText('John Doe');
-
-		await user.type(inputName, 'Zaber Ahmed');
-		expect(inputName).toHaveValue('Zaber Ahmed');
+		const { getByLabelText } = render(<SignUp />);
+		const inputName = getByLabelText('Name:') as HTMLInputElement;
+		expect(inputName.value).toMatch('');
+		fireEvent.change(inputName, { target: { value: 'Zaber Ahmed' } });
+		expect(inputName.value).toMatch('Zaber Ahmed');
 	});
 });

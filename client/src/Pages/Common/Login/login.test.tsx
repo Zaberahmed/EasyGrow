@@ -1,11 +1,9 @@
-// import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-
 import Login, { validateInput, passwordValidate } from './Login.component';
 import { userLogin } from '../../../Services/user';
-jest.mock('./../../Services/user', () => ({
+
+jest.mock('./../../../Services/user', () => ({
 	userLogin: jest.fn(() => Promise.resolve('mocked-token')),
 }));
 
@@ -50,13 +48,11 @@ describe('login', () => {
 	test('should be able to submit form', async () => {
 		const { getByRole, getByLabelText } = render(<Login />);
 
-		// Set the email and password values
 		const emailInput = getByLabelText('Email:');
 		const passwordInput = getByLabelText('Password:');
 		fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
 		fireEvent.change(passwordInput, { target: { value: 'password123' } });
 
-		// Submit the form
 		const loginButton = getByRole('button', { name: /log in/i });
 		fireEvent.click(loginButton);
 
@@ -74,7 +70,3 @@ describe('login', () => {
 		expect(passwordValidate('0!_A23')).toBe(false);
 	});
 });
-
-// test('testing inside login folder', () => {
-//   expect(1 + 2).toBe(3);
-// });

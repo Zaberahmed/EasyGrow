@@ -15,7 +15,7 @@ const initialstate = {
 const SignUp: React.FC = () => {
 	const [state, setState] = useState(initialstate);
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+	const handleChange = async (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
 		const { name, value } = event.target;
 		setState((prevState) => ({
 			...prevState,
@@ -23,7 +23,7 @@ const SignUp: React.FC = () => {
 		}));
 	};
 
-	const handleSubmit = (event: React.FormEvent) => {
+	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
 
 		createAccount(state)
@@ -53,7 +53,7 @@ const SignUp: React.FC = () => {
 						id="name"
 						value={state.name}
 						onChange={handleChange}
-						required // Add required attribute here
+						required
 					/>
 				</div>
 				<div>
@@ -68,7 +68,7 @@ const SignUp: React.FC = () => {
 						id="email"
 						value={state.email}
 						onChange={handleChange}
-						required // Add required attribute here
+						required
 					/>
 				</div>
 				<div>
@@ -83,7 +83,7 @@ const SignUp: React.FC = () => {
 						id="password"
 						value={state.password}
 						onChange={handleChange}
-						required // Add required attribute here
+						required
 					/>
 				</div>
 				<div>
@@ -98,7 +98,7 @@ const SignUp: React.FC = () => {
 						id="phoneNumber"
 						value={state.phoneNumber}
 						onChange={handleChange}
-						required // Add required attribute here
+						required
 					/>
 				</div>
 				<div>
@@ -112,7 +112,7 @@ const SignUp: React.FC = () => {
 						id="address"
 						value={state.address}
 						onChange={handleChange}
-						required // Add required attribute here
+						required
 					/>
 				</div>
 				<div>
@@ -126,8 +126,7 @@ const SignUp: React.FC = () => {
 						id="role"
 						value={state.role}
 						onChange={handleChange}
-						required // Add required attribute here
-					>
+						required>
 						<option value="">Select a role</option>
 						<option value="farmer">Farmer</option>
 						<option value="landOwner">Land Owner</option>
