@@ -1,3 +1,3 @@
-function Authenticted() {}
+function Authenticted() { }
 
 export default Authenticted;
