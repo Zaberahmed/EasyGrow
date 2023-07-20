@@ -48,7 +48,7 @@ const SignUp: React.FC = () => {
 						Name:
 					</label>
 					<input
-						className=""
+						placeholder="John Doe"
 						type="text"
 						id="name"
 						value={state.name}

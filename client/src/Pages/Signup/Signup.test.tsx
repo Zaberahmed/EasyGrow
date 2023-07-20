@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-
+import userEvent from '@testing-library/user-event';
 import SignUp from './Signup.component';
 
 describe('Sign Up component test', () => {
@@ -14,5 +14,14 @@ describe('Sign Up component test', () => {
 		expect(screen.getByLabelText('Role:')).toBeInTheDocument();
 
 		expect(screen.getByText('Sign Up')).toBeInTheDocument();
+	});
+
+	test('user inputs are being recorded', async () => {
+		const user = userEvent.setup();
+		render(<SignUp />);
+		const inputName = screen.getByPlaceholderText('John Doe');
+
+		await user.type(inputName, 'Zaber Ahmed');
+		expect(inputName).toHaveValue('Zaber Ahmed');
 	});
 });
