@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import { router } from './routers/router';
 
 import * as dotenv from 'dotenv';
-dotenv.config({ path: __dirname + '/.env' });
+dotenv.config({ path: __dirname + './.env' });
 
 const app: Application = express();
 

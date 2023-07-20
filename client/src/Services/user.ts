@@ -21,6 +21,7 @@ export const createAccount = async (newUser: User) => {
 };
 
 export const userLogin = async (user: any) => {
+  console.log(user);
   try {
     const response = await fetch('http://localhost:4000/login', {
       method: 'POST',
