@@ -9,7 +9,7 @@ jest.mock('./../../Services/user', () => ({
   userLogin: jest.fn(() => Promise.resolve('mocked-token')),
 }));
 
-describe("login", () => {
+describe.only("login", () => {
   test("validate function should pass on correct input ", () => {
     const text = "text@test.com";
     expect(validateInput(text)).toBe(true);
