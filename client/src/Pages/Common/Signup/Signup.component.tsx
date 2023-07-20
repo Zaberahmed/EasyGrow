@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChangeEvent, useState } from 'react';
-import { createAccount } from './../../Services/user';
-import EasyGrowLogo from './../../assets/EasyGrow.component';
+import { createAccount } from '../../../Services/user';
+import EasyGrowLogo from '../../../assets/EasyGrow.component';
 
 const initialstate = {
 	name: '',

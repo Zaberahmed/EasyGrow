@@ -11,3 +11,5 @@ Setting up legacy project:
 4. When it's time to merge, git checkout dev && git pull origin dev && git merge <your_branch_name> && git push origin dev
 
 5. git checkout <your_branch_name> and start working again.
+
+6. Whenever you want your branch to be update with dev branch type git fetch origin && git merge origin/dev.
