@@ -1,4 +1,4 @@
-function EasyGrow() {
+function EasyGrowLogo() {
   return (
     <div className='w-10'>
       <svg viewBox='0 0 157.33 30' height='30' width='157.33' id='textblock'>
@@ -32,4 +32,4 @@ function EasyGrow() {
   );
 }
 
-export default EasyGrow;
+export default EasyGrowLogo;

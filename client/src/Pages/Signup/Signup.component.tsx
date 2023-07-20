@@ -1,116 +1,145 @@
-import './Signup.style.css';
-import { useState } from 'react';
-import EasyGrow from './../../assets/EasyGrow.component';
+import React from 'react';
+import { ChangeEvent, useState } from 'react';
 import { createAccount } from './../../Services/user';
-import { Link } from 'react-router-dom';
+import EasyGrowLogo from './../../assets/EasyGrow.component';
 
-const SignUp = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [role, setRole] = useState('');
+const initialstate = {
+	name: '',
+	email: '',
+	password: '',
+	phoneNumber: '',
+	address: '',
+	role: '',
+};
 
-  const [gotoLogin, setGotoLogin] = useState(false);
+const SignUp: React.FC = () => {
+	const [state, setState] = useState(initialstate);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+	const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+		const { name, value } = event.target;
+		setState((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
 
-    const newUser: User = {
-      name,
-      email,
-      password,
-      phoneNumber,
-      address,
-      role,
-    };
+	const handleSubmit = (event: React.FormEvent) => {
+		event.preventDefault();
 
-    createAccount(newUser)
-      .then(() => {
-        console.log('account created');
-        setGotoLogin(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+		createAccount(state)
+			.then(() => {
+				console.log('account created');
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	};
 
-  return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <EasyGrow />
-        </div>
-        <div>
-          <label className='label'>Name:</label>
-          <input
-            className=''
-            type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label className='label'>Email:</label>
-          <input
-            className=''
-            type='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label className='label'>Password:</label>
-          <input
-            className=''
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label className='label'>Phone Number:</label>
-          <input
-            className=''
-            type='tel'
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label className='label'>Address:</label>
-          <textarea
-            className=''
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label className='label'>Role:</label>
-          <select className='' value={role} onChange={(e) => setRole(e.target.value)} required>
-            <option value=''>Select a role</option>
-            <option value='farmer'>Farmer</option>
-            <option value='landOwner'>Land Owner</option>
-          </select>
-        </div>
+	return (
+		<div>
+			<form onSubmit={handleSubmit}>
+				<div>
+					<EasyGrowLogo />
+				</div>
+				<div>
+					<label
+						className="label"
+						htmlFor="name">
+						Name:
+					</label>
+					<input
+						placeholder="John Doe"
+						type="text"
+						id="name"
+						value={state.name}
+						onChange={handleChange}
+						required // Add required attribute here
+					/>
+				</div>
+				<div>
+					<label
+						className="label"
+						htmlFor="email">
+						Email:
+					</label>
+					<input
+						className=""
+						type="email"
+						id="email"
+						value={state.email}
+						onChange={handleChange}
+						required // Add required attribute here
+					/>
+				</div>
+				<div>
+					<label
+						className="label"
+						htmlFor="password">
+						Password:
+					</label>
+					<input
+						className=""
+						type="password"
+						id="password"
+						value={state.password}
+						onChange={handleChange}
+						required // Add required attribute here
+					/>
+				</div>
+				<div>
+					<label
+						className="label"
+						htmlFor="phoneNumber">
+						Phone Number:
+					</label>
+					<input
+						className=""
+						type="text"
+						id="phoneNumber"
+						value={state.phoneNumber}
+						onChange={handleChange}
+						required // Add required attribute here
+					/>
+				</div>
+				<div>
+					<label
+						className="label"
+						htmlFor="address">
+						Address:
+					</label>
+					<textarea
+						className=""
+						id="address"
+						value={state.address}
+						onChange={handleChange}
+						required // Add required attribute here
+					/>
+				</div>
+				<div>
+					<label
+						className="label"
+						htmlFor="role">
+						Role:
+					</label>
+					<select
+						className=""
+						id="role"
+						value={state.role}
+						onChange={handleChange}
+						required // Add required attribute here
+					>
+						<option value="">Select a role</option>
+						<option value="farmer">Farmer</option>
+						<option value="landOwner">Land Owner</option>
+					</select>
+				</div>
 
-        {gotoLogin ? (
-          <Link to='/login'>
-            <button type='submit'>Sign Up</button>
-          </Link>
-        ) : (
-          <button type='submit'>Sign Up</button>
-        )}
-      </form>
-    </div>
-  );
+				<div>
+					<button type="submit">Sign Up</button>
+				</div>
+			</form>
+		</div>
+	);
 };
 
 export default SignUp;
