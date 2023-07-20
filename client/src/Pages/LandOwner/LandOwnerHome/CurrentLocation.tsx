@@ -1,6 +1,6 @@
 
-import React, { useEffect, useState } from 'react';
-import SwitchMode from './SwitchMode';
+import { useEffect, useState } from 'react';
+
 
 const CurrentLocation = () => {
     const [address, setAddress] = useState<any>({});
