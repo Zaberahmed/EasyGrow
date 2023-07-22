@@ -1,5 +1,8 @@
 
 import { useEffect, useState } from 'react';
+import {
+    VStack, Text
+} from '@chakra-ui/react';
 
 
 const CurrentLocation = () => {
@@ -32,11 +35,13 @@ const CurrentLocation = () => {
 
 
     return (
-        <div className="">
-            <p>{address.place?.area}</p>
-            <p>{address.place?.city},Bangladesh</p>
 
-        </div>
+        <VStack align={'left'}>
+            <Text fontSize={'sm'} mb={'0!important'}>{address.place?.area}</Text>
+            <Text fontWeight={500} fontSize={"md"} mt={-3}  >{address.place?.city},Bangladesh</Text>
+        </VStack>
+
+
     )
 };
 

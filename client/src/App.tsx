@@ -7,6 +7,12 @@ import SplashScreen from './Pages/Common/SplashScreen/SplashScreen.component';
 import AddLandForm from './components/AddLandForm/AddLandForm.component';
 import Greetings from './Pages/LandOwner/LandOwnerHome/Greetings';
 import CurrentLocation from './Pages/LandOwner/LandOwnerHome/CurrentLocation';
+import Heading from './Pages/LandOwner/LandOwnerHome/Heading';
+
+import PhotoWithOverlay from './Pages/LandOwner/LandOwnerHome/PhotoWithOverlay';
+import BottomNavBar from './Pages/LandOwner/LandOwnerHome/BottomNavBar';
+import MainPage from './Pages/LandOwner/LandOwnerHome/MainPage';
+import BoxImage from './Pages/LandOwner/LandOwnerHome/BoxImage';
 
 function App() {
 	return (
@@ -31,7 +37,7 @@ function App() {
 				/>
 				<Route
 					path='/gre'
-					element={<CurrentLocation />}
+					element={<MainPage />}
 				></Route>
 
 

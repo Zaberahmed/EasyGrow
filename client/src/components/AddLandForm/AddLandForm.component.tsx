@@ -30,10 +30,13 @@ const Form1 = () => {
             <Heading w="100%" textAlign={'center'} fontWeight="normal" mb="2%">
                 User Registration
             </Heading>
-            <Flex>
+            <Flex
 
 
-                <FormControl>
+            >
+
+
+                <FormControl >
                     <FormLabel htmlFor="land-size" fontWeight={'normal'} >
                         Land Size
                     </FormLabel>

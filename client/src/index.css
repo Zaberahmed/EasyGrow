@@ -20,18 +20,18 @@
 } */
 
 * {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	font-family: 'Signika Negative', sans-serif;
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
-	background-color: #edf5ff;
-	--accent-color: #85d42b;
-	--text-color: #212121;
-	--secondary-color: #710193;
-	--red-color: #ff0000;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Signika Negative', sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  /* background-color: #f6faff; */
+  --accent-color: #85d42b;
+  --text-color: #212121;
+  --secondary-color: #710193;
+  --red-color: #ff0000;
 }
