@@ -1,25 +1,25 @@
 body {
-  font-size: 1rem;
+	font-size: 1rem;
 }
 
 input,
 textarea,
 select,
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 1.5rem 2rem;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #cee3ff;
-  cursor: pointer;
-  transition: border-color 0.25s;
+	border-radius: 8px;
+	border: 1px solid transparent;
+	padding: 1.5rem 2rem;
+	font-size: 1em;
+	font-weight: 500;
+	font-family: inherit;
+	background-color: #cee3ff;
+	cursor: pointer;
+	transition: border-color 0.25s;
 }
-/* button:hover {
-  border-color: #646cff;
-} */
+button:hover {
+	border-color: #646cff;
+}
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+	outline: 4px auto -webkit-focus-ring-color;
 }
