@@ -5,7 +5,6 @@ import { getAllOffersByLandId, changeOfferStatus } from '../models/offer.model';
 
 // Land controllers
 const addLand = async (req: Request, res: Response) => {
-  console.log('coming here');
   try {
     const { name, size, ownerId, location, description, price } = req.body;
 

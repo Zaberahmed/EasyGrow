@@ -20,9 +20,9 @@ app.use(cookieParser());
 app.use(router);
 
 mongoose.connection.on('open', () => {
-  console.log('Connection to DB is open!');
+  console.log('🍃 Connection to DB is open!');
 });
 
 app.listen(process.env.SERVER_PORT, () => {
-  console.log(`Server is listening on port ${process.env.SERVER_PORT}!`);
+  console.log(`🚀 Server is listening on port ${process.env.SERVER_PORT}!`);
 });
