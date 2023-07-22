@@ -2,6 +2,7 @@ import React from 'react';
 import { ChangeEvent, useState } from 'react';
 import { createAccount } from '../../../Services/user';
 import EasyGrowLogo from '../../../assets/EasyGrow.component';
+import './Signup.style.css';
 
 const initialstate = {
 	name: '',
