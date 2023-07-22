@@ -5,6 +5,7 @@ import { getAllOffersByLandId, changeOfferStatus } from '../models/offer.model';
 
 // Land controllers
 const addLand = async (req: Request, res: Response) => {
+  console.log('coming here');
   try {
     const { name, size, ownerId, location, description, price } = req.body;
 
@@ -103,4 +104,11 @@ const rejectOffer = async (req: Request, res: Response) => {
   }
 };
 
-export { addLand, removeLand, landSearchByOwner, allOffersForALand, acceptOffer, rejectOffer };
+export {
+  addLand,
+  removeLand,
+  landSearchByOwner,
+  allOffersForALand,
+  acceptOffer,
+  rejectOffer,
+};

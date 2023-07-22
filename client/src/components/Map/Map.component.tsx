@@ -47,6 +47,7 @@ const MapComponent: React.FC = () => {
     function updateArea(e: any) {
       const data = draw.getAll();
       console.log(data);
+
       const center = turf.center(data);
 
       new mapboxgl.Marker({ color: 'red', anchor: 'center' })
@@ -56,6 +57,7 @@ const MapComponent: React.FC = () => {
 
       const answer = document.getElementById('calculated-area');
       if (data.features.length > 0) {
+
         const area = turf.area(data);
         const rounded_area = Math.round(area * 100) / 100;
         if (answer)

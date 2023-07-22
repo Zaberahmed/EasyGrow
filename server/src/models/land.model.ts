@@ -132,7 +132,10 @@ const searchLandByLocation = async (longitude: number, latitude: number) => {
   }
 };
 
-const addOfferByOfferId = async (landId: Types.ObjectId, offerId: Types.ObjectId) => {
+const addOfferByOfferId = async (
+  landId: Types.ObjectId,
+  offerId: Types.ObjectId
+) => {
   try {
     return await LandModel.findOneAndUpdate(
       { _id: landId },
@@ -144,9 +147,15 @@ const addOfferByOfferId = async (landId: Types.ObjectId, offerId: Types.ObjectId
   }
 };
 
-const removeOfferByOfferId = async (landId: Types.ObjectId, offerId: Types.ObjectId) => {
+const removeOfferByOfferId = async (
+  landId: Types.ObjectId,
+  offerId: Types.ObjectId
+) => {
   try {
-    return await LandModel.findOneAndUpdate({ _id: landId }, { $pull: { offers: offerId } });
+    return await LandModel.findOneAndUpdate(
+      { _id: landId },
+      { $pull: { offers: offerId } }
+    );
   } catch (error) {
     console.log(error);
   }
