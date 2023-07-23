@@ -14,6 +14,8 @@ import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MainPage from './Pages/LandOwner/LandOwnerHome/MainPage';
 import BoxImage from './components/BoxImage/BoxImage';
 
+import FarmerHomePage from './Pages/Farmer/FarmerHome/FarmerHome.page';
+
 function App() {
 	return (
 		<>
@@ -30,17 +32,19 @@ function App() {
 				<Route
 					path="/map"
 					element={<MapComponent />}></Route>
-
 				<Route
 					path="/form"
 					element={<AddLandForm />}
 				/>
 				<Route
-					path='/gre'
-					element={<MainPage />}
-				></Route>
-
-
+					path="/gre"
+					element={<MainPage />}></Route>
+				//Farmer page routes
+				<Route
+					path="farmer"
+					element={<FarmerHomePage />}>
+					<Route></Route>
+				</Route>
 			</Routes>
 		</>
 	);

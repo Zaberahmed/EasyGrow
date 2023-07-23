@@ -13,13 +13,14 @@ const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4
 const MapComponent = () => {
 	const mapContainerRef = useRef<HTMLDivElement>(null);
 	const mapRef = useRef<Map | null>(null);
+	mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
 
 	useEffect(() => {
 		if (mapContainerRef.current) {
 			mapRef.current = new mapboxgl.Map({
 				container: mapContainerRef.current,
 				style: 'mapbox://styles/mapbox/satellite-streets-v12?optimize=true',
-				center: [-0.1084, 51.5549],
+				center: [90.4125, 23.8103],
 				zoom: 14,
 			});
 
