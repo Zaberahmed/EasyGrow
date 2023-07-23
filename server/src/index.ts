@@ -7,11 +7,11 @@ const mongoose = require('mongoose');
 
 const app: Application = express();
 
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env' });
 
 const corsConfig = {
-  origin: process.env.CLIENT_LINK,
-  credentials: true,
+	origin: process.env.CLIENT_LINK,
+	credentials: true,
 };
 
 app.use(cors(corsConfig));
@@ -20,9 +20,9 @@ app.use(cookieParser());
 app.use(router);
 
 mongoose.connection.on('open', () => {
-  console.log('🍃 Connection to DB is open!');
+	console.log('🍃 Connection to DB is open!');
 });
 
 app.listen(process.env.SERVER_PORT, () => {
-  console.log(`🚀 Server is listening on port ${process.env.SERVER_PORT}!`);
+	console.log(`🚀 Server is listening on port ${process.env.SERVER_PORT}!`);
 });
