@@ -8,15 +8,15 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import { IoLocationSharp } from 'react-icons/io5';
-import Heading from './Heading';
-import CurrentLocation from './CurrentLocation';
-import UserProfileAvatar from './UserProfileAvatar';
-import PhotoWithOverlay from './PhotoWithOverlay';
+import Heading from '../../../components/Heading/Heading';
+import CurrentLocation from '../../../components/CurrentLocation/CurrentLocation';
+import UserProfileAvatar from '../../../components/UserProfileAvatar/UserProfileAvatar';
+import PhotoWithOverlay from '../../../components/PhotoWithOverlay/PhotoWithOverlay';
 import addLand from '../../../assets/addResize.jpg';
 import landList from '../../../assets/listLandResize.jpg';
-import BoxImage from './BoxImage';
-import RecentAddedLand from './RecentAddedLand';
-import BottomNavBar from './BottomNavBar';
+import BoxImage from '../../../components/BoxImage/BoxImage';
+import RecentAddedLand from '../../../components/RecentAddedLand/RecentAddedLand';
+import BottomNavBar from '../../../components/BottomNavBar/BottomNavBar';
 
 const MainPage = () => {
     return (
