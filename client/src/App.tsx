@@ -5,14 +5,14 @@ import Login from './Pages/Common/Login/Login.component';
 import MapComponent from './components/Map/Map.component';
 import SplashScreen from './Pages/Common/SplashScreen/SplashScreen.component';
 import AddLandForm from './components/AddLandForm/AddLandForm.component';
-import Greetings from './Pages/LandOwner/LandOwnerHome/Greetings';
-import CurrentLocation from './Pages/LandOwner/LandOwnerHome/CurrentLocation';
-import Heading from './Pages/LandOwner/LandOwnerHome/Heading';
+import Greetings from './components/Greetings/Greetings';
+import CurrentLocation from './components/CurrentLocation/CurrentLocation';
+import Heading from './components/Heading/Heading';
 
-import PhotoWithOverlay from './Pages/LandOwner/LandOwnerHome/PhotoWithOverlay';
-import BottomNavBar from './Pages/LandOwner/LandOwnerHome/BottomNavBar';
+import PhotoWithOverlay from './components/PhotoWithOverlay/PhotoWithOverlay';
+import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MainPage from './Pages/LandOwner/LandOwnerHome/MainPage';
-import BoxImage from './Pages/LandOwner/LandOwnerHome/BoxImage';
+import BoxImage from './components/BoxImage/BoxImage';
 
 function App() {
 	return (
