@@ -2,8 +2,7 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { router } from './routers/router';
-import path from 'path';
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const app: Application = express();
 
