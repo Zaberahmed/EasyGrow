@@ -1,6 +1,7 @@
-import Greetings from '../Greetings/Greetings';
-import slider from './../../assets/land-plot.jpg';
-import { Box, HStack, Heading } from '@chakra-ui/react';
+import Greetings from "../Greetings/Greetings";
+import slider from './../../assets/land-plot.jpg'
+import { Box, HStack, Heading } from "@chakra-ui/react";
+
 
 const PhotoWithOverlay = () => {
 	const styles = {

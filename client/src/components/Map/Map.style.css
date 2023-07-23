@@ -16,8 +16,12 @@
 .map-btn {
   padding: 1rem;
   position: absolute;
-  bottom: 1rem;
+  bottom: 3rem;
   right: 2rem;
+  margin-left: 5px;
+  font-weight: 700;
+  color: black;
+  background-color: aliceblue;
 }
 
 .mapboxgl-ctrl-attrib-inner,

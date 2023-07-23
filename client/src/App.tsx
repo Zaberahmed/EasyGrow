@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { useContext } from 'react';
 import './App.css';
 import SignUp from './Pages/Common/Signup/Signup.component';
 import Login from './Pages/Common/Login/Login.component';
@@ -13,6 +14,8 @@ import PhotoWithOverlay from './components/PhotoWithOverlay/PhotoWithOverlay';
 import BottomNavBar from './components/BottomNavBar/BottomNavBar';
 import MainPage from './Pages/LandOwner/LandOwnerHome/MainPage';
 import BoxImage from './components/BoxImage/BoxImage';
+import OffersForLand from './Pages/LandOwner/OffersForLand/OffersForLand.component';
+import ListOfLands from './Pages/LandOwner/ListOfLands/ListOfLands.page';
 
 import FarmerHomePage from './Pages/Farmer/FarmerHome/FarmerHome.page';
 import LandDetailswithOffersPage from './Pages/Farmer/landDetailswithOffers/landDetailswithOffers.page';
