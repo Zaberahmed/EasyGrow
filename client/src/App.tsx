@@ -15,6 +15,7 @@ import MainPage from './Pages/LandOwner/LandOwnerHome/MainPage';
 import BoxImage from './components/BoxImage/BoxImage';
 
 import FarmerHomePage from './Pages/Farmer/FarmerHome/FarmerHome.page';
+import LandDetailswithOffersPage from './Pages/Farmer/landDetailswithOffers/landDetailswithOffers.page';
 
 function App() {
 	return (
@@ -42,9 +43,10 @@ function App() {
 				//Farmer page routes
 				<Route
 					path="farmer"
-					element={<FarmerHomePage />}>
-					<Route></Route>
-				</Route>
+					element={<FarmerHomePage />}></Route>
+				<Route
+					path="land-details"
+					element={<LandDetailswithOffersPage />}></Route>
 			</Routes>
 		</>
 	);
