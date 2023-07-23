@@ -1,5 +1,5 @@
 import Greetings from "../Greetings/Greetings";
-import slider from './../../../assets/land-plot.jpg'
+import slider from './../../assets/land-plot.jpg'
 import { Box, HStack, Heading } from "@chakra-ui/react";
 
 
