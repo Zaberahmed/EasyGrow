@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Checkbox, CheckboxGroup, Container } from '@chakra-ui/react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { Center, Checkbox, CheckboxGroup, Container } from '@chakra-ui/react';
 import {
     Progress,
     Box,
@@ -83,11 +83,24 @@ const Form1 = () => {
     );
 };
 
+const initialState = {
+    duration: '',
+    amount: ''
+}
 const Form2 = () => {
+    const [lease, setLease] = useState(initialState);
+    const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setLease((prevState) => ({
+            ...prevState,
+            [name]: value
+        }))
+    }
+    console.log(lease);
     return (
         <>
             <Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
-                User Details
+                Lease Details
             </Heading>
 
             <Container>
@@ -95,14 +108,23 @@ const Form2 = () => {
                     <FormLabel htmlFor='lease-duration' fontWeight={'normal'}>
                         Lease Duration
                     </FormLabel>
-                    <Input id='lease-duration' placeholder='lease-duration' />
+                    <Input
+                        id='lease-duration'
+                        name='duration'
+                        onChange={handleChange}
+                        value={lease.duration}
+                        placeholder='lease-duration' />
                 </FormControl>
                 <br />
                 <FormControl>
                     <FormLabel htmlFor='lease-amount' fontWeight={'normal'}>
                         Lease Amount
                     </FormLabel>
-                    <Input id='lease-amount' placeholder='lease-amount' />
+                    <Input
+                        name='amount'
+                        value={lease.amount}
+                        onChange={handleChange}
+                        id='lease-amount' placeholder='lease-amount' />
                 </FormControl>
             </Container>
         </>
@@ -113,19 +135,19 @@ const Form3 = () => {
     return (
         <>
             <Heading w='100%' textAlign={'center'} fontWeight='normal'>
-                Social Handles
+                Others
             </Heading>
 
             <Container>
                 <FormControl>
-                    <FormLabel htmlFor='conditions' fontWeight={'normal'}>
+                    <FormLabel htmlFor='conditions'>
                         Conditions and Restrictions
                     </FormLabel>
-                    <Checkbox defaultChecked={false}>Checkbox</Checkbox>
+                    <Checkbox fontWeight='normal' defaultChecked={false}>May require liability insurance for activities on the land</Checkbox>
                     <br />
-                    <Checkbox defaultChecked={false}>Checkbox</Checkbox>
+                    <Checkbox fontWeight='normal' defaultChecked={false}>Specifies the allowed purposes like agriculture,commercial</Checkbox>
                     <br />
-                    <Checkbox defaultChecked={false}>Checkbox</Checkbox>
+                    <Checkbox fontWeight='normal' defaultChecked={false}>Mandates adherence to all relevant laws and regulations</Checkbox>
                     <br />
                 </FormControl>
             </Container>
@@ -139,79 +161,83 @@ export default function AddLandForm() {
     const [progress, setProgress] = useState(33.33);
     return (
         <>
-            <Box
+            <Center h='100vh' >
+                <Box
 
-                borderWidth='1px'
-                rounded='lg'
-                shadow='1px 1px 3px rgba(0,0,0,0.3)'
-                maxWidth={800}
-                p={6}
+                    borderWidth='1px'
+                    rounded='lg'
+                    shadow='1px 1px 3px rgba(0,0,0,0.3)'
+                    minWidth={"90vw"}
+                    maxWidth={"90vw"}
+                    p={8}
 
-                m='10px auto'
-                as='form'
-            >
-                <Progress
-                    hasStripe
-                    value={progress}
-                    mb='5%'
-                    mx='5%'
-                    isAnimated
-                ></Progress>
-                {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
-                <ButtonGroup mt='5%' w='100%'>
-                    <Flex w='100%' justifyContent='space-between'>
-                        <Flex>
-                            <Button
-                                onClick={() => {
-                                    setStep(step - 1);
-                                    setProgress(progress - 33.33);
-                                }}
-                                isDisabled={step === 1}
-                                colorScheme='teal'
-                                variant='solid'
-                                w='7rem'
-                                mr='5%'
-                            >
-                                Back
-                            </Button>
-                            <Button
-                                w='7rem'
-                                isDisabled={step === 3}
-                                onClick={() => {
-                                    setStep(step + 1);
-                                    if (step === 3) {
-                                        setProgress(100);
-                                    } else {
-                                        setProgress(progress + 33.33);
-                                    }
-                                }}
-                                colorScheme='teal'
-                                variant='outline'
-                            >
-                                Next
-                            </Button>
+                    m='10px auto'
+                    as='form'
+                >
+                    <Progress
+                        hasStripe
+                        value={progress}
+                        mb='5%'
+                        mx='5%'
+                        isAnimated
+                    ></Progress>
+                    {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+                    <ButtonGroup mt='5%' w='100%'>
+                        <Flex w='100%' justifyContent='space-between'>
+                            <Flex>
+                                <Button
+                                    onClick={() => {
+                                        setStep(step - 1);
+                                        setProgress(progress - 33.33);
+                                    }}
+                                    isDisabled={step === 1}
+                                    colorScheme='teal'
+                                    variant='solid'
+                                    w='7rem'
+                                    mr='5%'
+                                >
+                                    Back
+                                </Button>
+                                <Button
+                                    w='7rem'
+
+                                    onClick={() => {
+                                        setStep(step + 1);
+                                        if (step === 3) {
+                                            setProgress(100);
+                                        } else {
+                                            setProgress(progress + 33.33);
+                                        }
+                                    }}
+                                    colorScheme='teal'
+                                    variant='outline'
+                                    style={{ display: step == 3 ? 'none' : 'block' }}
+                                >
+                                    Next
+                                </Button>
+                            </Flex>
+                            {step === 3 ? (
+                                <Button
+                                    w='7rem'
+                                    colorScheme='red'
+                                    variant='solid'
+                                    onClick={() => {
+                                        toast({
+                                            title: 'Account created.',
+                                            description: "We've created your account for you.",
+                                            status: 'success',
+                                            duration: 3000,
+                                            isClosable: true,
+                                        });
+                                    }}
+                                >
+                                    Submit
+                                </Button>
+                            ) : null}
                         </Flex>
-                        {step === 3 ? (
-                            <Button
-                                w='7rem'
-                                colorScheme='red'
-                                variant='solid'
-                                onClick={() => {
-                                    toast({
-                                        title: 'Account created.',
-                                        description: "We've created your account for you.",
-                                        status: 'success',
-                                        duration: 3000,
-                                        isClosable: true,
-                                    });
-                                }}
-                            >
-                                Submit
-                            </Button>
-                        ) : null}
-                    </Flex>
-                </ButtonGroup>
-            </Box>
+                    </ButtonGroup>
+                </Box>
+            </Center >
         </>
     );
 }

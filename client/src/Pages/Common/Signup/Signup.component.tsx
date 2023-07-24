@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@chakra-ui/react';
 import { ChangeEvent, useState } from 'react';
 import { createAccount } from '../../../Services/user';
 import EasyGrowLogo from '../../../assets/EasyGrow.component';
+import { passwordValidate } from '../../../utils/PasswordValidate';
 import './Signup.style.css';
 
 const initialstate = {
@@ -13,7 +16,10 @@ const initialstate = {
 	role: '',
 };
 
+
 const SignUp: React.FC = () => {
+	const navigate = useNavigate();
+	const toast = useToast();
 	const [state, setState] = useState(initialstate);
 
 	const handleChange = async (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -26,15 +32,23 @@ const SignUp: React.FC = () => {
 
 	const handleSubmit = async (event: React.FormEvent) => {
 		event.preventDefault();
-
-		createAccount(state)
-			.then(() => {
-				console.log('account created');
-			})
-			.catch((error) => {
-				console.log(error);
+		const registeredUser = await createAccount(state);
+		if (registeredUser) {
+			navigate('/login')
+		}
+		else {
+			toast({
+				title: 'Wrong Credentials',
+				description: "Give correct correct information and log in.",
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
 			});
+		}
+
+
 	};
+
 
 	return (
 		<div className="sign-up-container">
@@ -92,6 +106,13 @@ const SignUp: React.FC = () => {
 					onChange={handleChange}
 					required
 				/>
+				{state.password && !passwordValidate(state.password) ?
+					<p className='text-red-500'>Password should include	6 digit,upperCase,lowerCase
+
+
+					</p> : null
+
+				}
 
 				<label
 					data-testid="phoneNumber-label"

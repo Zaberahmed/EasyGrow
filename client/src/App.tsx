@@ -44,9 +44,9 @@ function App() {
 					element={<AddLandForm />}
 				/>
 				<Route
-					path="/gre"
-					element={<MainPage />}></Route>
-				//Farmer page routes
+					path='/list'
+					element={<ListOfLands />}
+				></Route>
 				<Route
 					path="farmer"
 					element={<FarmerHomePage />}></Route>
