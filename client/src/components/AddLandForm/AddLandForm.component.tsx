@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Center, Checkbox, CheckboxGroup, Container } from '@chakra-ui/react';
 import {
     Progress,
-    Box,
+    Box, Text,
     ButtonGroup,
     Button,
     Heading,
@@ -52,15 +52,19 @@ const Form1 = () => {
             </Heading>
             <Container>
                 <FormControl>
+                    <FormLabel htmlFor='land-name' fontWeight={'normal'}>
+                        Land Name
+                    </FormLabel>
+                    <Input placeholder='name'></Input>
+                </FormControl>
+                <br />
+                <FormControl>
                     <FormLabel htmlFor='land-size' fontWeight={'normal'}>
                         Land Size
                     </FormLabel>
+                    <Text style={{ pointerEvents: 'none' }} className='border-2 p-4 rounded-lg border-gray-100'>{`${landInfo.area} acre`}</Text>
 
-                    <Input
-                        id='land-size'
-                        value={`${landInfo.area} acre`}
-                        style={{ pointerEvents: 'none' }}
-                    />
+
                 </FormControl>
                 <br />
                 <FormControl>
@@ -69,11 +73,8 @@ const Form1 = () => {
                     </FormLabel>
                     {
                         address.features && (
-                            <Textarea
-                                placeholder='location'
-                                value={address?.features[0].place_name}
-                                style={{ pointerEvents: 'none' }}
-                            ></Textarea>
+
+                            <Text style={{ pointerEvents: 'none' }} className='border-2 p-5 rounded-lg border-gray-100'>{address?.features[0].place_name}</Text>
                         )
 
                     }
@@ -85,7 +86,7 @@ const Form1 = () => {
 
 const initialState = {
     duration: '',
-    amount: ''
+    price: ''
 }
 const Form2 = () => {
     const [lease, setLease] = useState(initialState);
@@ -121,8 +122,8 @@ const Form2 = () => {
                         Lease Amount
                     </FormLabel>
                     <Input
-                        name='amount'
-                        value={lease.amount}
+                        name='price'
+                        value={lease.price}
                         onChange={handleChange}
                         id='lease-amount' placeholder='lease-amount' />
                 </FormControl>
@@ -132,6 +133,7 @@ const Form2 = () => {
 };
 
 const Form3 = () => {
+
     return (
         <>
             <Heading w='100%' textAlign={'center'} fontWeight='normal'>

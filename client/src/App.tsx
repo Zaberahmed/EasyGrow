@@ -40,6 +40,9 @@ function App() {
 					path="/map"
 					element={<MapComponent />}></Route>
 				<Route
+					path="/home"
+					element={<MainPage />}></Route>
+				<Route
 					path="/form"
 					element={<AddLandForm />}
 				/>
@@ -47,6 +50,16 @@ function App() {
 					path='/list'
 					element={<ListOfLands />}
 				></Route>
+				<Route path='/add/:id'
+					element={<OffersForLand></OffersForLand>}
+				></Route>
+
+
+
+
+
+
+
 				<Route
 					path="farmer"
 					element={<FarmerHomePage />}></Route>
