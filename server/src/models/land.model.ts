@@ -12,7 +12,7 @@ interface Land {
   description: string;
   price: number;
   LeasedBy?: Types.ObjectId | undefined;
-  crops?: string[];
+  crops?: Types.ObjectId[];
   offers?: Types.ObjectId[] | undefined;
 }
 
@@ -55,7 +55,8 @@ const LandSchema = new Schema({
     required: false,
   },
   crops: {
-    type: [String],
+    type: [Types.ObjectId],
+    ref: 'CropModel',
     required: false,
   },
   offers: {

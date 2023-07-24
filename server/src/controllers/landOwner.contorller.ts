@@ -2,11 +2,30 @@ import { Request, Response } from 'express';
 import { addALand, removeALand, searchLandByOwner } from '../models/land.model';
 import { addALandByLandId, removeALandByLandId } from '../models/user.model';
 import { getAllOffersByLandId, changeOfferStatus } from '../models/offer.model';
+import { getAllCrops } from '../models/crop.model';
+import { getSuitableData } from '../apis/crop.api';
+import { Types } from '../models/database';
 
 // Land controllers
 const addLand = async (req: Request, res: Response) => {
   try {
     const { name, size, ownerId, location, description, price } = req.body;
+
+    const crops = await getAllCrops();
+
+    const { longitude, latitude } = location[0];
+
+    const soilData = (await getSuitableData(longitude, latitude)) || 6.5;
+
+    const suitableCrops: Types.ObjectId[] = [];
+
+    if (crops) {
+      crops.forEach((crop) => {
+        if (crop.max_ph >= soilData && soilData >= crop.min_ph) {
+          suitableCrops.push(crop._id);
+        }
+      });
+    }
 
     const newLand = {
       name,
@@ -15,6 +34,7 @@ const addLand = async (req: Request, res: Response) => {
       location,
       description,
       price,
+      crops: suitableCrops,
     };
 
     const createdLand = await addALand(newLand);

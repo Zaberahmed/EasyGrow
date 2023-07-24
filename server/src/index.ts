@@ -2,12 +2,11 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { router } from './routers/router';
-import path from 'path';
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const app: Application = express();
 
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env' });
 
 const corsConfig = {
   origin: `${process.env.CLIENT_LINK}`,
