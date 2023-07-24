@@ -8,6 +8,10 @@ import * as landOwnerController from '../controllers/landOwner.contorller';
 import { authenticator } from '../middlewares/authenticator';
 import { authorizer } from '../middlewares/authorizer';
 
+import { addingCrops } from '../apis/crop.api';
+
+router.post('/crops', addingCrops);
+
 // *account controllers*
 router.post('/registration', accountController.registerUser);
 router.post('/login', accountController.login);
