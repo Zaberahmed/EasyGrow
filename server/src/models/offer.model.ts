@@ -8,7 +8,7 @@ interface Offer {
   status: string;
 }
 
-const OfferSchema = new Schema<Offer>({
+const OfferSchema = new Schema({
   landId: {
     type: Types.ObjectId,
     ref: 'LandModel',
@@ -34,7 +34,7 @@ const OfferSchema = new Schema<Offer>({
   },
 });
 
-const OfferModel = model<Offer>('Offer', OfferSchema);
+const OfferModel = model('Offer', OfferSchema);
 
 const getAllOffersByLandId = async (landId: Types.ObjectId) => {
   try {

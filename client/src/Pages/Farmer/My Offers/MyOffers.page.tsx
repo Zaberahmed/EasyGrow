@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Offer } from '../../../Interfaces/Offer.interface';
 import OfferDetailsComponent from '../../../components/Offer Details/OfferDetails.component';
+import formatMoney from '../../../utils/formatMoney';
 const initialOffer: Offer = {
 	amount: '0',
 	status: 'pending',
@@ -21,9 +22,7 @@ const dummyOffers: Offer[] = [
 	},
 ];
 
-function formatMoney(number: string) {
-	return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
+
 
 const MyOffersPage = () => {
 	const [offer, setOffer] = useState<Offer>(initialOffer);

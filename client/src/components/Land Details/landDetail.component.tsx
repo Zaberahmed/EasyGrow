@@ -107,21 +107,6 @@ const LandDetailComponent = () => {
 								placeholder="01XXX-XXXXXX"
 							/>
 						</FormControl>
-
-						<FormControl isRequired>
-							<FormLabel>Offer amount:</FormLabel>
-							<Input
-								type="text"
-								placeholder="30,000"
-							/>
-						</FormControl>
-						<Button
-							isLoading={isLoading}
-							loadingText="Submitting"
-							colorScheme="teal"
-							variant="solid">
-							Submit
-						</Button>
 					</Stack>
 				</CardBody>
 			</Card>

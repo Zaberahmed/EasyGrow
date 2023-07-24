@@ -10,7 +10,7 @@ interface User {
 	lands?: Types.ObjectId[] | undefined;
 }
 
-const UserSchema = new Schema<User>({
+const UserSchema = new Schema({
 	name: {
 		type: String,
 		required: true,
@@ -43,7 +43,7 @@ const UserSchema = new Schema<User>({
 	],
 });
 
-const UserModel = model<User>('User', UserSchema);
+const UserModel = model('User', UserSchema);
 
 const createUser = async (userDetails: User) => {
 	try {
