@@ -1,26 +1,19 @@
 import './Login.style.css';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { userLogin } from '../../../Services/user';
+import { useNavigate } from 'react-router-dom';
+
 
 const initialState = {
 	email: '',
 	password: '',
 };
-const isUpperCase = new RegExp(/(?=.*[A-Z])/g);
-const isLowerCase = new RegExp(/(?=.*[a-z])/g);
-const isLong = new RegExp(/(?=.{6,})/g);
-const isNumeric = new RegExp(/(?=.*[0-9])/g);
-const checkIsWhiteSpaceFromBegAndEnd = new RegExp(/^([^ ][\w\W ]*[^ ])$/);
+
 
 export const validateInput = (str = '') => str.includes('@');
-export const passwordValidate = (currentPassword: string): boolean => {
-	if (currentPassword.match(isUpperCase) && currentPassword.match(isLowerCase) && currentPassword.match(isLong) && currentPassword.match(isNumeric) && currentPassword.match(checkIsWhiteSpaceFromBegAndEnd)) {
-		return true;
-	} else {
-		return false;
-	}
-};
+
 const Login = () => {
+	const navigate = useNavigate()
 	const [formData, setFomData] = useState(initialState);
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -34,17 +27,16 @@ const Login = () => {
 		e.preventDefault();
 
 		const form = e.currentTarget;
-		console.log(form);
+
 		const formData: FormData = new FormData(form);
 		const user = Object.fromEntries(formData);
-		console.log(user);
-		const token = await userLogin(user);
-		console.log(token);
 
-		// if (token!) {
-		//   const hello = await profile();
-		//   console.log(hello);
-		// }
+		const token = await userLogin(user);
+
+
+		if (token) {
+			navigate('/home')
+		}
 	};
 	const validateForm = () => {
 		return !formData.email || !formData.password;
@@ -77,7 +69,7 @@ const Login = () => {
 					value={formData.password}
 					onChange={handleChange}
 				/>
-				{formData.password && !passwordValidate(formData.password) ? <p className="">Password not stronger</p> : null}
+				{/* {formData.password && !passwordValidate(formData.password) ? <p className="">Password not stronger</p> : null} */}
 				<button
 					role="button"
 					type="submit"

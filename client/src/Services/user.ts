@@ -1,7 +1,11 @@
+const BASE_URL = 'http://localhost:4000';
+
 export const createAccount = async (newUser: User) => {
   try {
-    const response = await fetch('http://localhost:4000/registration', {
+    const response = await fetch(`${BASE_URL}/registration`, {
       method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -13,8 +17,7 @@ export const createAccount = async (newUser: User) => {
     }
 
     const user = await response.json();
-
-    console.log(user);
+    return user;
   } catch (error) {
     console.error(error);
   }
@@ -25,6 +28,8 @@ export const userLogin = async (user: any) => {
   try {
     const response = await fetch('http://localhost:4000/login', {
       method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -39,7 +44,7 @@ export const userLogin = async (user: any) => {
 
     localStorage.setItem(`${data.accessToken}`, `${data.token}`);
 
-    return data.token;
+    return data.accessToken;
   } catch (error) {
     console.error(error);
   }

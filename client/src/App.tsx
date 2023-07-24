@@ -33,7 +33,9 @@ function App() {
 				<Route
 					path="/map"
 					element={<MapComponent />}></Route>
-
+				<Route
+					path="/home"
+					element={<MainPage />}></Route>
 				<Route
 					path="/form"
 					element={<AddLandForm />}

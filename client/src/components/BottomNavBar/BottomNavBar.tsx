@@ -41,7 +41,7 @@ const BottomNavBar = () => {
                 borderRadius='30px'
                 bgColor={bgColor}
                 boxShadow={'0px 0px 15px -8px rgba(0,0,0,0.9)'}>
-                <Link to='/'>
+                <Link to='/home'>
                     <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                         <IconButton
                             aria-label='Home'
@@ -64,7 +64,7 @@ const BottomNavBar = () => {
                         />
                     </motion.div>
                 </Link>
-                <Link to='/dashboard'>
+                <Link to='/map'>
                     <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                         <IconButton
                             aria-label='Search'

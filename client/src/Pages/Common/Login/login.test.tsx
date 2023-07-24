@@ -1,6 +1,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Login, { validateInput, passwordValidate } from './Login.component';
+import Login, { validateInput } from './Login.component';
+import { passwordValidate } from '../../../utils/PasswordValidate';
 import { userLogin } from '../../../Services/user';
 
 jest.mock('./../../../Services/user', () => ({
