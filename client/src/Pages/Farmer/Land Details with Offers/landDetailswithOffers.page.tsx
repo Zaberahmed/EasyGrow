@@ -3,7 +3,7 @@ import OfferAmountComponent from '../../../components/Offer Amount Form/OfferAmo
 
 const LandDetailswithOffersPage = () => {
 	return (
-		<div>
+		<div className="land-detail-with-offers-page-container">
 			<LandDetailComponent />
 			<OfferAmountComponent />
 		</div>
