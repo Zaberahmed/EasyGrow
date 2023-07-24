@@ -2,7 +2,9 @@ import { Card, CardHeader, Heading, CardBody, Stack, StackDivider, Text, Box, In
 
 const LandDetailComponent = () => {
 	return (
-		<Flex>
+		<Flex
+			flexDirection={'row'}
+			flexWrap={'wrap'}>
 			<Card>
 				<CardHeader>
 					<Heading size="md">Land Details</Heading>
@@ -11,7 +13,7 @@ const LandDetailComponent = () => {
 				<CardBody>
 					<Stack
 						divider={<StackDivider />}
-						spacing="4">
+						spacing="2">
 						<Box>
 							<Heading
 								size="xs"

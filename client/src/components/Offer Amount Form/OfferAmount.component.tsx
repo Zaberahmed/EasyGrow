@@ -19,6 +19,7 @@ const OfferAmountComponent = () => {
 					Offer amount:
 				</FormLabel>
 				<Input
+					ml={2}
 					borderColor={'gray.400'}
 					type="text"
 					placeholder="30,000"
@@ -31,7 +32,8 @@ const OfferAmountComponent = () => {
 				colorScheme="teal"
 				variant="solid"
 				mt={7}
-				ml={2}>
+				ml={4}
+				mr={2}>
 				Submit
 			</Button>
 		</Flex>
