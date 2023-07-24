@@ -17,10 +17,11 @@ import BoxImage from './components/BoxImage/BoxImage';
 import OffersForLand from './Pages/LandOwner/OffersForLand/OffersForLand.component';
 import ListOfLands from './Pages/LandOwner/ListOfLands/ListOfLands.page';
 
-import FarmerHomePage from './Pages/Farmer/FarmerHome/FarmerHome.page';
-import LandDetailswithOffersPage from './Pages/Farmer/landDetailswithOffers/landDetailswithOffers.page';
+import FarmerHomePage from './Pages/Farmer/Farmer Home/FarmerHome.page';
+import LandDetailswithOffersPage from './Pages/Farmer/Land Details with Offers/landDetailswithOffers.page';
 import OfferDetailsComponent from './components/Offer Details/OfferDetails.component';
-import MyOffersPage from './Pages/Farmer/Myoffers/MyOffers.page';
+import MyOffersPage from './Pages/Farmer/My Offers/MyOffers.page';
+import ViewMapPage from './Pages/Farmer/View Map/ViewMap.page';
 
 function App() {
 	return (
@@ -50,10 +51,13 @@ function App() {
 					path="farmer"
 					element={<FarmerHomePage />}></Route>
 				<Route
-					path="land-details"
+					path="farmer/map"
+					element={<ViewMapPage />}></Route>
+				<Route
+					path="farmer/land-details"
 					element={<LandDetailswithOffersPage />}></Route>
 				<Route
-					path="offer-details"
+					path="farmer/offer-details"
 					element={<MyOffersPage />}></Route>
 			</Routes>
 		</>

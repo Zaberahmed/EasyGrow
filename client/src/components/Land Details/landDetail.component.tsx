@@ -1,10 +1,8 @@
-import { Card, CardHeader, Heading, CardBody, Stack, StackDivider, Text, Box, FormControl, FormLabel, Input, Button } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Card, CardHeader, Heading, CardBody, Stack, StackDivider, Text, Box, Input, Flex } from '@chakra-ui/react';
 
 const LandDetailComponent = () => {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 	return (
-		<div className="land-details-container">
+		<Flex>
 			<Card>
 				<CardHeader>
 					<Heading size="md">Land Details</Heading>
@@ -100,32 +98,10 @@ const LandDetailComponent = () => {
 								Rice, Maize, Potato
 							</Text>
 						</Box>
-						<FormControl isRequired>
-							<FormLabel>Contact details:</FormLabel>
-							<Input
-								type="tel"
-								placeholder="01XXX-XXXXXX"
-							/>
-						</FormControl>
-
-						<FormControl isRequired>
-							<FormLabel>Offer amount:</FormLabel>
-							<Input
-								type="text"
-								placeholder="30,000"
-							/>
-						</FormControl>
-						<Button
-							isLoading={isLoading}
-							loadingText="Submitting"
-							colorScheme="teal"
-							variant="solid">
-							Submit
-						</Button>
 					</Stack>
 				</CardBody>
 			</Card>
-		</div>
+		</Flex>
 	);
 };
 
