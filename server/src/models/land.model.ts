@@ -5,64 +5,65 @@ interface Location {
 	latitude: number;
 }
 interface Land {
-	name: string;
-	size: number;
-	ownerId?: Types.ObjectId;
-	location: Location[];
-	description: string;
-	price: number;
-	LeasedBy?: Types.ObjectId | undefined;
-	crops?: string[];
-	offers?: Types.ObjectId[] | undefined;
+  name: string;
+  size: number;
+  ownerId?: Types.ObjectId;
+  location: Location[];
+  description: string;
+  price: number;
+  LeasedBy?: Types.ObjectId | undefined;
+  crops?: Types.ObjectId[];
+  offers?: Types.ObjectId[] | undefined;
 }
 
 const LandSchema = new Schema({
-	name: {
-		type: String,
-		required: true,
-	},
-	size: {
-		type: Number,
-		required: true,
-	},
-	ownerId: {
-		type: Types.ObjectId,
-		required: true,
-	},
-	location: [
-		{
-			longitude: {
-				type: Number,
-				required: true,
-			},
-			latitude: {
-				type: Number,
-				required: true,
-			},
-		},
-	],
-	description: {
-		type: String,
-		required: true,
-	},
-	price: {
-		type: Number,
-		required: true,
-	},
-	LeasedBy: {
-		type: Types.ObjectId,
-		ref: 'UserModel',
-		required: false,
-	},
-	crops: {
-		type: [String],
-		required: false,
-	},
-	offers: {
-		type: [Types.ObjectId],
-		ref: 'OfferModel',
-		required: false,
-	},
+  name: {
+    type: String,
+    required: true,
+  },
+  size: {
+    type: Number,
+    required: true,
+  },
+  ownerId: {
+    type: Types.ObjectId,
+    required: true,
+  },
+  location: [
+    {
+      longitude: {
+        type: Number,
+        required: true,
+      },
+      latitude: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
+  description: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  LeasedBy: {
+    type: Types.ObjectId,
+    ref: 'UserModel',
+    required: false,
+  },
+  crops: {
+    type: [Types.ObjectId],
+    ref: 'CropModel',
+    required: false,
+  },
+  offers: {
+    type: [Types.ObjectId],
+    ref: 'OfferModel',
+    required: false,
+  },
 });
 
 const LandModel = model('Land', LandSchema);
