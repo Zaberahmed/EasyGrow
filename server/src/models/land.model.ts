@@ -1,3 +1,4 @@
+import { Crop } from './crop.model';
 import { Schema, Types, model } from './database';
 
 interface Location {
@@ -12,7 +13,7 @@ interface Land {
 	description: string;
 	price: number;
 	LeasedBy?: Types.ObjectId | undefined;
-	crops?: Types.ObjectId[];
+	crops?: Crop[];
 	offers?: Types.ObjectId[] | undefined;
 }
 
