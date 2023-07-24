@@ -50,6 +50,16 @@ function App() {
 					path='/list'
 					element={<ListOfLands />}
 				></Route>
+				<Route path='/add/:id'
+					element={<OffersForLand></OffersForLand>}
+				></Route>
+
+
+
+
+
+
+
 				<Route
 					path="farmer"
 					element={<FarmerHomePage />}></Route>

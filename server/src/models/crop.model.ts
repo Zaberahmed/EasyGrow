@@ -1,6 +1,7 @@
-import { Schema, model } from './database';
+import { Schema, Types, model } from './database';
 
-interface Crop {
+export interface Crop {
+  _id?: Types.ObjectId;
   name: string;
   pricePerTon?: number;
   tonPerAcre?: number;
@@ -15,7 +16,7 @@ interface Crop {
   min_rainfall: number;
 }
 
-const CropSchema = new Schema<Crop>({
+const CropSchema = new Schema({
   name: {
     type: String,
     required: false,
@@ -66,7 +67,7 @@ const CropSchema = new Schema<Crop>({
   },
 });
 
-const CropModel = model<Crop>('Crop', CropSchema);
+const CropModel = model('Crop', CropSchema);
 
 const getAllCrops = async () => {
   try {

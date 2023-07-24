@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 const app: Application = express();
 
-require('dotenv').config({ path: __dirname + '/.env' });
+require('dotenv').config();
 
 const corsConfig = {
   origin: `${process.env.CLIENT_LINK}`,

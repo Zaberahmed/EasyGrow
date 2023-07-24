@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { addALand, removeALand, searchLandByOwner } from '../models/land.model';
 import { addALandByLandId, removeALandByLandId } from '../models/user.model';
 import { getAllOffersByLandId, changeOfferStatus } from '../models/offer.model';
-import { getAllCrops } from '../models/crop.model';
+import { Crop, getAllCrops } from '../models/crop.model';
 import { getSuitableData } from '../apis/crop.api';
 import { Types } from '../models/database';
 
@@ -20,9 +20,9 @@ const addLand = async (req: Request, res: Response) => {
     const suitableCrops: Types.ObjectId[] = [];
 
     if (crops) {
-      crops.forEach((crop) => {
+      crops.forEach((crop: Crop) => {
         if (crop.max_ph >= soilData && soilData >= crop.min_ph) {
-          suitableCrops.push(crop._id);
+          crop._id && suitableCrops.push(crop._id);
         }
       });
     }
