@@ -9,7 +9,7 @@ import { Types } from '../models/database';
 // Land controllers
 const addLand = async (req: Request, res: Response) => {
 	try {
-		const { name, size, ownerId, location, description, price } = req.body;
+		const { name, size, ownerId, location, duration, description, price } = req.body;
 
 		const crops = await getAllCrops();
 
@@ -32,6 +32,7 @@ const addLand = async (req: Request, res: Response) => {
 			size,
 			ownerId,
 			location,
+			duration,
 			description,
 			price,
 			crops: suitableCrops,
