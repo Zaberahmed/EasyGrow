@@ -16,7 +16,7 @@ interface Land {
   offers?: Types.ObjectId[] | undefined;
 }
 
-const LandSchema = new Schema<Land>({
+const LandSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -65,7 +65,7 @@ const LandSchema = new Schema<Land>({
   },
 });
 
-const LandModel = model<Land>('Land', LandSchema);
+const LandModel = model('Land', LandSchema);
 
 const getAllLand = async () => {
   try {
