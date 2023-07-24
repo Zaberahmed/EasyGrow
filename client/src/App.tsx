@@ -39,7 +39,7 @@ function App() {
 					element={<AddLandForm />}
 				/>
 				<Route
-					path='/gre'
+					path='/list'
 					element={<ListOfLands />}
 				></Route>
 				<Route

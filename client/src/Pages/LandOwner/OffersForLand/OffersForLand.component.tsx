@@ -1,6 +1,8 @@
 import { Box, Button, Card, CardBody, Center, Container, Divider, Flex, HStack, Heading, Highlight, Stack, StackDivider, Text, VStack } from '@chakra-ui/react';
 import { TbCurrencyTaka } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { BiArrowBack } from 'react-icons/bi'
 const scrollbarStyles = `
   ::-webkit-scrollbar {
     width: 12px;
@@ -16,27 +18,32 @@ const scrollbarStyles = `
   }
 `;
 const OffersForLand = () => {
+  const navigate = useNavigate();
   const routerParams = useParams();
-  console.log(routerParams);
+
   const data = [
     {
+      id: 1,
       landSize: 3000,
       location: 'dhaka',
       duration: '2 month',
-      amount: 6000
-
-    }, {
+      amount: 6000,
+    },
+    {
+      id: 2,
       landSize: 9000,
       location: 'gazipur',
       duration: '2 month',
-      amount: 4000
-    }, {
+      amount: 4000,
+    },
+    {
+      id: 3,
       landSize: 3000,
       location: 'barishal',
       duration: '2 month',
-      amount: 6000
-    }
-  ]
+      amount: 6000,
+    },
+  ];
   const farmerData = [
     {
       name: 'ahmed',
@@ -52,14 +59,24 @@ const OffersForLand = () => {
 
       amount: 7000
     }
-  ]
+  ];
+  const filteredData = data.filter((each) =>
+    (each.id === Number(routerParams.id))
+  );
+
   return (
     <div>
-      <Center mt={4}>
-        <Heading>List Of Offers</Heading>
-      </Center>
+      <Flex align="center" justify="space-between" mt={4}>
+        <Button onClick={() => navigate(-1)} variant="unstyled">
+          <BiArrowBack style={{ paddingLeft: '1rem' }} size={40} />
+        </Button>
+        <Center flex={1}>
+          <Heading>List Of Offers</Heading>
+        </Center>
+      </Flex>
+
       {
-        data.map((each) => <>
+        filteredData.map((each) => <>
           <Card m={8}>
 
 
@@ -111,18 +128,19 @@ const OffersForLand = () => {
 
 
               {farmerData.map((each, index) => (
-                <Card key={index} borderWidth='2px' borderColor='green.500' borderRadius='lg' m={4} >
+                <Card key={index} borderWidth='2px' borderColor='green.500' borderRadius='lg' m={1} >
                   <CardBody>
-                    <Flex justifyContent='space-between'>
+                    <Flex justifyContent='space-between' >
                       <Stack direction='column' spacing={2}>
-                        <Text as='b'>Offered By <Text as='mark'>{each.name}</Text></Text>
+                        <Text fontSize='xs'>Offered By </Text>
+                        <Text as='b'>{each.name}</Text>
                         <Text as='b'>Amount: {each.amount}</Text>
                       </Stack>
                       <VStack direction='row' spacing={2} justifyContent='flex-end'>
                         <Button colorScheme='teal' variant='outline'>
                           ACCEPT
                         </Button>
-                        <Button colorScheme='teal' variant='outline'>
+                        <Button colorScheme='red' variant='outline'>
                           REJECT
                         </Button>
                       </VStack>
