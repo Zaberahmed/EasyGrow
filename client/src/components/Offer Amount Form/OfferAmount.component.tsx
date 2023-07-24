@@ -7,7 +7,7 @@ const OfferAmountComponent = () => {
 		<Flex
 			position="sticky"
 			bottom={0.5}
-			boxShadow={0}
+			boxShadow={'inset -1px 1px 2px grey'}
 			bgColor={'gray.200'}
 			justifyContent="center"
 			alignItems="center"

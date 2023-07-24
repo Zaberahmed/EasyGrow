@@ -33,53 +33,48 @@ const OfferDetailsComponent = ({ amount, status }: Offer) => {
 	};
 
 	return (
-		<div className="offer-container">
-			<Card>
-				<CardHeader>
-					<Heading size="md">Offer Details</Heading>
-				</CardHeader>
-
-				<CardBody>
-					<Stack
-						divider={<StackDivider />}
-						spacing="4">
-						<Box>
-							<Heading
-								size="xs"
-								textTransform="uppercase">
-								Amount
-							</Heading>
-							<Flex
-								alignItems="center"
-								pt="2"
-								fontSize="sm">
-								<TbCurrencyTaka size={20} />
-								<Text pl="2">{amount}</Text>
-							</Flex>
+		<Card
+			boxShadow={'0 2px 4px grey'}
+			mb={3}>
+			<CardBody mb={3}>
+				<Stack
+					divider={<StackDivider />}
+					spacing="2">
+					<Box>
+						<Heading
+							size="xs"
+							textTransform="uppercase">
+							Amount
+						</Heading>
+						<Flex
+							alignItems="center"
+							pt="2"
+							fontSize="sm">
+							<TbCurrencyTaka size={20} />
+							<Text pl="2">{amount}</Text>
+						</Flex>
+					</Box>
+					<Box>
+						<Heading
+							size="xs"
+							textTransform="uppercase">
+							Status
+						</Heading>
+						<Box
+							as="div"
+							display="flex"
+							p="1"
+							borderRadius="md"
+							fontWeight="bold"
+							w="40%"
+							{...getStatusButtonStyle()}>
+							{getStatusIcon()}
+							<Text pl="2">{status}</Text>
 						</Box>
-						<Box>
-							<Heading
-								size="xs"
-								textTransform="uppercase">
-								Status
-							</Heading>
-							<Box
-								as="div" // Use Box as a div-like element
-								display="flex"
-								p="1"
-								borderRadius="md"
-								fontWeight="bold"
-								w="40%"
-								{...getStatusButtonStyle()} // Apply the appropriate button style
-							>
-								{getStatusIcon()} {/* Render the appropriate icon based on the status */}
-								<Text pl="2">{status}</Text>
-							</Box>
-						</Box>
-					</Stack>
-				</CardBody>
-			</Card>
-		</div>
+					</Box>
+				</Stack>
+			</CardBody>
+		</Card>
 	);
 };
 
