@@ -43,6 +43,11 @@ const MyOffersPage = () => {
 					status={offer.status}
 				/>
 			))}
+
+			<BottomNavBar
+				leftSide="farmer"
+				middle="farmer/map"
+				rightSide="farmer/offer-details"></BottomNavBar>
 		</div>
 	);
 };

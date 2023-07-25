@@ -4,7 +4,6 @@ import BottomNavBar from '../../../components/BottomNavBar/BottomNavBar';
 import BoxImage from '../../../components/BoxImage/BoxImage';
 import CurrentLocation from '../../../components/CurrentLocation/CurrentLocation';
 import PhotoWithOverlay from '../../../components/PhotoWithOverlay/PhotoWithOverlay';
-import RecentAddedLand from '../../../components/RecentAddedLand/RecentAddedLand';
 import UserProfileAvatar from '../../../components/UserProfileAvatar/UserProfileAvatar';
 
 import offerList from './../../../assets/offer-list.jpg';
@@ -36,12 +35,14 @@ const FarmerHomePage = () => {
 					addLand={leaseLand}
 					landList={offerList}
 					addLandDesc={'Search Land'}
-					landListDesc={'My offers'}></BoxImage>
+					landListDesc={'My offers'}
+					firstRoute="farmer/map"
+					secondRoute="farmer/offer-details"></BoxImage>
 
 				<BottomNavBar
-					leftSide=""
-					middle="map"
-					rightSide="offer-details"></BottomNavBar>
+					leftSide="farmer"
+					middle="farmer/map"
+					rightSide="farmer/offer-details"></BottomNavBar>
 			</Container>
 		</VStack>
 	);

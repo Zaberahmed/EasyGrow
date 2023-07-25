@@ -51,16 +51,16 @@ function App() {
 					element={<MainPage />}></Route>
 				//farmer routes
 				<Route
-					path="farmer"
+					path="/farmer"
 					element={<FarmerHomePage />}></Route>
 				<Route
-					path="farmer/map"
+					path="/farmer/map"
 					element={<ViewMapPage />}></Route>
 				<Route
-					path="farmer/land-details"
+					path="/farmer/land-details"
 					element={<LandDetailswithOffersPage />}></Route>
 				<Route
-					path="farmer/offer-details"
+					path="/farmer/offer-details"
 					element={<MyOffersPage />}></Route>
 			</Routes>
 		</>
