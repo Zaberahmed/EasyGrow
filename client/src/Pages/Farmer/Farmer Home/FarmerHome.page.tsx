@@ -7,7 +7,7 @@ import PhotoWithOverlay from '../../../components/PhotoWithOverlay/PhotoWithOver
 import UserProfileAvatar from '../../../components/UserProfileAvatar/UserProfileAvatar';
 
 import offerList from './../../../assets/offer-list.jpg';
-import leaseLand from './../../../assets/lease-land.jpg';
+import leaseLand from './../../../assets/lease-land-2.jpg';
 
 const FarmerHomePage = () => {
 	return (

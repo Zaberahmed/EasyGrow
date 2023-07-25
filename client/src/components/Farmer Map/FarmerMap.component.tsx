@@ -3,6 +3,7 @@ import mapboxgl, { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import MapboxGeocoder from 'mapbox-gl-geocoder';
 import 'mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import { useNavigate } from 'react-router-dom';
 
 export const FarmerMapcomponent = () => {
 	const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -10,6 +11,7 @@ export const FarmerMapcomponent = () => {
 	const defaultMarkerPosition: [number, number] = [90.4125, 23.8103];
 	const [lands, setLands] = useState([]);
 	const [popup, setPopup] = useState<mapboxgl.Popup | null>(null);
+	const navigate = useNavigate();
 	const dummyLand = {
 		size: 1500,
 		lease: 40000,
@@ -27,13 +29,6 @@ export const FarmerMapcomponent = () => {
 				center: [90.4125, 23.8103],
 				zoom: 14,
 			});
-
-			mapRef.current.addControl(
-				new MapboxGeocoder({
-					accessToken: mapboxgl.accessToken,
-					mapboxgl: mapboxgl,
-				})
-			);
 		}
 
 		return () => mapRef.current?.remove();
@@ -46,38 +41,41 @@ export const FarmerMapcomponent = () => {
 				closeOnClick: true,
 			});
 			const marker = new mapboxgl.Marker({ color: 'red', anchor: 'center' }).setLngLat(defaultMarkerPosition).addTo(mapRef.current!);
-			// const btnElement = document.
+			// const btnElement = document.createElement('div');
+			// btnElement.addEventListener('click', () => navigate('/farmer/land-details'));
 			marker.getElement().addEventListener('mouseenter', () => {
 				mapRef.current!.getCanvas().style.cursor = 'pointer';
-				console.log('Entered!');
+
 				popup
 					.setLngLat(defaultMarkerPosition)
 					.setHTML(
 						`<div class="popup">
 
-    <h3 class="route-name">Land Details</h3>
-    <div class="route-metric-row">
-      <h4 class="row-title">Land size</h4>
-      <div class="row-value">${dummyLand.size}</div>
-    </div>
-    <div class="route-metric-row">
-      <h4 class="row-title">Lease amount</h4>
-      <div class="row-value">${dummyLand.lease}</div>
-    </div>
-    <div class="route-metric-row">
-      <h4 class="row-title">Lease duration</h4>
-      <div class="row-value">${dummyLand.duration} month</div>
-    </div>
-    <p class="route-city">${dummyLand.address}</p>
-    <button class="popup-button" onclick= handleClick()>See Details</button>
-  </div>
-      `
+				  <h3 class="route-name">Land Details</h3>
+				  <div class="route-metric-row">
+				    <h4 class="row-title">Land size</h4>
+				    <div class="row-value">${dummyLand.size}</div>
+				  </div>
+				  <div class="route-metric-row">
+				    <h4 class="row-title">Lease amount</h4>
+				    <div class="row-value">${dummyLand.lease}</div>
+				  </div>
+				  <div class="route-metric-row">
+				    <h4 class="row-title">Lease duration</h4>
+				    <div class="row-value">${dummyLand.duration} month</div>
+				  </div>
+				  <p class="route-city">${dummyLand.address}</p>
+				  <button class="popup-button" onclick= handleClick()>See Details</button>
+				</div>
+				    `
 					)
 					.addTo(mapRef.current!);
+
+				// popup.setLngLat(defaultMarkerPosition).setDOMContent(btnElement).addTo(mapRef.current!);
 			});
 			marker.getElement().addEventListener('mouseleave', () => {
 				mapRef.current!.getCanvas().style.cursor = '';
-				console.log('Exited!');
+
 				// popup.remove();
 			});
 		}

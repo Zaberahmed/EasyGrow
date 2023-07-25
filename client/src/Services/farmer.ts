@@ -40,7 +40,7 @@ const getAllLands = async () => {
 	}
 };
 
-const getLandByLocation = async (longitude: number, latitude: number) => {
+const getLandsByLocation = async (longitude: number, latitude: number) => {
 	try {
 		return await axios({
 			method: 'POST',
@@ -141,4 +141,4 @@ const deleteOffer = async (landId: string, offerId: string) => {
 	}
 };
 
-export { getLandDetails, getAllLands, getLandByLocation, getLandByCrop, makeAnOffer, changeOffer, deleteOffer };
+export { getLandDetails, getAllLands, getLandsByLocation, getLandByCrop, makeAnOffer, changeOffer, deleteOffer };

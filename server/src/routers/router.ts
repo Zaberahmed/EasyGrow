@@ -4,6 +4,7 @@ const router = Router();
 import * as accountController from '../controllers/account.controller';
 import * as farmerController from '../controllers/farmer.controller';
 import * as landOwnerController from '../controllers/landOwner.contorller';
+import * as cropsController from '../controllers/crops.contorller';
 
 import { authenticator } from '../middlewares/authenticator';
 import { authorizer } from '../middlewares/authorizer';
@@ -44,5 +45,7 @@ router.post('/landSearchByOwner', landOwnerController.landSearchByOwner);
 router.post('/allOffersForALand', landOwnerController.allOffersForALand);
 router.post('/acceptOffer', landOwnerController.acceptOffer);
 router.post('/rejectOffer', landOwnerController.rejectOffer);
+// crops
+router.post('/crops', cropsController.createCrops);
 
 export { router };

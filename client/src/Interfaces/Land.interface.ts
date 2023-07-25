@@ -8,6 +8,7 @@ export interface Land {
 	size: number;
 	ownerId?: string;
 	location: Location[];
+	duration: string;
 	description: string;
 	price: number;
 	LeasedBy?: string | undefined;
