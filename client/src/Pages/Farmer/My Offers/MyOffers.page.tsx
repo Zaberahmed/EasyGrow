@@ -5,21 +5,21 @@ import formatMoney from '../../../utils/formatMoney';
 import { Center, Heading } from '@chakra-ui/react';
 const initialOffer: Offer = {
 	amount: '0',
-	status: 'pending',
+	status: 'Negotiating',
 };
 
 const dummyOffers: Offer[] = [
 	{
 		amount: '40000',
-		status: 'pending',
+		status: 'Negotiating',
 	},
 	{
 		amount: '50000',
-		status: 'accepted',
+		status: 'Accepted',
 	},
 	{
 		amount: '30000',
-		status: 'rejected',
+		status: 'Rejected',
 	},
 ];
 
