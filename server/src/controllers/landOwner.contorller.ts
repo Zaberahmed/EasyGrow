@@ -17,7 +17,6 @@ const addLand = async (req: Request, res: Response) => {
 
 		let soilData = (await getSuitableData(longitude, latitude)) || 6.5;
 		if (soilData && soilData < 6.5) soilData = 6.5;
-		console.log('soilData:', soilData);
 
 		const suitableCrops: Crop[] = [];
 
@@ -28,7 +27,6 @@ const addLand = async (req: Request, res: Response) => {
 				}
 			});
 		}
-		console.log('suitable Crops:', suitableCrops);
 
 		const newLand = {
 			name,

@@ -42,6 +42,10 @@ const LandSchema = new Schema({
 			},
 		},
 	],
+	duration: {
+		type: String,
+		require: true,
+	},
 	description: {
 		type: String,
 		required: true,

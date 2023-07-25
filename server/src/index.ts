@@ -9,7 +9,7 @@ const app: Application = express();
 require('dotenv').config({ path: __dirname + '/.env' });
 
 const corsConfig = {
-	origin: `${process.env.CLIENT_LINK}`,
+	origin: 'http://localhost:5173',
 	credentials: true,
 };
 
