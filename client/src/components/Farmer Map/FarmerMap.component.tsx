@@ -1,25 +1,68 @@
 import { useEffect, useRef, useState } from 'react';
 import mapboxgl, { Map } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import MapboxGeocoder from 'mapbox-gl-geocoder';
+import { MapboxSearchBox } from '@mapbox/search-js-web';
 import 'mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import { useNavigate } from 'react-router-dom';
+import { getLandsByLocation } from '../../Services/farmer';
+import { Land } from '../../Interfaces/Land.interface';
+import ReactDOM from 'react-dom';
+
+interface SearchResult {
+	longitude: number;
+	latitude: number;
+}
 
 export const FarmerMapcomponent = () => {
 	const mapContainerRef = useRef<HTMLDivElement>(null);
 	const mapRef = useRef<Map | null>(null);
 	const defaultMarkerPosition: [number, number] = [90.4125, 23.8103];
-	const [lands, setLands] = useState([]);
+	const [lands, setLands] = useState<Land[]>([]);
 	const [popup, setPopup] = useState<mapboxgl.Popup | null>(null);
+	const [searchResult, setSearchResult] = useState<[number, number]>(defaultMarkerPosition);
+	const popUpRef = useRef(new mapboxgl.Popup({ offset: 15 }));
+
 	const navigate = useNavigate();
+
 	const dummyLand = {
 		size: 1500,
 		lease: 40000,
 		duration: 6,
 		address: 'Dhaka',
 	};
+	const Popup = ({ size, price, duration, id }: { size: number; price: number; duration: string; id: string }) => (
+		<div className="popup">
+			<h3 className="route-name">Land Details</h3>
+			<div className="route-metric-row">
+				<h4 className="row-title">Land size</h4>
+				<div className="row-value">{size}</div>
+			</div>
+			<div className="route-metric-row">
+				<h4 className="row-title">Lease amount</h4>
+				<div className="row-value">{price}</div>
+			</div>
+			<div className="route-metric-row">
+				<h4 className="row-title">Lease Duration</h4>
+				<div className="row-value">{duration}</div>
+			</div>
+			<p className="route-city">Dhaka</p>
+			<button onClick={() => navigate(`/farmer/land-details/${id}`)}>See Details</button>
+		</div>
+	);
 
 	mapboxgl.accessToken = 'pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g';
+
+	const fetchLands = async () => {
+		try {
+			const results = await getLandsByLocation(searchResult[0], searchResult[1]);
+
+			console.log(results);
+
+			setLands(results);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	useEffect(() => {
 		if (mapContainerRef.current) {
@@ -29,6 +72,29 @@ export const FarmerMapcomponent = () => {
 				center: [90.4125, 23.8103],
 				zoom: 14,
 			});
+
+			const search = new MapboxSearchBox();
+			search.accessToken = mapboxgl.accessToken;
+			search.theme = {
+				variables: {
+					fontFamily: 'Poppins, sans-serif',
+					unit: '15px',
+					padding: '0.5em',
+					borderRadius: '10px',
+					boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+				},
+				cssText: '.Input:active { opacity: 0.5; }, ',
+			};
+
+			mapRef.current.addControl(search);
+
+			search.addEventListener('retrieve', async (event) => {
+				const featureCollection = event.detail;
+				const longitude = featureCollection.features[0].geometry.coordinates[0];
+				const latitude = featureCollection.features[0].geometry.coordinates[1];
+
+				setSearchResult([longitude, latitude]);
+			});
 		}
 
 		return () => mapRef.current?.remove();
@@ -36,50 +102,75 @@ export const FarmerMapcomponent = () => {
 
 	useEffect(() => {
 		if (mapContainerRef.current && mapRef.current) {
-			const popup = new mapboxgl.Popup({
-				closeButton: true,
-				closeOnClick: true,
-			});
-			const marker = new mapboxgl.Marker({ color: 'red', anchor: 'center' }).setLngLat(defaultMarkerPosition).addTo(mapRef.current!);
-			// const btnElement = document.createElement('div');
-			// btnElement.addEventListener('click', () => navigate('/farmer/land-details'));
-			marker.getElement().addEventListener('mouseenter', () => {
-				mapRef.current!.getCanvas().style.cursor = 'pointer';
+			lands.forEach((land) => {
+				const popup = new mapboxgl.Popup({
+					closeButton: true,
+					closeOnClick: true,
+				});
+				const marker = new mapboxgl.Marker({ color: 'red', anchor: 'center' }).setLngLat([land.location[0].longitude, land.location[0].latitude]).addTo(mapRef.current!);
 
-				popup
-					.setLngLat(defaultMarkerPosition)
-					.setHTML(
-						`<div class="popup">
+				// const divElement = document.createElement('div');
+				// const btnElement = document.createElement('div');
+				// btnElement.innerHTML = `<button class="popup-button> See Details</button>`;
+				// divElement.appendChild(btnElement);
 
-				  <h3 class="route-name">Land Details</h3>
-				  <div class="route-metric-row">
-				    <h4 class="row-title">Land size</h4>
-				    <div class="row-value">${dummyLand.size}</div>
-				  </div>
-				  <div class="route-metric-row">
-				    <h4 class="row-title">Lease amount</h4>
-				    <div class="row-value">${dummyLand.lease}</div>
-				  </div>
-				  <div class="route-metric-row">
-				    <h4 class="row-title">Lease duration</h4>
-				    <div class="row-value">${dummyLand.duration} month</div>
-				  </div>
-				  <p class="route-city">${dummyLand.address}</p>
-				  <button class="popup-button" onclick= handleClick()>See Details</button>
-				</div>
-				    `
-					)
-					.addTo(mapRef.current!);
+				// btnElement.addEventListener('click', () => console.log('Yes!!!'));
+				marker.getElement().addEventListener('mouseenter', () => {
+					mapRef.current!.getCanvas().style.cursor = 'pointer';
 
-				// popup.setLngLat(defaultMarkerPosition).setDOMContent(btnElement).addTo(mapRef.current!);
-			});
-			marker.getElement().addEventListener('mouseleave', () => {
-				mapRef.current!.getCanvas().style.cursor = '';
+					// 	popup
+					// 		.setLngLat([land.location[0].longitude, land.location[0].latitude])
+					// 		.setHTML(
+					// 			`<div class="popup">
 
-				// popup.remove();
+					//   <h3 class="route-name">Land Details</h3>
+					//   <div class="route-metric-row">
+					//     <h4 class="row-title">Land size</h4>
+					//     <div class="row-value">${land.size}</div>
+					//   </div>
+					//   <div class="route-metric-row">
+					//     <h4 class="row-title">Lease amount</h4>
+					//     <div class="row-value">${land.price}</div>
+					//   </div>
+					//   <div class="route-metric-row">
+					//     <h4 class="row-title">Lease duration</h4>
+					//     <div class="row-value">${land.duration} m</div>
+					//   </div>
+					//   <p class="route-city">Dhaka</p>
+					//   <button class="popup-button" onclick= handleClick(${land._id})>See Details</button>
+					// </div>
+					//     `
+					// 		)
+					// 		.addTo(mapRef.current!);
+
+					const popupNode = document.createElement('div');
+					if (land._id) {
+						ReactDOM.render(
+							<Popup
+								size={land.size}
+								price={land.price}
+								duration={land.duration}
+								id={land._id}
+							/>,
+							popupNode
+						);
+					}
+
+					popUpRef.current.setLngLat([land.location[0].longitude, land.location[1].latitude]).setDOMContent(popupNode).addTo(mapRef.current!);
+
+					marker.getElement().addEventListener('mouseleave', () => {
+						mapRef.current!.getCanvas().style.cursor = '';
+
+						// popup.remove();
+					});
+				});
 			});
 		}
 	}, [lands]);
+
+	useEffect(() => {
+		fetchLands();
+	}, [searchResult]);
 
 	return (
 		<div

@@ -1,8 +1,13 @@
 import { FormControl, FormLabel, Input, Button, Center, Flex, Box } from '@chakra-ui/react';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 const OfferAmountComponent = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [amount, setAmount] = useState<string>('0');
+
+	const handleSubmit = async () => {
+		console.log('Yes!!');
+	};
 	return (
 		<Flex
 			position="sticky"
@@ -12,7 +17,9 @@ const OfferAmountComponent = () => {
 			justifyContent="center"
 			alignItems="center"
 			w="auto">
-			<FormControl isRequired>
+			<FormControl
+				isRequired
+				onSubmit={() => handleSubmit}>
 				<FormLabel
 					ml={2}
 					mr={2}
@@ -22,21 +29,22 @@ const OfferAmountComponent = () => {
 				<Input
 					ml={2}
 					borderColor={'gray.400'}
-					type="text"
 					placeholder="30,000"
+					type="number"
+					onChange={(event) => setAmount(event.currentTarget.value)}
 				/>
+				<Button
+					type="submit"
+					isLoading={isLoading}
+					loadingText="Submitting"
+					colorScheme="teal"
+					variant="solid"
+					mt={7}
+					ml={4}
+					mr={2}>
+					Submit
+				</Button>
 			</FormControl>
-
-			<Button
-				isLoading={isLoading}
-				loadingText="Submitting"
-				colorScheme="teal"
-				variant="solid"
-				mt={7}
-				ml={4}
-				mr={2}>
-				Submit
-			</Button>
 		</Flex>
 	);
 };

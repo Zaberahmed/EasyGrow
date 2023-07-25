@@ -5,16 +5,17 @@ const SERVER_URL = `${SERVER_ADDRESS}:${SERVER_PORT}`;
 
 const token = localStorage.getItem('accessToken');
 
-const getLandDetails = async (_id: string) => {
+const getLandDetails = async (landId: string) => {
 	try {
 		return await axios({
 			method: 'POST',
+			withCredentials: true,
 			url: `${SERVER_URL}/getLand`,
 			headers: {
 				'Content-Type': 'application/json',
 				authorization: `Bearer ${token}`,
 			},
-			data: { _id },
+			data: { landId },
 		})
 			.then((res) => res.data)
 			.catch((error) => window.alert(`${error.response.data}`));
@@ -44,12 +45,13 @@ const getLandsByLocation = async (longitude: number, latitude: number) => {
 	try {
 		return await axios({
 			method: 'POST',
+			withCredentials: true,
 			url: `${SERVER_URL}/landSearchByLocation`,
 			headers: {
 				'Content-Type': 'application/json',
 				authorization: `Bearer ${token}`,
 			},
-			data: { longitude, latitude },
+			data: JSON.stringify({ longitude, latitude }),
 		})
 			.then((res) => res.data)
 			.catch((error) => window.alert(`${error.response.data}`));

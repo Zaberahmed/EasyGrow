@@ -64,7 +64,7 @@ function App() {
 					path="/farmer/map"
 					element={<ViewMapPage />}></Route>
 				<Route
-					path="/farmer/land-details"
+					path="/farmer/land-details/:id"
 					element={<LandDetailswithOffersPage />}></Route>
 				<Route
 					path="/farmer/offer-details"

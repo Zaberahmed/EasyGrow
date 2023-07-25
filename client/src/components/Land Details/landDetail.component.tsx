@@ -1,12 +1,14 @@
 import { Card, CardHeader, Heading, CardBody, Stack, StackDivider, Text, Box, Center, Button, Flex } from '@chakra-ui/react';
 import TermsAndConditionsComponent from '../Terms & Conditions/TermsAndConditions.component';
 import { TbCurrencyTaka } from 'react-icons/tb';
-import formatMoney from '../../utils/formatMoney';
+import formatMoney from './../../utils/formatMoney';
 import { FaArrowLeft } from 'react-icons/fa';
 import RecommendedCropComponent from '../Recommended Crop/RecommendedCrop.component';
 import { useNavigate } from 'react-router-dom';
+import { Land } from '../../Interfaces/Land.interface';
+import { Crop } from '../../Interfaces/Crops.interface';
 
-const LandDetailComponent = () => {
+const LandDetailComponent = ({ land }: { land: Land }) => {
 	const navigate = useNavigate();
 	return (
 		<Card>
@@ -42,7 +44,7 @@ const LandDetailComponent = () => {
 							<Text
 								pt="2"
 								fontSize={14}>
-								1400
+								{land.size}
 							</Text>
 						</div>
 						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -72,7 +74,7 @@ const LandDetailComponent = () => {
 							<Text
 								pt="2"
 								fontSize={14}>
-								6 month
+								{land.duration} months
 							</Text>
 						</div>
 						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -85,7 +87,7 @@ const LandDetailComponent = () => {
 								pt="2"
 								fontSize={14}
 								display={'flex'}>
-								{formatMoney('40000')} <TbCurrencyTaka size={17} />
+								{formatMoney(land.price)} <TbCurrencyTaka size={17} />
 							</Text>
 						</div>
 					</Box>
@@ -97,7 +99,17 @@ const LandDetailComponent = () => {
 							textTransform="uppercase">
 							Recommended Crops
 						</Heading>
-						<RecommendedCropComponent />
+						{land.crops &&
+							land.crops.map((crop: Crop, index: number) => {
+								return (
+									<RecommendedCropComponent
+										key={index}
+										crop={crop}
+										size={land.size}
+										amount={land.price}
+									/>
+								);
+							})}
 					</Box>
 
 					<Box>
