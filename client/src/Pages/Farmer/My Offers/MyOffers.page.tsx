@@ -3,23 +3,24 @@ import { Offer } from '../../../Interfaces/Offer.interface';
 import OfferDetailsComponent from '../../../components/Offer Details/OfferDetails.component';
 import formatMoney from '../../../utils/formatMoney';
 import { Center, Heading } from '@chakra-ui/react';
+import BottomNavBar from '../../../components/BottomNavBar/BottomNavBar';
 const initialOffer: Offer = {
 	amount: '0',
-	status: 'pending',
+	status: 'Negotiating',
 };
 
 const dummyOffers: Offer[] = [
 	{
 		amount: '40000',
-		status: 'pending',
+		status: 'Negotiating',
 	},
 	{
 		amount: '50000',
-		status: 'accepted',
+		status: 'Accepted',
 	},
 	{
 		amount: '30000',
-		status: 'rejected',
+		status: 'Rejected',
 	},
 ];
 
@@ -42,6 +43,11 @@ const MyOffersPage = () => {
 					status={offer.status}
 				/>
 			))}
+
+			<BottomNavBar
+				leftSide="farmer"
+				middle="farmer/map"
+				rightSide="farmer/offer-details"></BottomNavBar>
 		</div>
 	);
 };

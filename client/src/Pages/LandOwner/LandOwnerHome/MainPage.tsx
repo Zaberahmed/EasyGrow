@@ -1,12 +1,4 @@
-import {
-    Avatar,
-    Box,
-    Container,
-    Flex,
-    HStack,
-    Text,
-    VStack,
-} from '@chakra-ui/react';
+import { Avatar, Box, Container, Flex, HStack, Text, VStack } from '@chakra-ui/react';
 import { IoLocationSharp } from 'react-icons/io5';
 import Heading from '../../../components/Heading/Heading';
 import CurrentLocation from '../../../components/CurrentLocation/CurrentLocation';
@@ -19,31 +11,42 @@ import RecentAddedLand from '../../../components/RecentAddedLand/RecentAddedLand
 import BottomNavBar from '../../../components/BottomNavBar/BottomNavBar';
 
 const MainPage = () => {
-    return (
-        <VStack mt={3} spacing={4} mb={'50px!important'} h={'80vh!important'}>
-            <Container>
-                <Heading></Heading>
-                <Flex justifyContent={'space-between'} m={2} mb={5}>
-                    <HStack>
-                        <Text fontSize={'30px'}>
-                            <IoLocationSharp />
-                        </Text>
-                        <CurrentLocation />
-                    </HStack>
-                    <UserProfileAvatar />
-                </Flex>
-                <PhotoWithOverlay></PhotoWithOverlay>
-                <BoxImage
-                    addLand={addLand}
-                    landList={landList}
-                    addLandDesc={'Add Land'}
-                    landListDesc={'Land List'}
-                ></BoxImage>
-                <RecentAddedLand></RecentAddedLand>
-                <BottomNavBar></BottomNavBar>
-            </Container>
-        </VStack>
-    );
+	return (
+		<VStack
+			mt={3}
+			spacing={4}
+			mb={'50px!important'}
+			h={'80vh!important'}>
+			<Container>
+				<Heading></Heading>
+				<Flex
+					justifyContent={'space-between'}
+					m={2}
+					mb={5}>
+					<HStack>
+						<Text fontSize={'30px'}>
+							<IoLocationSharp />
+						</Text>
+						<CurrentLocation />
+					</HStack>
+					<UserProfileAvatar />
+				</Flex>
+				<PhotoWithOverlay></PhotoWithOverlay>
+				<BoxImage
+					addLand={addLand}
+					landList={landList}
+					addLandDesc={'Add Land'}
+					landListDesc={'Land List'}
+					firstRoute="/map"
+					secondRoute="/list"></BoxImage>
+				<RecentAddedLand></RecentAddedLand>
+				<BottomNavBar
+					leftSide="/home"
+					middle="/map"
+					rightSide=""></BottomNavBar>
+			</Container>
+		</VStack>
+	);
 };
 
 export default MainPage;
