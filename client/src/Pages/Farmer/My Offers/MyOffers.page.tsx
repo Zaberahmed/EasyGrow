@@ -3,6 +3,7 @@ import { Offer } from '../../../Interfaces/Offer.interface';
 import OfferDetailsComponent from '../../../components/Offer Details/OfferDetails.component';
 import formatMoney from '../../../utils/formatMoney';
 import { Center, Heading } from '@chakra-ui/react';
+import BottomNavBar from '../../../components/BottomNavBar/BottomNavBar';
 const initialOffer: Offer = {
 	amount: '0',
 	status: 'Negotiating',
