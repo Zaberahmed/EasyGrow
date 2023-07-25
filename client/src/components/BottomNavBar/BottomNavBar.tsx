@@ -8,10 +8,11 @@ interface NavbarProps {
 	leftSide: string;
 	middle: string;
 	rightSide: string;
+	userRole: string;
 }
 
-const BottomNavBar = ({ leftSide, middle, rightSide }: NavbarProps) => {
-	// const { isOpen, onOpen, onClose } = useDisclosure();
+const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) => {
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const navigate = useNavigate();
 
 	const bgColor = useColorModeValue('white', 'gray.800');
@@ -91,7 +92,10 @@ const BottomNavBar = ({ leftSide, middle, rightSide }: NavbarProps) => {
 					whileHover={{ scale: 1.1 }}
 					whileTap={{ scale: 0.9 }}>
 					<IconButton
-						onClick={() => navigate(`/${rightSide}`)}
+						onClick={() => {
+							if (userRole === 'landowner') onOpen;
+							else return navigate(`/${rightSide}`);
+						}}
 						aria-label="Profile"
 						icon={<AiOutlineMenuFold size={20} />}
 						variant="ghost"

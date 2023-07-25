@@ -15,7 +15,7 @@ const Greetings = ({ name }: GreetingProps) => {
 		} else if (hour >= 10 && hour < 14) {
 			setGreeting('Noon');
 		} else if (hour >= 14 && hour < 18) {
-			setGreeting('AfterNoon');
+			setGreeting('Afternoon');
 		} else {
 			setGreeting('Evening');
 		}

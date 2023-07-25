@@ -43,7 +43,8 @@ const MainPage = () => {
 				<BottomNavBar
 					leftSide="/home"
 					middle="/map"
-					rightSide=""></BottomNavBar>
+					rightSide=""
+					userRole="landowner"></BottomNavBar>
 			</Container>
 		</VStack>
 	);

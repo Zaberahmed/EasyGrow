@@ -42,7 +42,8 @@ const FarmerHomePage = () => {
 				<BottomNavBar
 					leftSide="farmer"
 					middle="farmer/map"
-					rightSide="farmer/offer-details"></BottomNavBar>
+					rightSide="farmer/offer-details"
+					userRole="farmer"></BottomNavBar>
 			</Container>
 		</VStack>
 	);
