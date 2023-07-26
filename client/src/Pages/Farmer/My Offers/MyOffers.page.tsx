@@ -10,25 +10,11 @@ import { profile } from '../../../Services/user';
 
 const initialOffer: Offer[] = [
 	{
-		amount: '0',
-		status: 'Negotiating',
+		amount: '',
+		status: '',
 	},
 ];
 
-const dummyOffers: Offer[] = [
-	{
-		amount: '40000',
-		status: 'Negotiating',
-	},
-	{
-		amount: '50000',
-		status: 'Accepted',
-	},
-	{
-		amount: '30000',
-		status: 'Rejected',
-	},
-];
 const initialUser: User = {
 	_id: '',
 	name: '',
@@ -54,7 +40,7 @@ const MyOffersPage = () => {
 			}
 		};
 		fetchOffers();
-	}, []);
+	}, [user._id!]);
 	useEffect(() => {
 		const fetchProfile = async () => {
 			try {

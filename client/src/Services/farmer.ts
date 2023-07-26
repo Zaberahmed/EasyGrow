@@ -159,7 +159,28 @@ const getOffers = async (farmerId: string) => {
 				authorization: `Bearer ${token}`,
 			},
 			data: {
-				farmerId: '64bbb393c7f2aab37546c5e9',
+				farmerId,
+			},
+		})
+			.then((res) => res.data)
+			.catch((error) => window.alert(`${error.response.data}`));
+	} catch (error) {
+		console.log('Error message:', error);
+	}
+};
+const getOffer = async (farmerId: string, landId: string) => {
+	try {
+		return await axios({
+			method: 'POST',
+			url: `${SERVER_URL}/getOffers`,
+			withCredentials: true,
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: `Bearer ${token}`,
+			},
+			data: {
+				farmerId,
+				landId,
 			},
 		})
 			.then((res) => res.data)
@@ -169,4 +190,4 @@ const getOffers = async (farmerId: string) => {
 	}
 };
 
-export { getLandDetails, getAllLands, getLandsByLocation, getLandByCrop, makeAnOffer, changeOffer, deleteOffer, getOffers };
+export { getLandDetails, getAllLands, getLandsByLocation, getLandByCrop, makeAnOffer, changeOffer, deleteOffer, getOffers, getOffer };

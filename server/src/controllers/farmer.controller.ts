@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { getAllLand, getLandById, searchLandByCrops, searchLandByLocation, addOfferByOfferId, removeOfferByOfferId } from '../models/land.model';
-import { makeNewOffer, changeOfferAmount, deleteAnOffer, findOffers } from '../models/offer.model';
+import { makeNewOffer, changeOfferAmount, deleteAnOffer, findOffers,findOneOffer } from '../models/offer.model';
 
 // Land controllers
 const getAllLands = async (req: Request, res: Response) => {
@@ -50,7 +50,18 @@ const landSearchByLocation = async (req: Request, res: Response) => {
 };
 
 // Offer controllers
+const getOneOffer = async (req: Request, res: Response) => {
+	try {
+		const { farmerId, landId } = req.body;
 
+		const offer = await findOneOffer(farmerId,landId);
+
+		return res.status(200).send(offer);
+	} catch (error) {
+		res.status(500);
+		console.log(error);
+	}
+};
 const getOffers = async (req: Request, res: Response) => {
 	try {
 		const { farmerId } = req.body;
@@ -117,4 +128,4 @@ const deleteOffer = async (req: Request, res: Response) => {
 	}
 };
 
-export { getAllLands, getLand, landSearchByCrops, landSearchByLocation, makeAnOffer, getOffers, changeOffer, deleteOffer };
+export { getAllLands, getLand, landSearchByCrops, landSearchByLocation, makeAnOffer, getOffers, changeOffer, deleteOffer, getOneOffer };

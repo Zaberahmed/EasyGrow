@@ -1,19 +1,29 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Land } from '../../../Interfaces/Land.interface';
 import LandDetailComponent from '../../../components/Land Details/landDetail.component';
 import OfferAmountComponent from '../../../components/Offer Amount Form/OfferAmount.component';
 import { useState, useEffect } from 'react';
 import { getLandDetails } from '../../../Services/farmer';
-import { Button, Card, CardHeader, Center, Heading } from '@chakra-ui/react';
+import { Card, CardHeader, Center, Heading } from '@chakra-ui/react';
 import { Crop } from '../../../Interfaces/Crops.interface';
 import RecommendedCropComponent from '../../../components/Recommended Crop/RecommendedCrop.component';
 import TermsAndConditionsComponent from '../../../components/Terms & Conditions/TermsAndConditions.component';
-import { FaArrowLeft } from 'react-icons/fa';
+import { Offer } from '../../../Interfaces/Offer.interface';
+import { profile } from '../../../Services/user';
 
+const initialUser: User = {
+	_id: '',
+	name: '',
+	email: '',
+	password: '',
+	phoneNumber: '',
+	address: '',
+	role: '',
+};
 const LandDetailswithOffersPage = () => {
 	const { id } = useParams();
-	const navigate = useNavigate();
-
+	const [offer, setOffer] = useState<Offer>();
+	const [user, setUser] = useState<User>(initialUser);
 	const [land, setLand] = useState<Land>();
 
 	useEffect(() => {
@@ -29,30 +39,37 @@ const LandDetailswithOffersPage = () => {
 		fetchLandDetails();
 	}, [id]);
 
+	useEffect(() => {
+		const fetchOneOffer = async () => {
+			try {
+				// const result = await getOffer(land?._id);
+				// console.log(result);
+				// setLand(result[0]);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchOneOffer();
+	}, []);
+	useEffect(() => {
+		const fetchProfile = async () => {
+			try {
+				const result = await profile();
+				console.log(result);
+				setUser(result);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchProfile();
+	}, []);
+
 	return (
 		<div>
-			<Button
-				onClick={() => navigate(-1)}
-				variant="unstyled"
-				position={'absolute'}
-				top={4}
-				left={2.5}>
-				{' '}
-				<FaArrowLeft size={20} />
-			</Button>
-			<Card
-				boxShadow={' inset  .5px 2px grey'}
-				mb={1}>
-				<Center>
-					<CardHeader>
-						<Heading size="md">Land Details</Heading>
-					</CardHeader>
-				</Center>
-				{land && <LandDetailComponent land={land} />}
-			</Card>
+			{land && <LandDetailComponent land={land} />}
 
 			<Card
-				boxShadow={' inset  .5px 2px grey'}
+				// boxShadow={' inset  .5px 2px grey'}
 				mb={1}>
 				<Center>
 					<CardHeader>
@@ -76,12 +93,12 @@ const LandDetailswithOffersPage = () => {
 			</Card>
 
 			<Card
-				boxShadow={' inset .5px 2px grey'}
+				// boxShadow={' inset .5px 2px grey'}
 				mb={1}>
 				<Center>
 					<CardHeader>
 						<Heading
-							size="xs"
+							size="sm"
 							mb={2}
 							textTransform="uppercase">
 							Terms & Conditions
@@ -91,10 +108,11 @@ const LandDetailswithOffersPage = () => {
 				<TermsAndConditionsComponent />
 			</Card>
 
-			{land && land._id && land.ownerId && (
+			{land && land._id && land.ownerId && user._id && (
 				<OfferAmountComponent
 					landId={land?._id}
 					landOwnerId={land?.ownerId}
+					userId={user._id}
 				/>
 			)}
 		</div>
