@@ -1,14 +1,17 @@
 import axios from 'axios';
+import { Land } from '../Interfaces/Land.interface';
 const SERVER_PORT = 4000;
 const SERVER_ADDRESS = 'http://localhost';
 const SERVER_URL = `${SERVER_ADDRESS}:${SERVER_PORT}`;
 
 const token = localStorage.getItem('accessToken');
 
-export const addLandDetails = async (land: Land) => {
+export const addLandDetails = async (land: any) => {
+  console.log(land);
   try {
     return await axios({
       method: 'POST',
+      withCredentials: true,
       url: `${SERVER_URL}/addLand`,
       headers: {
         'Content-Type': 'application/json',

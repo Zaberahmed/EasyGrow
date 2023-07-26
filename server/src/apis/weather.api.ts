@@ -5,8 +5,8 @@ dotenv.config({ path: __dirname + '/.env' });
 const getWeatherData = async (longitude: number, latitude: number) => {
   const apiUrl = 'https://history.openweathermap.org/data/2.5/aggregated/month';
   const month = 8;
-  const lat = longitude;
-  const lon = latitude;
+  const lon = longitude;
+  const lat = latitude;
   const appid = process.env.API_ID;
 
   const url = `${apiUrl}?month=${month}&lat=${lat}&lon=${lon}&appid=${appid}`;

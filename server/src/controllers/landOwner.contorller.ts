@@ -11,7 +11,7 @@ const addLand = async (req: Request, res: Response) => {
   try {
     const { name, size, ownerId, location, duration, description, price } =
       req.body;
-
+    console.log(req.body);
     const crops = await getAllCrops();
 
     const { longitude, latitude } = location[0];

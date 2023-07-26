@@ -22,13 +22,20 @@ import {
 
 import { useToast } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
+import { profile } from '../../Services/user';
+import { addLandDetails } from '../../Services/landOwner';
 
-const Form1 = () => {
+
+const Form1 = ({ onForm1DataChange }: { onForm1DataChange: Function }) => {
     const [address, setAddress] = useState<any>({});
     const location = useLocation();
     const landInfo = location.state;
+    const size = landInfo.area;
     const latitude = landInfo.location[0];
     const longitude = landInfo.location[1];
+    const currentlocation = address?.features;
+
+
 
     const MAPBOX_ACCESS_TOKEN =
         'pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g';
@@ -43,6 +50,17 @@ const Form1 = () => {
         };
         fetchLocation(longitude, latitude);
     }, []);
+    const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+        const name = event.target.value;
+        const form1data = {
+            name: name,
+            size: size,
+            location: currentlocation
+
+        }
+        onForm1DataChange(form1data);
+
+    }
 
 
     return (
@@ -55,7 +73,11 @@ const Form1 = () => {
                     <FormLabel htmlFor='land-name' fontWeight={'normal'}>
                         Land Name
                     </FormLabel>
-                    <Input placeholder='name'></Input>
+                    <Input
+                        type='text'
+                        name='name'
+                        onChange={handleChange}
+                        placeholder='name'></Input>
                 </FormControl>
                 <br />
                 <FormControl>
@@ -88,7 +110,8 @@ const initialState = {
     duration: '',
     price: ''
 }
-const Form2 = () => {
+
+const Form2 = ({ onLeaseDataChange }: { onLeaseDataChange: Function }) => {
     const [lease, setLease] = useState(initialState);
     const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
@@ -97,7 +120,11 @@ const Form2 = () => {
             [name]: value
         }))
     }
-    console.log(lease);
+    useEffect(() => {
+
+        onLeaseDataChange(lease);
+    }, [lease, onLeaseDataChange]);
+
     return (
         <>
             <Heading w='100%' textAlign={'center'} fontWeight='normal' mb='2%'>
@@ -161,6 +188,76 @@ export default function AddLandForm() {
     const toast = useToast();
     const [step, setStep] = useState(1);
     const [progress, setProgress] = useState(33.33);
+    const [leaseData, setLeaseData] = useState(null);
+    const [landData, setLandData] = useState(null);
+    const [ownerId, setOwnerId] = useState(null);
+    const handleLeaseDataChange = (data: React.SetStateAction<null>) => {
+        setLeaseData(data);
+    };
+    const handleLandDataChange = (data: React.SetStateAction<null>) => {
+        setLandData(data)
+    }
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const profileData = await profile();
+                setOwnerId(profileData._id);
+            } catch (error) {
+
+                console.error('Error fetching profile data:', error);
+            }
+        };
+
+
+        fetchData();
+    }, []);
+
+    const name = landData?.name;
+    const size = landData?.size;
+
+    // const place = landData?.location[0].center;
+    const lon = Number(landData?.location[0].center[0]);
+    const lat = Number(landData?.location[0].center[1]);
+    const duration = leaseData?.duration;
+    const price = leaseData?.price;
+    const description = 'hello';
+
+
+    const addLand = {
+        name: name,
+        size: size,
+        description: description,
+        ownerId: ownerId,
+        location: [lon, lat],
+        duration: duration,
+        price: price
+
+
+
+
+    }
+
+    // console.log(addLand);
+    const handleSubmit = async () => {
+        // console.log('hello');
+        const data = await addLandDetails(addLand);
+        console.log(data);
+    }
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const data = await addLandDetails(addLand);
+    //             console.log(data);
+    //         } catch (error) {
+
+    //         }
+    //     };
+    //     fetchData();
+    // }, [])
+
     return (
         <>
             <Center h='100vh' >
@@ -183,7 +280,7 @@ export default function AddLandForm() {
                         mx='5%'
                         isAnimated
                     ></Progress>
-                    {step === 1 ? <Form1 /> : step === 2 ? <Form2 /> : <Form3 />}
+                    {step === 1 ? <Form1 onForm1DataChange={handleLandDataChange} /> : step === 2 ? <Form2 onLeaseDataChange={handleLeaseDataChange} /> : <Form3 />}
                     <ButtonGroup mt='5%' w='100%'>
                         <Flex w='100%' justifyContent='space-between'>
                             <Flex>
@@ -223,15 +320,16 @@ export default function AddLandForm() {
                                     w='7rem'
                                     colorScheme='red'
                                     variant='solid'
-                                    onClick={() => {
-                                        toast({
-                                            title: 'Account created.',
-                                            description: "We've created your account for you.",
-                                            status: 'success',
-                                            duration: 3000,
-                                            isClosable: true,
-                                        });
-                                    }}
+                                    // onClick={() => {
+                                    //     toast({
+                                    //         title: 'Account created.',
+                                    //         description: "We've created your account for you.",
+                                    //         status: 'success',
+                                    //         duration: 3000,
+                                    //         isClosable: true,
+                                    //     });
+                                    // }}
+                                    onClick={handleSubmit}
                                 >
                                     Submit
                                 </Button>
@@ -243,3 +341,5 @@ export default function AddLandForm() {
         </>
     );
 }
+
+

@@ -33,6 +33,7 @@ const Login = () => {
 
 		const token = await userLogin(user);
 
+		console.log(token);
 
 		if (token) {
 			navigate('/home')
