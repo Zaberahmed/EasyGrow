@@ -74,7 +74,6 @@ export const logout = async () => {
 export const profile = async () => {
   try {
     const token = localStorage.getItem('accessToken');
-
     const response = await fetch('http://localhost:4000/profile', {
       method: 'GET',
       credentials: 'include',
@@ -90,6 +89,7 @@ export const profile = async () => {
     }
 
     const user = await response.json();
+
     return user;
   } catch (error) {
     console.error(error);

@@ -16,6 +16,7 @@
 		"@emotion/styled": "^11.11.0",
 		"@mapbox/mapbox-gl-draw": "^1.4.2",
 		"@mapbox/mapbox-gl-geocoder": "^5.0.1",
+		"@mapbox/search-js-web": "^1.0.0-beta.17",
 		"@turf/turf": "^6.5.0",
 		"@types/mapbox__mapbox-gl-draw": "^1.4.0",
 		"@types/turf": "^3.5.32",

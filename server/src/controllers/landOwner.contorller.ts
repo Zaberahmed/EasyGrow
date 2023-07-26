@@ -16,14 +16,15 @@ const addLand = async (req: Request, res: Response) => {
 
     const { longitude, latitude } = location[0];
 
-    const soilData = (await getSuitableData(longitude, latitude)) || 6.5;
+    let soilData = (await getSuitableData(longitude, latitude)) || 6.5;
+    if (soilData && soilData < 6.5) soilData = 6.5;
 
-    const suitableCrops: Types.ObjectId[] = [];
+    const suitableCrops: Crop[] = [];
 
     if (crops) {
       crops.forEach((crop: Crop) => {
         if (crop.max_ph >= soilData && soilData >= crop.min_ph) {
-          crop._id && suitableCrops.push(crop._id);
+          crop._id && suitableCrops.push(crop);
         }
       });
     }

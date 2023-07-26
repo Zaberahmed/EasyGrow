@@ -36,6 +36,7 @@ function App() {
 				<Route
 					path="/login"
 					element={<Login />}></Route>
+				//lanowner routes
 				<Route
 					path="/map"
 					element={<MapComponent />}></Route>
@@ -47,30 +48,26 @@ function App() {
 					element={<AddLandForm />}
 				/>
 				<Route
-					path='/list'
-					element={<ListOfLands />}
-				></Route>
-				<Route path='/add/:id'
-					element={<OffersForLand></OffersForLand>}
-				></Route>
-
-
-
-
-
-
-
+					path="/list"
+					element={<ListOfLands />}></Route>
 				<Route
-					path="farmer"
+					path="/add/:id"
+					element={<OffersForLand></OffersForLand>}></Route>
+				<Route
+					path="/home"
+					element={<MainPage />}></Route>
+				//farmer routes
+				<Route
+					path="/farmer"
 					element={<FarmerHomePage />}></Route>
 				<Route
-					path="farmer/map"
+					path="/farmer/map"
 					element={<ViewMapPage />}></Route>
 				<Route
-					path="farmer/land-details"
+					path="/farmer/land-details/:id"
 					element={<LandDetailswithOffersPage />}></Route>
 				<Route
-					path="farmer/offer-details"
+					path="/farmer/offer-details"
 					element={<MyOffersPage />}></Route>
 			</Routes>
 		</>

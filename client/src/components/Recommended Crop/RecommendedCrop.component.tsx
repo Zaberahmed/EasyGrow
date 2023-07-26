@@ -1,8 +1,12 @@
 import { Card, Heading, CardBody, Stack, StackDivider, Text, Box } from '@chakra-ui/react';
-import formatMoney from '../../utils/formatMoney';
+import formatMoney from './../../utils/formatMoney';
 import { TbCurrencyTaka } from 'react-icons/tb';
+import { Crop } from '../../Interfaces/Crops.interface';
+import calculateRevenue from '../../utils/calculateRevenue';
 
-const RecommendedCropComponent = () => {
+const RecommendedCropComponent = ({ crop, size, amount }: { crop: Crop; size: number; amount: number }) => {
+	const revenue = calculateRevenue(size, amount, crop.pricePerTon!, crop.tonPerAcre!);
+
 	return (
 		<Card boxShadow={'0 1px 2px grey'}>
 			<CardBody>
@@ -19,7 +23,7 @@ const RecommendedCropComponent = () => {
 							<Heading
 								size="s"
 								textTransform="uppercase">
-								Rice
+								{crop.name}
 							</Heading>
 						</div>
 						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -32,7 +36,7 @@ const RecommendedCropComponent = () => {
 								pt="2"
 								fontSize="sm"
 								display={'flex'}>
-								{formatMoney('40000')} <TbCurrencyTaka size={17} />
+								{formatMoney(crop.pricePerTon!)} <TbCurrencyTaka size={17} />
 							</Text>
 						</div>
 					</Box>
@@ -51,7 +55,7 @@ const RecommendedCropComponent = () => {
 								pt="2"
 								fontSize="sm"
 								display={'flex'}>
-								{formatMoney('20000')} <TbCurrencyTaka size={17} />
+								{formatMoney(revenue)} <TbCurrencyTaka size={17} />
 							</Text>
 						</div>
 						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -63,7 +67,7 @@ const RecommendedCropComponent = () => {
 							<Text
 								pt="2"
 								fontSize="sm">
-								20,000
+								{crop.tonPerAcre}
 							</Text>
 						</div>
 					</Box>
