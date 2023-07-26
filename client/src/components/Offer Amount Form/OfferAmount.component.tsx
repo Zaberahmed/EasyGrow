@@ -20,8 +20,7 @@ const OfferAmountComponent = ({ landId, landOwnerId }: { landId: string; landOwn
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setIsLoading(true);
-		// if (!user._id) return;
-		// if (!amount) return;
+
 		try {
 			const result = await makeAnOffer(landId, landOwnerId, user._id!, amount);
 			console.log(result);
