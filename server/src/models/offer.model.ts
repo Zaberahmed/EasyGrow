@@ -46,7 +46,7 @@ const getAllOffersByLandId = async (landId: Types.ObjectId) => {
 };
 const findOffers = async (id: Types.ObjectId) => {
 	try {
-		return await OfferModel.find({ _id: id });
+		return await OfferModel.find({ farmerId: id });
 	} catch (error) {
 		console.log(error);
 	}

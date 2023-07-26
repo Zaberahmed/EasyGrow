@@ -8,10 +8,12 @@ import { getOffers } from '../../../Services/farmer';
 import { profile } from '../../../Services/user';
 // import User from '../../../Interfaces/User.interface';
 
-const initialOffer: Offer = {
-	amount: '0',
-	status: 'Negotiating',
-};
+const initialOffer: Offer[] = [
+	{
+		amount: '0',
+		status: 'Negotiating',
+	},
+];
 
 const dummyOffers: Offer[] = [
 	{
@@ -38,7 +40,7 @@ const initialUser: User = {
 };
 
 const MyOffersPage = () => {
-	const [offers, setOffers] = useState<Offer>(initialOffer);
+	const [offers, setOffers] = useState<Offer[]>(initialOffer);
 	const [user, setUser] = useState<User>(initialUser);
 
 	useEffect(() => {
@@ -76,7 +78,7 @@ const MyOffersPage = () => {
 					My Offers{' '}
 				</Heading>
 			</Center>
-			{dummyOffers.map((offer, index) => (
+			{offers.map((offer, index) => (
 				<OfferDetailsComponent
 					key={index}
 					amount={formatMoney(offer.amount)}
