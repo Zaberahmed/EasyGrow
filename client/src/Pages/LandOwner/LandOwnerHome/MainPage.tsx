@@ -41,8 +41,8 @@ const MainPage = () => {
 					secondRoute="/list"></BoxImage>
 				<RecentAddedLand></RecentAddedLand>
 				<BottomNavBar
-					leftSide="/home"
-					middle="/map"
+					leftSide="home"
+					middle="map"
 					rightSide=""
 					userRole="landowner"></BottomNavBar>
 			</Container>

@@ -49,6 +49,31 @@ export const userLogin = async (user: any) => {
     console.error(error);
   }
 };
+export const userById = async (userId: any) => {
+  try {
+    const response = await fetch('http://localhost:4000/userById', {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userId),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to log in');
+    }
+
+    const data = await response.json();
+
+    localStorage.setItem(`${data.accessToken}`, `${data.token}`);
+
+    return data.accessToken;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const logout = async () => {
   try {

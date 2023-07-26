@@ -1,5 +1,10 @@
 import { Request, Response } from 'express';
-import { addALand, removeALand, searchLandByOwner } from '../models/land.model';
+import {
+  addALand,
+  getAllLand,
+  removeALand,
+  searchLandByOwner,
+} from '../models/land.model';
 import { addALandByLandId, removeALandByLandId } from '../models/user.model';
 import { getAllOffersByLandId, changeOfferStatus } from '../models/offer.model';
 import { Crop, getAllCrops } from '../models/crop.model';
@@ -86,6 +91,7 @@ const landSearchByOwner = async (req: Request, res: Response) => {
 const allOffersForALand = async (req: Request, res: Response) => {
   try {
     const { landId } = req.body;
+    // console.log(landId);
 
     const allOffers = await getAllOffersByLandId(landId);
 
@@ -126,7 +132,18 @@ const rejectOffer = async (req: Request, res: Response) => {
   }
 };
 
+const allLand = async (req: Request, res: Response) => {
+  try {
+    const getLands = await getAllLand();
+    res.status(200).send(getLands);
+  } catch (error) {
+    res.status(500);
+    console.log(error);
+  }
+};
+
 export {
+  allLand,
   addLand,
   removeLand,
   landSearchByOwner,

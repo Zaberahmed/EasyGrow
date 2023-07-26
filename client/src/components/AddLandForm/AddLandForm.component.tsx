@@ -21,9 +21,10 @@ import {
 } from '@chakra-ui/react';
 
 import { useToast } from '@chakra-ui/react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { profile } from '../../Services/user';
 import { addLandDetails } from '../../Services/landOwner';
+import { Land } from '../../Interfaces/Land.interface';
 
 
 const Form1 = ({ onForm1DataChange }: { onForm1DataChange: Function }) => {
@@ -185,6 +186,7 @@ const Form3 = () => {
 };
 
 export default function AddLandForm() {
+    const navigate = useNavigate();
     const toast = useToast();
     const [step, setStep] = useState(1);
     const [progress, setProgress] = useState(33.33);
@@ -218,8 +220,8 @@ export default function AddLandForm() {
     const size = landData?.size;
 
     // const place = landData?.location[0].center;
-    const lon = Number(landData?.location[0].center[0]);
-    const lat = Number(landData?.location[0].center[1]);
+    const longitude = Number(landData?.location[0].center[0]);
+    const latitude = Number(landData?.location[0].center[1]);
     const duration = leaseData?.duration;
     const price = leaseData?.price;
     const description = 'hello';
@@ -230,7 +232,7 @@ export default function AddLandForm() {
         size: size,
         description: description,
         ownerId: ownerId,
-        location: [lon, lat],
+        location: [{ longitude, latitude }],
         duration: duration,
         price: price
 
@@ -244,19 +246,10 @@ export default function AddLandForm() {
         // console.log('hello');
         const data = await addLandDetails(addLand);
         console.log(data);
+
     }
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const data = await addLandDetails(addLand);
-    //             console.log(data);
-    //         } catch (error) {
 
-    //         }
-    //     };
-    //     fetchData();
-    // }, [])
 
     return (
         <>

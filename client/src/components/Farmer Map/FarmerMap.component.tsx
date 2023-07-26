@@ -156,7 +156,7 @@ export const FarmerMapcomponent = () => {
 						);
 					}
 
-					popUpRef.current.setLngLat([land.location[0].longitude, land.location[1].latitude]).setDOMContent(popupNode).addTo(mapRef.current!);
+					popUpRef.current.setLngLat([land.location[0].longitude, land.location[0].latitude]).setDOMContent(popupNode).addTo(mapRef.current!);
 
 					marker.getElement().addEventListener('mouseleave', () => {
 						mapRef.current!.getCanvas().style.cursor = '';

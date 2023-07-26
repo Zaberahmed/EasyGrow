@@ -65,6 +65,7 @@ export const allOffersForALand = async (landId: string) => {
     return await axios({
       method: 'POST',
       url: `${SERVER_URL}/allOffersForALand`,
+      withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${token}`,
@@ -95,6 +96,7 @@ export const acceptOffer = async (offerId: string, status: string) => {
     console.log('Error while getting land details:', error);
   }
 };
+
 export const rejectoffer = async (offerId: string, status: string) => {
   try {
     return await axios({
@@ -112,15 +114,43 @@ export const rejectoffer = async (offerId: string, status: string) => {
     console.log('Error while getting land details:', error);
   }
 };
+export const allLands = async () => {
+  try {
+    return await axios({
+      method: 'GET',
+      url: `${SERVER_URL}/allLand`,
+      withCredentials: true,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((res) => {
+      const lands = res.data;
+      return lands;
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+// export const allOfferBylandId = async (landId: string) => {
+//   console.log(landId);
+//   try {
+//     const offer = await axios({
+//       method: 'POST',
+//       url: `${SERVER_URL}/allOffersForALand`,
 
-// export const addLand = async (land: Land) => {
-//   const response = await fetch('http://localhost:4000/profile', {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify(land),
-//   });
-
-//   if (!response.ok) {
-//     throw new Error('Failed to get profile');
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${token}`,
+//       },
+//       data: landId,
+//     });
+//     console.log(offer);
+//     // .then((res) => {
+//     //   console.log(res);
+//     //   // return res.data;
+//     // })
+//     // .catch((error) => window.alert(`${error.response.data}`));
+//   } catch (error) {
+//     console.log(error);
 //   }
 // };
