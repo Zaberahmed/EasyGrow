@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import { createUser, findUserByEmail, updatePassword } from './../models/user.model';
+import {
+  createUser,
+  findUserByEmail,
+  updatePassword,
+} from './../models/user.model';
 import {
   getSession,
   createSession,
@@ -126,7 +130,7 @@ const profile = async (req: Request, res: Response) => {
   try {
     const token = req.cookies.accessToken;
     const session: SessionData | undefined = getSession(token);
-
+    console.log(session);
     if (session) {
       const profile = await findUserByEmail(session.userEmail);
       res.status(200).send(profile);
@@ -134,6 +138,14 @@ const profile = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const userById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.body;
+    const user = await findById(id);
+    res.status(200).send(user);
+  } catch (error) {}
 };
 
 const logout = async (req: Request, res: Response) => {
@@ -150,4 +162,15 @@ const logout = async (req: Request, res: Response) => {
   }
 };
 
-export { registerUser, login, forgotPassword, resetPassword, profile, logout };
+export {
+  userById,
+  registerUser,
+  login,
+  forgotPassword,
+  resetPassword,
+  profile,
+  logout,
+};
+function findById(id: any) {
+  throw new Error('Function not implemented.');
+}

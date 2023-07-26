@@ -5,11 +5,11 @@ import {
   CardBody,
   Center,
   Container,
-  Divider,
+
   Flex,
   HStack,
   Heading,
-  Highlight,
+
   Input,
   InputGroup,
   InputLeftElement,
@@ -22,7 +22,9 @@ import { TbCurrencyTaka } from 'react-icons/tb';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
-import { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { allLands, allOffersForALand } from '../../../Services/landOwner';
+import { Land } from '../../../Interfaces/Land.interface';
 const scrollbarStyles = `
   ::-webkit-scrollbar {
     width: 12px;
@@ -37,34 +39,60 @@ const scrollbarStyles = `
     border-radius: 6px;
   }
 `;
+interface OffersById {
+  amount: number,
+  farmerId: string,
+  landId: string,
+  landOwnerId: string,
+  status: string,
+  _id: any
+}
 const OffersForLand = () => {
+
 
   const navigate = useNavigate();
   const routerParams = useParams();
 
-  const data = [
-    {
-      id: 1,
-      landSize: 3000,
-      location: 'dhaka',
-      duration: '2 month',
-      amount: 6000,
-    },
-    {
-      id: 2,
-      landSize: 9000,
-      location: 'gazipur',
-      duration: '2 month',
-      amount: 4000,
-    },
-    {
-      id: 3,
-      landSize: 3000,
-      location: 'barishal',
-      duration: '2 month',
-      amount: 6000,
-    },
-  ];
+  const [allLand, setAllLand] = useState<Land[]>([]);
+  const [offersById, setOffersById] = useState<OffersById[]>([]);
+  useEffect(() => {
+    async function fetchAllLands() {
+      try {
+        const allLandData = await allLands();
+        setAllLand(allLandData);
+
+      } catch (error) {
+
+      }
+    }
+    fetchAllLands()
+
+  }, [])
+
+
+  // const data = [
+  //   {
+  //     id: 1,
+  //     landSize: 3000,
+  //     location: 'dhaka',
+  //     duration: '2 month',
+  //     amount: 6000,
+  //   },
+  //   {
+  //     id: 2,
+  //     landSize: 9000,
+  //     location: 'gazipur',
+  //     duration: '2 month',
+  //     amount: 4000,
+  //   },
+  //   {
+  //     id: 3,
+  //     landSize: 3000,
+  //     location: 'barishal',
+  //     duration: '2 month',
+  //     amount: 6000,
+  //   },
+  // ];
   const farmerData = [
     {
       id: 1,
@@ -87,18 +115,46 @@ const OffersForLand = () => {
   ];
   const [showField, setShowField] = useState<boolean[]>(farmerData.map(() => false));
   const [updated, setUpdated] = useState('');
-  const filteredData = data.filter(
-    (each) => each.id === Number(routerParams.id)
+  const filteredData = allLand.filter(
+    (each) => each?._id === (routerParams.id)
   );
-  const handleCounterBtn = (id: any) => {
-    setShowField((prevShowField) => ({ ...prevShowField, [id]: true }));
+  // console.log(filteredData);
+  // const landId = filteredData[0]?._id;
+  // console.log('outside', landId);
+  // console.log(offersById);
+  // var landId = filteredData && filteredData[0]._id;
+  // var farmersForOneLand = offersById.filter(
+  //   (each) => each.landId == landId);
+  // console.log(farmersForOneLand);
+  //for one land,,many farmers can have,so I need to map all this data to get farmer's details by searching id
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+
+
+        const landId = filteredData && await filteredData[0]._id;
+
+        const offersBylandId = await allOffersForALand(landId)
+        setOffersById(offersBylandId);
+
+      } catch (error) {
+
+      }
+    }
+    fetchData();
+
+  }, [filteredData]);
+
+  const handleCounterBtn = (_id: any) => {
+    setShowField((prevShowField) => ({ ...prevShowField, [_id]: true }));
   };
   const handleKeyDown = (event: any) => {
     if (event.key === 'Enter') {
       setUpdated(event.target.value)
     }
   }
-  console.log(updated);
+  // console.log(updated);
 
   return (
     <div>
@@ -113,7 +169,7 @@ const OffersForLand = () => {
 
       {filteredData.map((each) => (
         <>
-          <Card key={each.id} m={8}>
+          <Card key={each?._id} m={8}>
             <CardBody>
               <Stack divider={<StackDivider />} spacing='4'>
                 <Box>
@@ -121,23 +177,23 @@ const OffersForLand = () => {
                     Land Size
                   </Heading>
                   <Text pt='2' fontSize='sm'>
-                    {each.landSize}
+                    {each?.size}
                   </Text>
                 </Box>
-                <Box>
+                {/* <Box>
                   <Heading size='xs' textTransform='uppercase'>
                     Location
                   </Heading>
                   <Text pt='2' fontSize='sm'>
                     {each.location}
                   </Text>
-                </Box>
+                </Box> */}
                 <Box>
                   <Heading size='xs' textTransform='uppercase'>
                     Lease Duration
                   </Heading>
                   <Text pt='2' fontSize='sm'>
-                    {each.duration}
+                    {each?.duration}
                   </Text>
                 </Box>
                 <Box>
@@ -146,7 +202,7 @@ const OffersForLand = () => {
                   </Heading>
                   <HStack>
                     <Text pt='2' fontSize='sm'>
-                      {each.amount}
+                      {each?.price}
                       <Text>
 
                         <TbCurrencyTaka />
@@ -158,9 +214,9 @@ const OffersForLand = () => {
             </CardBody>
 
             <Container overflowY='auto' maxHeight='300px' css={scrollbarStyles}>
-              {farmerData.map((each) => (
+              {offersById.map((each) => (
                 <Card
-                  key={each.id}
+                  key={each._id}
                   borderWidth='2px'
                   borderColor='green.500'
                   borderRadius='lg'
@@ -170,7 +226,7 @@ const OffersForLand = () => {
                     <Flex justifyContent='space-between'>
                       <Stack direction='column' spacing={2}>
                         <Text fontWeight='xs'>Offered By </Text>
-                        <Text as='b'>{each.name}</Text>
+                        {/* <Text as='b'>{each.name}</Text> */}
                         <Text as='b'>Amount: {each.amount}</Text>
                       </Stack>
                       <VStack
@@ -183,7 +239,7 @@ const OffersForLand = () => {
                           colorScheme='teal' variant='outline'>
                           ACCEPT
                         </Button>
-                        {showField[each.id] ? (
+                        {showField[each._id] ? (
                           <Box>
                             <InputGroup>
                               <InputLeftElement
@@ -206,7 +262,7 @@ const OffersForLand = () => {
                         ) : (
                           <Button
                             w={'28vw'}
-                            onClick={() => handleCounterBtn(each.id)}
+                            onClick={() => handleCounterBtn(each._id)}
                             colorScheme='red'
                             variant='outline'
                           >

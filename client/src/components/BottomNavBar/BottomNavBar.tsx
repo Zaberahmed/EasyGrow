@@ -42,7 +42,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 					whileHover={{ scale: 1.1 }}
 					whileTap={{ scale: 0.9 }}>
 					<IconButton
-						onClick={() => navigate(`/${leftSide}`)}
+						onClick={() => navigate(`${leftSide}`)}
 						aria-label="Home"
 						icon={<AiOutlineHome size={20} />}
 						variant="ghost"
@@ -67,7 +67,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 					whileHover={{ scale: 1.1 }}
 					whileTap={{ scale: 0.9 }}>
 					<IconButton
-						onClick={() => navigate(`/${middle}`)}
+						onClick={() => navigate(`${middle}`)}
 						aria-label="Search"
 						icon={<FaSearchLocation size={20} />}
 						variant="ghost"
@@ -94,7 +94,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 					<IconButton
 						onClick={() => {
 							if (userRole === 'landowner') onOpen;
-							else return navigate(`/${rightSide}`);
+							else return navigate(`${rightSide}`);
 						}}
 						aria-label="Profile"
 						icon={<AiOutlineMenuFold size={20} />}

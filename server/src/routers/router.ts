@@ -18,6 +18,7 @@ router.post('/registration', accountController.registerUser);
 router.post('/login', accountController.login);
 router.post('/forgotPassword', accountController.forgotPassword);
 router.post('/resetPassword', accountController.resetPassword);
+router.post('/userById', accountController.userById);
 router.get('/logout', accountController.logout);
 
 router.use(authenticator, authorizer);
@@ -31,7 +32,7 @@ router.post('/landSearchByLocation', farmerController.landSearchByLocation);
 router.get('/landSearchByCrops', farmerController.landSearchByCrops);
 
 // for offer
-router.post('/getOffer', farmerController.getOneOffer)
+router.post('/getOffer', farmerController.getOneOffer);
 router.post('/getOffers', farmerController.getOffers);
 router.post('/makeAnOffer', farmerController.makeAnOffer);
 router.post('/changeOffer', farmerController.changeOffer);
@@ -47,6 +48,7 @@ router.post('/landSearchByOwner', landOwnerController.landSearchByOwner);
 router.post('/allOffersForALand', landOwnerController.allOffersForALand);
 router.post('/acceptOffer', landOwnerController.acceptOffer);
 router.post('/rejectOffer', landOwnerController.rejectOffer);
+router.get('/allLand', landOwnerController.allLand);
 // crops
 router.post('/crops', cropsController.createCrops);
 

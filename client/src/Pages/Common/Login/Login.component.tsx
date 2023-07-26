@@ -24,15 +24,20 @@ const Login = () => {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const [token, setToken] = useState<string>('');
+		// const [token, setToken] = useState<string>('');
 
 		const form = e.currentTarget;
 
 		const formData: FormData = new FormData(form);
 		const user = Object.fromEntries(formData);
 
-		const result = await userLogin(user);
-		setToken(result);
+		const token = await userLogin(user);
+
+		console.log(token);
+
+		if (token) {
+			navigate('/home');
+		}
 	};
 	const validateForm = () => {
 		return !formData.email || !formData.password;
