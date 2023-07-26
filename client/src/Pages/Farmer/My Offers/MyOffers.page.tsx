@@ -6,7 +6,7 @@ import { Center, Heading } from '@chakra-ui/react';
 import BottomNavBar from '../../../components/BottomNavBar/BottomNavBar';
 import { getOffers } from '../../../Services/farmer';
 import { profile } from '../../../Services/user';
-// import User from '../../../Interfaces/User.interface';
+import { User } from '../../../Interfaces/User.interface';
 
 const initialOffer: Offer[] = [
 	{
@@ -16,7 +16,6 @@ const initialOffer: Offer[] = [
 ];
 
 const initialUser: User = {
-	_id: '',
 	name: '',
 	email: '',
 	password: '',
@@ -31,16 +30,21 @@ const MyOffersPage = () => {
 
 	useEffect(() => {
 		const fetchOffers = async () => {
+			let results: Offer[];
 			try {
-				const results = await getOffers(user._id!);
+				results = await getOffers(user._id!);
 				console.log(results);
-				setOffers(results);
+				const sortedResults = results.sort((a: Offer, b: Offer) => {
+					return results.indexOf(b) - results.indexOf(a);
+				});
+				setOffers(sortedResults);
 			} catch (error) {
 				console.log(error);
 			}
 		};
 		fetchOffers();
-	}, [user._id!]);
+	}, [user._id]);
+
 	useEffect(() => {
 		const fetchProfile = async () => {
 			try {

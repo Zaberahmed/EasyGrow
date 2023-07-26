@@ -47,7 +47,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 						icon={<AiOutlineHome size={20} />}
 						variant="ghost"
 						size="lg"
-						colorScheme={activeRoute === '/' ? 'gray' : 'green'}
+						colorScheme={activeRoute === `/${leftSide}` ? 'gray' : 'green'}
 						color={activeRoute === '/' ? selectedColor : activeColor}
 						transform={activeRoute === '/' ? 'scale(1.2)' : 'scale(1.0)'}
 						bg={activeRoute === '/' ? selectedBgColor : 'transparent'}
@@ -72,7 +72,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 						icon={<FaSearchLocation size={20} />}
 						variant="ghost"
 						size="lg"
-						colorScheme={activeRoute === '/dashboard' ? 'gray' : 'green'}
+						colorScheme={activeRoute === `/${middle}` ? 'gray' : 'green'}
 						color={activeRoute === '/dashboard' ? selectedColor : activeColor}
 						transform={activeRoute === '/dashboard' ? 'scale(1.2)' : 'scale(1.0)'}
 						bg={activeRoute === '/dashboard' ? selectedBgColor : 'transparent'}
@@ -100,7 +100,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 						icon={<AiOutlineMenuFold size={20} />}
 						variant="ghost"
 						size="lg"
-						colorScheme={activeRoute === '/' ? 'gray' : 'green'}
+						colorScheme={activeRoute === `/${rightSide}` ? 'gray' : 'green'}
 						color={activeRoute === '/' ? selectedColor : activeColor}
 						transform={activeRoute === '/' ? 'scale(1.2)' : 'scale(1.0)'}
 						bg={activeRoute === '/' ? selectedBgColor : 'transparent'}

@@ -3,17 +3,15 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { userLogin } from '../../../Services/user';
 import { useNavigate } from 'react-router-dom';
 
-
 const initialState = {
 	email: '',
 	password: '',
 };
 
-
 export const validateInput = (str = '') => str.includes('@');
 
 const Login = () => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const [formData, setFomData] = useState(initialState);
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -33,9 +31,8 @@ const Login = () => {
 
 		const token = await userLogin(user);
 
-
 		if (token) {
-			navigate('/home')
+			navigate('/home');
 		}
 	};
 	const validateForm = () => {
@@ -46,7 +43,7 @@ const Login = () => {
 		<div>
 			<h2>Login</h2>
 			<form
-				name="login-form"
+				className="login-form"
 				onSubmit={handleSubmit}>
 				<label htmlFor="email">Email:</label>
 				<input

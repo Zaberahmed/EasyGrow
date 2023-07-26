@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, CardHeader, Flex, FormControl, Heading, Input, Stack, StackDivider, Text } from '@chakra-ui/react';
+import { Box, Button, Card, CardBody, Flex, FormControl, Heading, Input, Stack, StackDivider, Text } from '@chakra-ui/react';
 import { Offer } from '../../Interfaces/Offer.interface';
 import { TbCurrencyTaka } from 'react-icons/tb';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -66,6 +66,7 @@ const OfferDetailsComponent = ({ amount, status }: Offer) => {
 											ml={2}
 											borderColor={'gray.400'}
 											type="text"
+											// placeholder=`${amount}`
 										/>
 									</FormControl>
 								) : (

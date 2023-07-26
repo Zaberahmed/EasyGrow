@@ -1,22 +1,14 @@
-import { FormControl, FormLabel, Input, Button, Center, Flex, Box } from '@chakra-ui/react';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormControl, FormLabel, Input, Button, Center, Flex, Box, Card } from '@chakra-ui/react';
+import { FormEvent, useState } from 'react';
 import { makeAnOffer } from '../../Services/farmer';
 // import { profile } from '../../Services/user';
 import { useToast } from '@chakra-ui/react';
+import { ObjectId } from 'mongodb';
 
-// const initialUser: User = {
-// 	_id: '',
-// 	name: '',
-// 	email: '',
-// 	password: '',
-// 	phoneNumber: '',
-// 	address: '',
-// 	role: '',
-// };
-const OfferAmountComponent = ({ landId, landOwnerId, userId }: { landId: string; landOwnerId: string; userId: string }) => {
+const OfferAmountComponent = ({ landId, landOwnerId, userId, setOffer }: { landId: ObjectId; landOwnerId: ObjectId; userId: ObjectId; setOffer: Function }) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [amount, setAmount] = useState<string>('');
-	// const [user, setUser] = useState<User>(initialUser);
+
 	const toast = useToast();
 
 	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -26,6 +18,7 @@ const OfferAmountComponent = ({ landId, landOwnerId, userId }: { landId: string;
 		try {
 			const result = await makeAnOffer(landId, landOwnerId, userId, amount);
 			console.log(result);
+			setOffer(result);
 			setIsLoading(false);
 			toast({
 				position: 'top',
@@ -55,25 +48,29 @@ const OfferAmountComponent = ({ landId, landOwnerId, userId }: { landId: string;
 	// }, []);
 
 	return (
-		<div>
+		<Card m={1.5}>
 			<form onSubmit={handleSubmit}>
 				<Flex
-					position="sticky"
+					position="fixed"
 					bottom={0.5}
-					boxShadow={'inset -1px 1px 2px grey'}
+					boxShadow={'outset 1px 1px 1px 1px grey'}
 					bgColor={'gray.200'}
 					justifyContent="center"
 					alignItems="center"
-					w="auto">
+					flexDirection="row"
+					w="97vw">
 					<FormControl isRequired>
 						<FormLabel
+							mt={1}
+							mb={1}
 							ml={2}
-							mr={2}
 							fontWeight={'bold'}>
 							Offer amount:
 						</FormLabel>
 						<Input
 							ml={2}
+							mb={2.5}
+							w={'60vw'}
 							borderColor={'gray.400'}
 							placeholder="30,000"
 							type="number"
@@ -87,7 +84,7 @@ const OfferAmountComponent = ({ landId, landOwnerId, userId }: { landId: string;
 							loadingText="Submitting"
 							colorScheme="teal"
 							variant="solid"
-							mt={7}
+							mb={1}
 							ml={4}
 							mr={2}>
 							Submit
@@ -95,7 +92,7 @@ const OfferAmountComponent = ({ landId, landOwnerId, userId }: { landId: string;
 					</FormControl>
 				</Flex>
 			</form>
-		</div>
+		</Card>
 	);
 };
 

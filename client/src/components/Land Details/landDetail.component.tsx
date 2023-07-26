@@ -40,7 +40,7 @@ const LandDetailComponent = ({ land }: { land: Land }) => {
 							<Text
 								pt="2"
 								fontSize={14}>
-								{land.size}
+								{land.size} acres
 							</Text>
 						</div>
 						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>

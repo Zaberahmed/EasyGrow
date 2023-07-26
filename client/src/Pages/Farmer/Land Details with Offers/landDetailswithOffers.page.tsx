@@ -3,16 +3,17 @@ import { Land } from '../../../Interfaces/Land.interface';
 import LandDetailComponent from '../../../components/Land Details/landDetail.component';
 import OfferAmountComponent from '../../../components/Offer Amount Form/OfferAmount.component';
 import { useState, useEffect } from 'react';
-import { getLandDetails } from '../../../Services/farmer';
+import { getLandDetails, getOffer } from '../../../Services/farmer';
 import { Card, CardHeader, Center, Heading } from '@chakra-ui/react';
 import { Crop } from '../../../Interfaces/Crops.interface';
 import RecommendedCropComponent from '../../../components/Recommended Crop/RecommendedCrop.component';
 import TermsAndConditionsComponent from '../../../components/Terms & Conditions/TermsAndConditions.component';
 import { Offer } from '../../../Interfaces/Offer.interface';
 import { profile } from '../../../Services/user';
+import { User } from '../../../Interfaces/User.interface';
+import OfferDetailsComponent from '../../../components/Offer Details/OfferDetails.component';
 
 const initialUser: User = {
-	_id: '',
 	name: '',
 	email: '',
 	password: '',
@@ -20,11 +21,25 @@ const initialUser: User = {
 	address: '',
 	role: '',
 };
+
+// const initialOffer: Offer = {
+// 	amount: '',
+// 	status: '',
+// };
+const initialLand: Land = {
+	name: '',
+	size: 0,
+	location: [],
+	duration: '',
+	description: '',
+	price: 0,
+};
 const LandDetailswithOffersPage = () => {
 	const { id } = useParams();
-	const [offer, setOffer] = useState<Offer>();
+	const [offer, setOffer] = useState<Offer[]>([]);
+	const [hasPostedOffer, setHasPostedOffer] = useState<boolean>(false);
 	const [user, setUser] = useState<User>(initialUser);
-	const [land, setLand] = useState<Land>();
+	const [land, setLand] = useState<Land>(initialLand);
 
 	useEffect(() => {
 		const fetchLandDetails = async () => {
@@ -42,15 +57,15 @@ const LandDetailswithOffersPage = () => {
 	useEffect(() => {
 		const fetchOneOffer = async () => {
 			try {
-				// const result = await getOffer(land?._id);
-				// console.log(result);
-				// setLand(result[0]);
+				const result = await getOffer(user._id!, land._id!);
+				console.log(result);
+				setOffer(result);
 			} catch (error) {
 				console.log(error);
 			}
 		};
 		fetchOneOffer();
-	}, []);
+	}, [user._id, land._id]);
 	useEffect(() => {
 		const fetchProfile = async () => {
 			try {
@@ -64,11 +79,16 @@ const LandDetailswithOffersPage = () => {
 		fetchProfile();
 	}, []);
 
+	useEffect(() => {
+		if (offer.length > 0) setHasPostedOffer(true);
+	}, [offer]);
+
 	return (
 		<div>
 			{land && <LandDetailComponent land={land} />}
 
 			<Card
+				m={1}
 				// boxShadow={' inset  .5px 2px grey'}
 				mb={1}>
 				<Center>
@@ -93,8 +113,9 @@ const LandDetailswithOffersPage = () => {
 			</Card>
 
 			<Card
-				// boxShadow={' inset .5px 2px grey'}
-				mb={1}>
+				boxShadow={'  0 0 1px 2px grey'}
+				mb={1}
+				m={1.5}>
 				<Center>
 					<CardHeader>
 						<Heading
@@ -108,13 +129,22 @@ const LandDetailswithOffersPage = () => {
 				<TermsAndConditionsComponent />
 			</Card>
 
-			{land && land._id && land.ownerId && user._id && (
+			{land && land._id && land.ownerId && user._id && !hasPostedOffer && (
 				<OfferAmountComponent
 					landId={land?._id}
 					landOwnerId={land?.ownerId}
 					userId={user._id}
+					setOffer={setOffer}
 				/>
 			)}
+
+			{hasPostedOffer && (
+				<OfferDetailsComponent
+					amount={offer[0].amount}
+					status={offer[0].status}
+				/>
+			)}
+			<div style={{ height: '15vh' }}></div>
 		</div>
 	);
 };

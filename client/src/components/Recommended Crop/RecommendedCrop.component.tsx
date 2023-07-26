@@ -8,70 +8,74 @@ const RecommendedCropComponent = ({ crop, size, amount }: { crop: Crop; size: nu
 	const revenue = calculateRevenue(size, amount, crop.pricePerTon!, crop.tonPerAcre!);
 
 	return (
-		<CardBody>
-			<Stack
-				divider={<StackDivider />}
-				spacing="2">
-				<Box
-					display={'flex'}
-					flexDirection={'row'}
-					justifyContent={'space-between'}
-					alignContent={'center'}
-					alignItems={'center'}>
-					<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-						<Heading
-							size="s"
-							textTransform="uppercase">
-							{crop.name}
-						</Heading>
-					</div>
-					<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-						<Heading
-							size="xs"
-							textTransform="uppercase">
-							Price (TK/Ton)
-						</Heading>
-						<Text
-							pt="2"
-							fontSize="sm"
-							display={'flex'}>
-							{formatMoney(crop.pricePerTon!)} <TbCurrencyTaka size={17} />
-						</Text>
-					</div>
-				</Box>
+		<Card
+			boxShadow={'0 0 1px 2px grey'}
+			mb={1.5}>
+			<CardBody>
+				<Stack
+					divider={<StackDivider />}
+					spacing="2">
+					<Box
+						display={'flex'}
+						flexDirection={'row'}
+						justifyContent={'space-between'}
+						alignContent={'center'}
+						alignItems={'center'}>
+						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+							<Heading
+								size="s"
+								textTransform="uppercase">
+								{crop.name}
+							</Heading>
+						</div>
+						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+							<Heading
+								size="xs"
+								textTransform="uppercase">
+								Price (TK/Ton)
+							</Heading>
+							<Text
+								pt="2"
+								fontSize="sm"
+								display={'flex'}>
+								{formatMoney(crop.pricePerTon!)} <TbCurrencyTaka size={17} />
+							</Text>
+						</div>
+					</Box>
 
-				<Box
-					display={'flex'}
-					flexDirection={'row'}
-					justifyContent={'space-between'}>
-					<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-						<Heading
-							size="xs"
-							textTransform="uppercase">
-							Yield (TK)
-						</Heading>
-						<Text
-							pt="2"
-							fontSize="sm"
-							display={'flex'}>
-							{formatMoney(revenue)} <TbCurrencyTaka size={17} />
-						</Text>
-					</div>
-					<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-						<Heading
-							size="xs"
-							textTransform="uppercase">
-							Production (Ton/Acre)
-						</Heading>
-						<Text
-							pt="2"
-							fontSize="sm">
-							{crop.tonPerAcre}
-						</Text>
-					</div>
-				</Box>
-			</Stack>
-		</CardBody>
+					<Box
+						display={'flex'}
+						flexDirection={'row'}
+						justifyContent={'space-between'}>
+						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+							<Heading
+								size="xs"
+								textTransform="uppercase">
+								Revenue(TK)
+							</Heading>
+							<Text
+								pt="2"
+								fontSize="sm"
+								display={'flex'}>
+								{formatMoney(revenue)} <TbCurrencyTaka size={17} />
+							</Text>
+						</div>
+						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+							<Heading
+								size="xs"
+								textTransform="uppercase">
+								Production (Ton/Acre)
+							</Heading>
+							<Text
+								pt="2"
+								fontSize="sm">
+								{crop.tonPerAcre}
+							</Text>
+						</div>
+					</Box>
+				</Stack>
+			</CardBody>
+		</Card>
 	);
 };
 
