@@ -118,13 +118,13 @@ const OffersForLand = () => {
   const filteredData = allLand.filter(
     (each) => each?._id === (routerParams.id)
   );
-
+  // console.log(filteredData);
   // const landId = filteredData[0]?._id;
   // console.log('outside', landId);
   // console.log(offersById);
-  var landId = filteredData && filteredData[0]._id;
-  var farmersForOneLand = offersById.filter(
-    (each) => each.landId == landId);
+  // var landId = filteredData && filteredData[0]._id;
+  // var farmersForOneLand = offersById.filter(
+  //   (each) => each.landId == landId);
   // console.log(farmersForOneLand);
   //for one land,,many farmers can have,so I need to map all this data to get farmer's details by searching id
 
@@ -133,7 +133,7 @@ const OffersForLand = () => {
       try {
 
 
-        // const landId = filteredData && await filteredData[0]._id;
+        const landId = filteredData && await filteredData[0]._id;
 
         const offersBylandId = await allOffersForALand(landId)
         setOffersById(offersBylandId);
