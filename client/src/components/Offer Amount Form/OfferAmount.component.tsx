@@ -52,7 +52,7 @@ const OfferAmountComponent = ({ landId, landOwnerId, userId, setOffer }: { landI
 			<form onSubmit={handleSubmit}>
 				<Flex
 					position="fixed"
-					bottom={0.5}
+					bottom={1}
 					boxShadow={'outset 1px 1px 1px 1px grey'}
 					bgColor={'gray.200'}
 					justifyContent="center"

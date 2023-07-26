@@ -22,10 +22,10 @@ const initialUser: User = {
 	role: '',
 };
 
-// const initialOffer: Offer = {
-// 	amount: '',
-// 	status: '',
-// };
+const initialOffer: Offer = {
+	amount: '',
+	status: '',
+};
 const initialLand: Land = {
 	name: '',
 	size: 0,
@@ -36,7 +36,7 @@ const initialLand: Land = {
 };
 const LandDetailswithOffersPage = () => {
 	const { id } = useParams();
-	const [offer, setOffer] = useState<Offer[]>([]);
+	const [offer, setOffer] = useState<Offer>(initialOffer);
 	const [hasPostedOffer, setHasPostedOffer] = useState<boolean>(false);
 	const [user, setUser] = useState<User>(initialUser);
 	const [land, setLand] = useState<Land>(initialLand);
@@ -79,10 +79,6 @@ const LandDetailswithOffersPage = () => {
 		fetchProfile();
 	}, []);
 
-	useEffect(() => {
-		if (offer.length > 0) setHasPostedOffer(true);
-	}, [offer]);
-
 	return (
 		<div>
 			{land && <LandDetailComponent land={land} />}
@@ -113,7 +109,7 @@ const LandDetailswithOffersPage = () => {
 			</Card>
 
 			<Card
-				boxShadow={'  0 0 1px 2px grey'}
+				boxShadow={'0 0 1px 2px grey'}
 				mb={1}
 				m={1.5}>
 				<Center>
@@ -129,7 +125,7 @@ const LandDetailswithOffersPage = () => {
 				<TermsAndConditionsComponent />
 			</Card>
 
-			{land && land._id && land.ownerId && user._id && !hasPostedOffer && (
+			{land && land._id && land.ownerId && user._id && !offer.amount && (
 				<OfferAmountComponent
 					landId={land?._id}
 					landOwnerId={land?.ownerId}
@@ -138,10 +134,10 @@ const LandDetailswithOffersPage = () => {
 				/>
 			)}
 
-			{hasPostedOffer && (
+			{offer.amount && (
 				<OfferDetailsComponent
-					amount={offer[0].amount}
-					status={offer[0].status}
+					amount={offer.amount}
+					status={offer.status}
 				/>
 			)}
 			<div style={{ height: '15vh' }}></div>

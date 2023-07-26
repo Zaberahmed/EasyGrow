@@ -1,5 +1,5 @@
 import './Login.style.css';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { userLogin } from '../../../Services/user';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,21 +23,31 @@ const Login = () => {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		const [token, setToken] = useState<string>('');
 
 		const form = e.currentTarget;
 
 		const formData: FormData = new FormData(form);
 		const user = Object.fromEntries(formData);
 
-		const token = await userLogin(user);
-
-		if (token) {
-			navigate('/home');
-		}
+		const result = await userLogin(user);
+		setToken(result);
 	};
 	const validateForm = () => {
 		return !formData.email || !formData.password;
 	};
+
+	// 	useEffect(() => {
+	// 		const fetchProfile=()=>{
+	// try{
+
+	// }
+	// catch(error){
+	// 	console.log(error)
+	// }
+	// 		}
+	// 		fetchProfile()
+	// 	}, [token]);
 
 	return (
 		<div>
@@ -54,8 +64,7 @@ const Login = () => {
 					value={formData.email}
 					onChange={handleChange}
 				/>
-				<br />
-				<br />
+
 				{formData.email && !validateInput(formData.email) ? <p className="">Email not valid</p> : null}
 				<label htmlFor="password">Password:</label>
 				<input
@@ -66,7 +75,7 @@ const Login = () => {
 					value={formData.password}
 					onChange={handleChange}
 				/>
-				{/* {formData.password && !passwordValidate(formData.password) ? <p className="">Password not stronger</p> : null} */}
+
 				<button
 					role="button"
 					type="submit"

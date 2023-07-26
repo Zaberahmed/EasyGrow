@@ -81,6 +81,7 @@ const MyOffersPage = () => {
 				middle="farmer/map"
 				rightSide="farmer/offer-details"
 				userRole="farmer"></BottomNavBar>
+			<div style={{ height: '18vh' }}></div>
 		</div>
 	);
 };
