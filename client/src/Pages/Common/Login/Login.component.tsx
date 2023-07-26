@@ -2,6 +2,7 @@ import './Login.style.css';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { userLogin } from '../../../Services/user';
 import { useNavigate } from 'react-router-dom';
+import EasyGrowLogo from '../../../assets/EasyGrow.component';
 
 const initialState = {
 	email: '',
@@ -50,8 +51,10 @@ const Login = () => {
 	// 	}, [token]);
 
 	return (
-		<div>
-			<h2>Login</h2>
+		<div className="login-form-container">
+			<figure className="logo">
+				<EasyGrowLogo />
+			</figure>
 			<form
 				className="login-form"
 				onSubmit={handleSubmit}>
@@ -65,7 +68,7 @@ const Login = () => {
 					onChange={handleChange}
 				/>
 
-				{formData.email && !validateInput(formData.email) ? <p className="">Email not valid</p> : null}
+				{formData.email && !validateInput(formData.email) ? <p className="error-message">Email not valid</p> : null}
 				<label htmlFor="password">Password:</label>
 				<input
 					id="password"
@@ -75,13 +78,14 @@ const Login = () => {
 					value={formData.password}
 					onChange={handleChange}
 				/>
-
-				<button
-					role="button"
-					type="submit"
-					disabled={validateForm()}>
-					Log in
-				</button>
+				<div className="login-button">
+					<button
+						role="button"
+						type="submit"
+						disabled={validateForm()}>
+						Log in
+					</button>
+				</div>
 			</form>
 		</div>
 	);
