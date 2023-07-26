@@ -24,12 +24,12 @@ export const FarmerMapcomponent = () => {
 
 	const navigate = useNavigate();
 
-	const dummyLand = {
-		size: 1500,
-		lease: 40000,
-		duration: 6,
-		address: 'Dhaka',
-	};
+	// const dummyLand = {
+	// 	size: 1500,
+	// 	lease: 40000,
+	// 	duration: 6,
+	// 	address: 'Dhaka',
+	// };
 	const Popup = ({ size, price, duration, id }: { size: number; price: number; duration: string; id: string }) => (
 		<div className="popup">
 			<h3 className="route-name">Land Details</h3>

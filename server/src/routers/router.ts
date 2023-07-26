@@ -31,6 +31,7 @@ router.post('/landSearchByLocation', farmerController.landSearchByLocation);
 router.get('/landSearchByCrops', farmerController.landSearchByCrops);
 
 // for offer
+router.post('/getOffers', farmerController.getOffers);
 router.post('/makeAnOffer', farmerController.makeAnOffer);
 router.post('/changeOffer', farmerController.changeOffer);
 router.delete('/deleteOffer', farmerController.deleteOffer);

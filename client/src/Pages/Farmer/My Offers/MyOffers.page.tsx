@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Offer } from '../../../Interfaces/Offer.interface';
 import OfferDetailsComponent from '../../../components/Offer Details/OfferDetails.component';
 import formatMoney from '../../../utils/formatMoney';
 import { Center, Heading } from '@chakra-ui/react';
 import BottomNavBar from '../../../components/BottomNavBar/BottomNavBar';
+import { getOffers } from '../../../Services/farmer';
+import { profile } from '../../../Services/user';
+// import User from '../../../Interfaces/User.interface';
+
 const initialOffer: Offer = {
 	amount: '0',
 	status: 'Negotiating',
@@ -23,9 +27,45 @@ const dummyOffers: Offer[] = [
 		status: 'Rejected',
 	},
 ];
+const initialUser: User = {
+	_id: '',
+	name: '',
+	email: '',
+	password: '',
+	phoneNumber: '',
+	address: '',
+	role: '',
+};
 
 const MyOffersPage = () => {
-	const [offer, setOffer] = useState<Offer>(initialOffer);
+	const [offers, setOffers] = useState<Offer>(initialOffer);
+	const [user, setUser] = useState<User>(initialUser);
+
+	useEffect(() => {
+		const fetchOffers = async () => {
+			try {
+				const results = await getOffers(user._id!);
+				console.log(results);
+				setOffers(results);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchOffers();
+	}, []);
+	useEffect(() => {
+		const fetchProfile = async () => {
+			try {
+				const result = await profile();
+				console.log(result);
+				setUser(result);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchProfile();
+	}, []);
+
 	return (
 		<div className="all-offers-container">
 			<Center>

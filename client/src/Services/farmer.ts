@@ -29,6 +29,7 @@ const getAllLands = async () => {
 		return await axios({
 			method: 'GET',
 			url: `${SERVER_URL}/getAllLands`,
+			withCredentials: true,
 			headers: {
 				'Content-Type': 'application/json',
 				authorization: `Bearer ${token}`,
@@ -65,6 +66,7 @@ const getLandByCrop = async () => {
 		return await axios({
 			method: 'GET',
 			url: `${SERVER_URL}/landSearchByCrops`,
+			withCredentials: true,
 			headers: {
 				'Content-Type': 'application/json',
 				authorization: `Bearer ${token}`,
@@ -77,10 +79,12 @@ const getLandByCrop = async () => {
 	}
 };
 
-const makeAnOffer = async (landId: string, landOwnerId: string, farmerId: string, amount: number) => {
+const makeAnOffer = async (landId: string, landOwnerId: string, farmerId: string, newamount: string) => {
 	try {
+		const amount = Number(newamount);
 		return await axios({
 			method: 'POST',
+			withCredentials: true,
 			url: `${SERVER_URL}/makeAnOffer`,
 			headers: {
 				'Content-Type': 'application/json',
@@ -105,6 +109,7 @@ const changeOffer = async (offerId: string, status: string, amount: number) => {
 		return await axios({
 			method: 'POST',
 			url: `${SERVER_URL}/changeOffer`,
+			withCredentials: true,
 			headers: {
 				'Content-Type': 'application/json',
 				authorization: `Bearer ${token}`,
@@ -127,6 +132,7 @@ const deleteOffer = async (landId: string, offerId: string) => {
 		return await axios({
 			method: 'DELETE',
 			url: `${SERVER_URL}/deleteOffer`,
+			withCredentials: true,
 			headers: {
 				'Content-Type': 'application/json',
 				authorization: `Bearer ${token}`,
@@ -142,5 +148,25 @@ const deleteOffer = async (landId: string, offerId: string) => {
 		console.log('Error message:', error);
 	}
 };
+const getOffers = async (farmerId: string) => {
+	try {
+		return await axios({
+			method: 'POST',
+			url: `${SERVER_URL}/getOffers`,
+			withCredentials: true,
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: `Bearer ${token}`,
+			},
+			data: {
+				farmerId: '64bbb393c7f2aab37546c5e9',
+			},
+		})
+			.then((res) => res.data)
+			.catch((error) => window.alert(`${error.response.data}`));
+	} catch (error) {
+		console.log('Error message:', error);
+	}
+};
 
-export { getLandDetails, getAllLands, getLandsByLocation, getLandByCrop, makeAnOffer, changeOffer, deleteOffer };
+export { getLandDetails, getAllLands, getLandsByLocation, getLandByCrop, makeAnOffer, changeOffer, deleteOffer, getOffers };

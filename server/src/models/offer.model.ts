@@ -44,6 +44,13 @@ const getAllOffersByLandId = async (landId: Types.ObjectId) => {
 		console.log(error);
 	}
 };
+const findOffers = async (id: Types.ObjectId) => {
+	try {
+		return await OfferModel.find({ _id: id });
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 const makeNewOffer = async (offerDetails: Offer) => {
 	try {
@@ -80,4 +87,4 @@ const changeOfferStatus = async (offerId: Types.ObjectId, status: string) => {
 	}
 };
 
-export { getAllOffersByLandId, makeNewOffer, deleteAnOffer, changeOfferAmount, changeOfferStatus };
+export { getAllOffersByLandId, makeNewOffer, deleteAnOffer, changeOfferAmount, changeOfferStatus, findOffers };

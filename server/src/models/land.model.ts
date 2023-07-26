@@ -140,6 +140,7 @@ const searchLandByLocation = async (longitude: number, latitude: number) => {
 
 const addOfferByOfferId = async (landId: Types.ObjectId, offerId: Types.ObjectId) => {
 	try {
+
 		return await LandModel.findOneAndUpdate({ _id: landId }, { $push: { offers: offerId } }, { new: true });
 	} catch (error) {
 		console.log(error);
