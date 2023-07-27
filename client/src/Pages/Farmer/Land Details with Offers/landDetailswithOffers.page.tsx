@@ -12,6 +12,7 @@ import { Offer } from '../../../Interfaces/Offer.interface';
 import { profile } from '../../../Services/user';
 import { User } from '../../../Interfaces/User.interface';
 import OfferDetailsComponent from '../../../components/Offer Details/OfferDetails.component';
+import AlreadyPostedComponent from '../../../components/Already Posted Offer/AlreadyPosted.component';
 
 const initialUser: User = {
 	name: '',
@@ -125,21 +126,23 @@ const LandDetailswithOffersPage = () => {
 				<TermsAndConditionsComponent />
 			</Card>
 
-			{land && land._id && land.ownerId && user._id && !offer.amount && (
+			{/* {land && land._id && land.ownerId && user._id && !offer.amount && (
 				<OfferAmountComponent
 					landId={land?._id}
 					landOwnerId={land?.ownerId}
 					userId={user._id}
 					setOffer={setOffer}
 				/>
-			)}
+			)} */}
 
-			{offer.amount && (
+			{/* {offer.amount && (
 				<OfferDetailsComponent
 					amount={offer.amount}
 					status={offer.status}
 				/>
-			)}
+			)} */}
+			<AlreadyPostedComponent amount="40,000" />
+
 			<div style={{ height: '15vh' }}></div>
 		</div>
 	);

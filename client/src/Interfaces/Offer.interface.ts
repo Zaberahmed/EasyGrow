@@ -8,5 +8,6 @@ export interface Offer {
 	amount: string;
 	status: string;
 	counter_offer?: string;
-	address?: string;
+	countered?: boolean;
+	address: string;
 }

@@ -105,11 +105,11 @@ const makeAnOffer = async (landId: ObjectId, landOwnerId: ObjectId, farmerId: Ob
 	}
 };
 
-const changeOffer = async (offerId: ObjectId, status: string, amount: number) => {
+const changeOffer = async (offerId: ObjectId, changable: { amount?: string; counter_offer?: string }) => {
 	try {
 		return await axios({
-			method: 'POST',
-			url: `${SERVER_URL}/changeOffer`,
+			method: 'PUT',
+			url: `${SERVER_URL}/counter-offer`,
 			withCredentials: true,
 			headers: {
 				'Content-Type': 'application/json',
@@ -117,8 +117,7 @@ const changeOffer = async (offerId: ObjectId, status: string, amount: number) =>
 			},
 			data: {
 				offerId,
-				status,
-				amount,
+				changable,
 			},
 		})
 			.then((res) => res.data)

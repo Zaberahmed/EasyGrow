@@ -6,8 +6,9 @@ export interface Offer {
 	farmerId?: Types.ObjectId;
 	amount: number;
 	status: string;
-	address?: string;
+	address: string;
 	counter_offer?: string;
+	countered?: boolean;
 }
 
 const OfferSchema = new Schema({
@@ -36,11 +37,16 @@ const OfferSchema = new Schema({
 	},
 	address: {
 		type: String,
-		require: false,
+		require: true,
 	},
 	counter_offer: {
 		type: String,
 		require: false,
+	},
+	countered: {
+		type: Boolean,
+		require: false,
+		default: false,
 	},
 });
 
@@ -87,8 +93,13 @@ const deleteAnOffer = async (offerId: Types.ObjectId) => {
 
 const changeOfferOrCounterOffer = async (offerId: Types.ObjectId, changable: { counter_offer?: string; amount?: string }) => {
 	try {
-		if (changable.amount) return await OfferModel.findOneAndUpdate({ _id: offerId }, { amount: changable.amount });
-		else return await OfferModel.findOneAndUpdate({ _id: offerId }, { counter_offer: changable.counter_offer });
+		if (changable.amount) {
+			await OfferModel.findOneAndUpdate({ _id: offerId }, { amount: changable.amount });
+			return await OfferModel.findOneAndUpdate({ _id: offerId }, { countered: false });
+		} else {
+			await OfferModel.findOneAndUpdate({ _id: offerId }, { counter_offer: changable.counter_offer });
+			return await OfferModel.findOneAndUpdate({ _id: offerId }, { countered: true });
+		}
 	} catch (error) {
 		console.log(error);
 	}

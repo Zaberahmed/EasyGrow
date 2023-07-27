@@ -76,7 +76,7 @@ const getOffers = async (req: Request, res: Response) => {
 };
 const makeAnOffer = async (req: Request, res: Response) => {
 	try {
-		const { landId, landOwnerId, farmerId, amount } = req.body;
+		const { landId, landOwnerId, farmerId, amount, address } = req.body;
 
 		const offer = {
 			landId,
@@ -84,6 +84,7 @@ const makeAnOffer = async (req: Request, res: Response) => {
 			farmerId,
 			amount,
 			status: 'Negotiating',
+			address,
 		};
 
 		const newOffer = await makeNewOffer(offer);

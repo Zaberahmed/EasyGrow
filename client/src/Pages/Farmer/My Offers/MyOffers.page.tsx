@@ -26,48 +26,54 @@ const initialUser: User = {
 	role: '',
 };
 
-const dummyOffers: Offer[] = [
-	{
-		amount: '14000',
-		status: 'Negotiating',
-		counter_offer: '1200',
-		address: 'Savar, Dhaka',
-	},
-];
+// const dummyOffers: Offer[] = [
+// 	{
+// 		amount: '14000',
+// 		status: 'Negotiating',
+// 		counter_offer: '1200',
+// 		address: 'Savar, Dhaka',
+// 		countered: true,
+// 	},
+// ];
 
 const MyOffersPage = () => {
 	const [offers, setOffers] = useState<Offer[]>(initialOffer);
 	const [user, setUser] = useState<User>(initialUser);
+	const [loading, setLoading] = useState<boolean>(true);
 
-	// useEffect(() => {
-	// 	const fetchOffers = async () => {
-	// 		let results: Offer[];
-	// 		try {
-	// 			results = await getOffers(user._id!);
-	// 			console.log(results);
-	// 			const sortedResults = results.sort((a: Offer, b: Offer) => {
-	// 				return results.indexOf(b) - results.indexOf(a);
-	// 			});
-	// 			setOffers(sortedResults);
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 		}
-	// 	};
-	// 	fetchOffers();
-	// }, [user._id]);
+	useEffect(() => {
+		const fetchOffers = async () => {
+			let results: Offer[];
+			try {
+				results = await getOffers(user._id!);
+				console.log(results);
+				const sortedResults = results.sort((a: Offer, b: Offer) => {
+					return results.indexOf(b) - results.indexOf(a);
+				});
+				setOffers(sortedResults);
+				if (offers) setLoading(false);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchOffers();
+	}, [user._id]);
 
-	// useEffect(() => {
-	// 	const fetchProfile = async () => {
-	// 		try {
-	// 			const result = await profile();
-	// 			console.log(result);
-	// 			setUser(result);
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 		}
-	// 	};
-	// 	fetchProfile();
-	// }, []);
+	useEffect(() => {
+		const fetchProfile = async () => {
+			try {
+				const result = await profile();
+				console.log(result);
+				setUser(result);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchProfile();
+	}, []);
+	if (loading) {
+		return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>Loding...</div>;
+	}
 
 	return (
 		<div className="all-offers-container">
@@ -80,15 +86,22 @@ const MyOffersPage = () => {
 					My Offers{' '}
 				</Heading>
 			</Center>
-			{dummyOffers.map((offer, index) => (
-				<OfferDetailsComponent
-					key={index}
-					amount={formatMoney(offer.amount)}
-					status={offer.status}
-					address={offer.address}
-					counter_offer={offer.counter_offer}
-				/>
-			))}
+
+			{offers.length > 0 ? (
+				offers.map((offer, index) => (
+					<OfferDetailsComponent
+						key={index}
+						amount={formatMoney(offer.amount)}
+						status={offer.status}
+						address={offer.address}
+						counter_offer={offer.counter_offer}
+						countered={offer.countered}
+						_id={offer._id}
+					/>
+				))
+			) : (
+				<Center>No offers yet</Center>
+			)}
 
 			<BottomNavBar
 				leftSide="farmer"
