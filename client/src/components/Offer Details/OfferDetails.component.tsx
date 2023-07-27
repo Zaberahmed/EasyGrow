@@ -8,7 +8,7 @@ import { FiEdit3 } from 'react-icons/fi';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { useState } from 'react';
 
-const OfferDetailsComponent = ({ amount, status }: Offer) => {
+const OfferDetailsComponent = ({ amount, status, address, counter_offer }: Offer) => {
 	const [edit, setEdit] = useState<boolean>(false);
 	const getStatusIcon = () => {
 		switch (status) {
@@ -48,11 +48,32 @@ const OfferDetailsComponent = ({ amount, status }: Offer) => {
 						display={'flex'}
 						flexDirection={'row'}
 						justifyContent={'space-between'}>
-						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-evenly' }}>
+							<Text
+								size="xs"
+								mb={2}>
+								{address}
+							</Text>
+							<Box
+								as="div"
+								display="flex"
+								p="1"
+								borderRadius="md"
+								fontWeight="bold"
+								{...getStatusBoxStyle()}>
+								<Text
+									pr={1}
+									pl={1}>
+									{status}
+								</Text>
+								{getStatusIcon()}
+							</Box>
+						</div>
+						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
 							<Heading
 								size="xs"
 								textTransform="uppercase">
-								Amount
+								Your Offer
 							</Heading>
 							<Flex
 								alignItems="center"
@@ -100,28 +121,23 @@ const OfferDetailsComponent = ({ amount, status }: Offer) => {
 									''
 								)}
 							</Flex>
-						</div>
-						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-							<Heading
-								size="xs"
-								textTransform="uppercase"
-								mb={2}>
-								Status
-							</Heading>
-							<Box
-								as="div"
-								display="flex"
-								p="1"
-								borderRadius="md"
-								fontWeight="bold"
-								{...getStatusBoxStyle()}>
-								<Text
-									pr={1}
-									pl={1}>
-									{status}
-								</Text>
-								{getStatusIcon()}
-							</Box>
+
+							{counter_offer ? (
+								<>
+									<Heading
+										size="xs"
+										textTransform="uppercase"
+										mt={3}>
+										Counter Offer
+									</Heading>
+									<Flex>
+										<TbCurrencyTaka size={20} />
+										<Text pr={2}>{counter_offer}</Text>
+									</Flex>
+								</>
+							) : (
+								<></>
+							)}
 						</div>
 					</Box>
 				</Stack>

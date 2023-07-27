@@ -7,4 +7,6 @@ export interface Offer {
 	landOwnerId?: ObjectId;
 	amount: string;
 	status: string;
+	counter_offer?: string;
+	address?: string;
 }

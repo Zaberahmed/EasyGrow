@@ -12,6 +12,8 @@ const initialOffer: Offer[] = [
 	{
 		amount: '',
 		status: '',
+		counter_offer: '',
+		address: '',
 	},
 ];
 
@@ -24,55 +26,67 @@ const initialUser: User = {
 	role: '',
 };
 
+const dummyOffers: Offer[] = [
+	{
+		amount: '14000',
+		status: 'Negotiating',
+		counter_offer: '1200',
+		address: 'Savar, Dhaka',
+	},
+];
+
 const MyOffersPage = () => {
 	const [offers, setOffers] = useState<Offer[]>(initialOffer);
 	const [user, setUser] = useState<User>(initialUser);
 
-	useEffect(() => {
-		const fetchOffers = async () => {
-			let results: Offer[];
-			try {
-				results = await getOffers(user._id!);
-				console.log(results);
-				const sortedResults = results.sort((a: Offer, b: Offer) => {
-					return results.indexOf(b) - results.indexOf(a);
-				});
-				setOffers(sortedResults);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		fetchOffers();
-	}, [user._id]);
+	// useEffect(() => {
+	// 	const fetchOffers = async () => {
+	// 		let results: Offer[];
+	// 		try {
+	// 			results = await getOffers(user._id!);
+	// 			console.log(results);
+	// 			const sortedResults = results.sort((a: Offer, b: Offer) => {
+	// 				return results.indexOf(b) - results.indexOf(a);
+	// 			});
+	// 			setOffers(sortedResults);
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 		}
+	// 	};
+	// 	fetchOffers();
+	// }, [user._id]);
 
-	useEffect(() => {
-		const fetchProfile = async () => {
-			try {
-				const result = await profile();
-				console.log(result);
-				setUser(result);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		fetchProfile();
-	}, []);
+	// useEffect(() => {
+	// 	const fetchProfile = async () => {
+	// 		try {
+	// 			const result = await profile();
+	// 			console.log(result);
+	// 			setUser(result);
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 		}
+	// 	};
+	// 	fetchProfile();
+	// }, []);
 
 	return (
 		<div className="all-offers-container">
 			<Center>
 				<Heading
 					size="md"
-					mt={5}>
+					mt={5}
+					mb={5}>
 					{' '}
 					My Offers{' '}
 				</Heading>
 			</Center>
-			{offers.map((offer, index) => (
+			{dummyOffers.map((offer, index) => (
 				<OfferDetailsComponent
 					key={index}
 					amount={formatMoney(offer.amount)}
 					status={offer.status}
+					address={offer.address}
+					counter_offer={offer.counter_offer}
 				/>
 			))}
 

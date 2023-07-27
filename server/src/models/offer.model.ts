@@ -1,11 +1,13 @@
 import { Schema, Types, model } from './database';
 
-interface Offer {
+export interface Offer {
 	landId?: Types.ObjectId;
 	landOwnerId?: Types.ObjectId;
 	farmerId?: Types.ObjectId;
 	amount: number;
 	status: string;
+	address?: string;
+	counter_offer?: string;
 }
 
 const OfferSchema = new Schema({
@@ -31,6 +33,14 @@ const OfferSchema = new Schema({
 	status: {
 		type: String,
 		required: true,
+	},
+	address: {
+		type: String,
+		require: false,
+	},
+	counter_offer: {
+		type: String,
+		require: false,
 	},
 });
 
@@ -75,12 +85,10 @@ const deleteAnOffer = async (offerId: Types.ObjectId) => {
 	}
 };
 
-const changeOfferAmount = async (offerId: Types.ObjectId, amount: number, status: string) => {
+const changeOfferOrCounterOffer = async (offerId: Types.ObjectId, changable: { counter_offer?: string; amount?: string }) => {
 	try {
-		const offer = await OfferModel.findOneAndUpdate({ _id: offerId }, { amount: amount });
-		if (offer) {
-			return await OfferModel.findOneAndUpdate({ _id: offerId }, { status: status });
-		}
+		if (changable.amount) return await OfferModel.findOneAndUpdate({ _id: offerId }, { amount: changable.amount });
+		else return await OfferModel.findOneAndUpdate({ _id: offerId }, { counter_offer: changable.counter_offer });
 	} catch (error) {
 		console.log(error);
 	}
@@ -94,4 +102,4 @@ const changeOfferStatus = async (offerId: Types.ObjectId, status: string) => {
 	}
 };
 
-export { getAllOffersByLandId, makeNewOffer, deleteAnOffer, changeOfferAmount, changeOfferStatus, findOffers, findOneOffer };
+export { getAllOffersByLandId, makeNewOffer, deleteAnOffer, changeOfferOrCounterOffer, changeOfferStatus, findOffers, findOneOffer };
