@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import {
   createUser,
+  findByUserId,
   findUserByEmail,
   updatePassword,
 } from './../models/user.model';
@@ -143,9 +144,13 @@ const profile = async (req: Request, res: Response) => {
 const userById = async (req: Request, res: Response) => {
   try {
     const { id } = req.body;
-    const user = await findById(id);
+
+    const user = await findByUserId(id);
+
     res.status(200).send(user);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const logout = async (req: Request, res: Response) => {

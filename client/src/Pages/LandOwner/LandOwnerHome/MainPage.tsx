@@ -37,8 +37,8 @@ const MainPage = () => {
 					landList={landList}
 					addLandDesc={'Add Land'}
 					landListDesc={'Land List'}
-					firstRoute="/map"
-					secondRoute="/list"></BoxImage>
+					firstRoute="./map"
+					secondRoute="./list"></BoxImage>
 				<RecentAddedLand></RecentAddedLand>
 				<BottomNavBar
 					leftSide="home"

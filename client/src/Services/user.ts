@@ -1,4 +1,5 @@
 const BASE_URL = 'http://localhost:4000';
+const token = localStorage.getItem('accessToken');
 
 export const createAccount = async (newUser: User) => {
   try {
@@ -51,25 +52,24 @@ export const userLogin = async (user: any) => {
 };
 export const userById = async (userId: any) => {
   try {
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
     const response = await fetch('http://localhost:4000/userById', {
       method: 'POST',
-      credentials: 'include',
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
+        authorization: `Bearer ${token}`,
+        data: userId,
       },
-      body: JSON.stringify(userId),
+      body: JSON.stringify({ id: userId }),
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to log in');
-    }
 
     const data = await response.json();
 
-    localStorage.setItem(`${data.accessToken}`, `${data.token}`);
+    return data;
 
-    return data.accessToken;
+    // localStorage.setItem(`${data.accessToken}`, `${data.token}`);
+
+    // return data.accessToken;
   } catch (error) {
     console.error(error);
   }

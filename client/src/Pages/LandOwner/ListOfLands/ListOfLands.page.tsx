@@ -54,7 +54,7 @@ const ListOfLands = () => {
     async function fetchAllLands() {
       try {
         const allLandData = await allLands();
-        setAllLand(allLandData);
+        setAllLand(allLandData.reverse());
 
       } catch (error) {
 
@@ -90,7 +90,7 @@ const ListOfLands = () => {
                   Lease Duration
                 </Heading>
                 <Text pt='2' fontSize='sm'>
-                  {each?.duration}
+                  {each?.duration} months
                 </Text>
               </Box>
               <Box>
@@ -99,11 +99,8 @@ const ListOfLands = () => {
                 </Heading>
                 <HStack>
                   <Text pt='2' fontSize='sm'>
-                    {each?.price}
-                    <Text>
-                      {' '}
-                      <TbCurrencyTaka />
-                    </Text>
+                    {each?.price}Tk
+
                   </Text>
                 </HStack>
               </Box>

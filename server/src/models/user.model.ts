@@ -71,9 +71,11 @@ const updatePassword = async (email: string, newPassword: string) => {
     console.log(error);
   }
 };
-const findById = async (id: string) => {
+const findByUserId = async (id: string) => {
   try {
-    return await UserModel.findById(id);
+    const user = await UserModel.find({ _id: id });
+
+    return user;
   } catch (error) {
     console.log(error);
   }
@@ -111,7 +113,7 @@ const removeALandByLandId = async (
 };
 
 export {
-  findById,
+  findByUserId,
   createUser,
   findUserByEmail,
   updatePassword,

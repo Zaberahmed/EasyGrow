@@ -5,11 +5,9 @@ import {
   CardBody,
   Center,
   Container,
-
   Flex,
   HStack,
   Heading,
-
   Input,
   InputGroup,
   InputLeftElement,
@@ -23,8 +21,10 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import { useEffect, useState } from 'react';
-import { allLands, allOffersForALand } from '../../../Services/landOwner';
+import { allLands, allOffersForALand, counterOffer } from '../../../Services/landOwner';
 import { Land } from '../../../Interfaces/Land.interface';
+import { userById } from '../../../Services/user';
+import React from 'react';
 const scrollbarStyles = `
   ::-webkit-scrollbar {
     width: 12px;
@@ -40,121 +40,89 @@ const scrollbarStyles = `
   }
 `;
 interface OffersById {
-  amount: number,
-  farmerId: string,
-  landId: string,
-  landOwnerId: string,
-  status: string,
-  _id: any
+  amount: number;
+  farmerId: string;
+  landId: string;
+  landOwnerId: string;
+  status: string;
+  _id: any;
 }
 const OffersForLand = () => {
-
-
   const navigate = useNavigate();
   const routerParams = useParams();
 
   const [allLand, setAllLand] = useState<Land[]>([]);
   const [offersById, setOffersById] = useState<OffersById[]>([]);
+
   useEffect(() => {
     async function fetchAllLands() {
       try {
         const allLandData = await allLands();
         setAllLand(allLandData);
-
-      } catch (error) {
-
-      }
+      } catch (error) { }
     }
-    fetchAllLands()
+    fetchAllLands();
+  }, []);
 
-  }, [])
 
 
-  // const data = [
-  //   {
-  //     id: 1,
-  //     landSize: 3000,
-  //     location: 'dhaka',
-  //     duration: '2 month',
-  //     amount: 6000,
-  //   },
-  //   {
-  //     id: 2,
-  //     landSize: 9000,
-  //     location: 'gazipur',
-  //     duration: '2 month',
-  //     amount: 4000,
-  //   },
-  //   {
-  //     id: 3,
-  //     landSize: 3000,
-  //     location: 'barishal',
-  //     duration: '2 month',
-  //     amount: 6000,
-  //   },
-  // ];
-  const farmerData = [
-    {
-      id: 1,
-      name: 'ahmed',
 
-      amount: 3000,
-    },
-    {
-      id: 2,
-      name: 'radit',
 
-      amount: 6000,
-    },
-    {
-      id: 3,
-      name: 'erab',
 
-      amount: 7000,
-    },
-  ];
-  const [showField, setShowField] = useState<boolean[]>(farmerData.map(() => false));
-  const [updated, setUpdated] = useState('');
-  const filteredData = allLand.filter(
-    (each) => each?._id === (routerParams.id)
+  const filteredData = allLand.filter((each) => each?._id === routerParams.id);
+  const [showField, setShowField] = useState<boolean[]>(
+    filteredData.map(() => false)
   );
-  // console.log(filteredData);
-  // const landId = filteredData[0]?._id;
-  // console.log('outside', landId);
-  // console.log(offersById);
-  // var landId = filteredData && filteredData[0]._id;
-  // var farmersForOneLand = offersById.filter(
-  //   (each) => each.landId == landId);
-  // console.log(farmersForOneLand);
-  //for one land,,many farmers can have,so I need to map all this data to get farmer's details by searching id
 
+  const [names, setNames] = useState<any[]>([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const landId = filteredData && (await filteredData[0]._id);
 
+        const offersBylandId = await allOffersForALand(landId);
+        const farmerIdList: any = [];
+        offersBylandId.map(async (everyOffer: any) =>
+          farmerIdList.push(everyOffer.farmerId)
+        );
 
-        const landId = filteredData && await filteredData[0]._id;
+        let farmerDetails = await Promise.all(
+          farmerIdList.map((el: string) => userById(el))
+        );
 
-        const offersBylandId = await allOffersForALand(landId)
+        let farmersName = [];
+
+        for (let i = 0; i < farmerDetails.length; i++) {
+          let name = farmerDetails[i][0].name;
+          farmersName.push(name);
+        }
+        setNames(farmersName);
+
         setOffersById(offersBylandId);
-
-      } catch (error) {
-
-      }
-    }
+      } catch (error) { }
+    };
     fetchData();
-
-  }, [filteredData]);
+  }, [allLand]);
 
   const handleCounterBtn = (_id: any) => {
     setShowField((prevShowField) => ({ ...prevShowField, [_id]: true }));
   };
-  const handleKeyDown = (event: any) => {
+  const handleKeyDown = async (event: any, id: any) => {
     if (event.key === 'Enter') {
-      setUpdated(event.target.value)
+      const value = event.target.value;
+      const counter = {
+        offerId: id,
+        changable: {
+          counter_offer: value
+        }
+
+      }
+      const result = await counterOffer(counter)
+      console.log(result)
+
     }
-  }
-  // console.log(updated);
+  };
+
 
   return (
     <div>
@@ -167,20 +135,21 @@ const OffersForLand = () => {
         </Center>
       </Flex>
 
-      {filteredData.map((each) => (
-        <>
-          <Card key={each?._id} m={8}>
-            <CardBody>
-              <Stack divider={<StackDivider />} spacing='4'>
-                <Box>
-                  <Heading size='xs' textTransform='uppercase'>
-                    Land Size
-                  </Heading>
-                  <Text pt='2' fontSize='sm'>
-                    {each?.size}
-                  </Text>
-                </Box>
-                {/* <Box>
+      {filteredData.map((each, index) => (
+        <div key={index}>
+          <React.Fragment >
+            <Card m={8} >
+              <CardBody>
+                <Stack divider={<StackDivider />} spacing='4'>
+                  <Box>
+                    <Heading size='xs' textTransform='uppercase'>
+                      Land Size
+                    </Heading>
+                    <Text pt='2' fontSize='sm'>
+                      {each?.size}
+                    </Text>
+                  </Box>
+                  {/* <Box>
                   <Heading size='xs' textTransform='uppercase'>
                     Location
                   </Heading>
@@ -188,97 +157,99 @@ const OffersForLand = () => {
                     {each.location}
                   </Text>
                 </Box> */}
-                <Box>
-                  <Heading size='xs' textTransform='uppercase'>
-                    Lease Duration
-                  </Heading>
-                  <Text pt='2' fontSize='sm'>
-                    {each?.duration}
-                  </Text>
-                </Box>
-                <Box>
-                  <Heading size='xs' textTransform='uppercase'>
-                    Lease Amount
-                  </Heading>
-                  <HStack>
+                  <Box>
+                    <Heading size='xs' textTransform='uppercase'>
+                      Lease Duration
+                    </Heading>
                     <Text pt='2' fontSize='sm'>
-                      {each?.price}
-                      <Text>
-
-                        <TbCurrencyTaka />
-                      </Text>
+                      {each?.duration}
                     </Text>
-                  </HStack>
-                </Box>
-              </Stack>
-            </CardBody>
+                  </Box>
+                  <Box>
+                    <Heading size='xs' textTransform='uppercase'>
+                      Lease Amount
+                    </Heading>
+                    <HStack>
+                      <Text pt='2' fontSize='sm'>
+                        {each?.price} Tk.
 
-            <Container overflowY='auto' maxHeight='300px' css={scrollbarStyles}>
-              {offersById.map((each) => (
-                <Card
-                  key={each._id}
-                  borderWidth='2px'
-                  borderColor='green.500'
-                  borderRadius='lg'
-                  m={1}
-                >
-                  <CardBody>
-                    <Flex justifyContent='space-between'>
-                      <Stack direction='column' spacing={2}>
-                        <Text fontWeight='xs'>Offered By </Text>
-                        {/* <Text as='b'>{each.name}</Text> */}
-                        <Text as='b'>Amount: {each.amount}</Text>
-                      </Stack>
-                      <VStack
-                        direction='row'
-                        spacing={2}
-                        justifyContent='flex-end'
-                      >
-                        <Button
-                          w={"28vw"}
-                          colorScheme='teal' variant='outline'>
-                          ACCEPT
-                        </Button>
-                        {showField[each._id] ? (
-                          <Box>
-                            <InputGroup>
-                              <InputLeftElement
 
-                                pointerEvents='none'
-                                color='gray.300'
-                                fontWeight='bold'
-                                fontSize='2em'
-                                children='৳'
-                              />
-                              <Input
-                                min={0}
-                                maxWidth={"28vw"}
-                                type='number'
-                                autoFocus={true}
-                                htmlSize={2}
-                                onKeyDown={handleKeyDown} />
-                            </InputGroup>
-                          </Box>
-                        ) : (
-                          <Button
-                            w={'28vw'}
-                            onClick={() => handleCounterBtn(each._id)}
-                            colorScheme='red'
-                            variant='outline'
+                      </Text>
+                    </HStack>
+                  </Box>
+                </Stack>
+              </CardBody>
+
+              <Container overflowY='auto' maxHeight='300px' css={scrollbarStyles}>
+                {offersById.map((each, index) => (
+                  <React.Fragment key={index}>
+                    <Card
+                      // key={index}
+                      borderWidth='2px'
+                      borderColor='green.500'
+                      borderRadius='lg'
+                      m={1}
+                    >
+                      <CardBody>
+                        <Flex justifyContent='space-between'>
+                          <Stack direction='column' spacing={2}>
+                            <Text fontWeight='xs'>Offered By </Text>
+
+                            <Text as='b'>{names[index]}</Text>
+                            <Text as='b'>Amount: {each.amount}</Text>
+                            <Text as='b'>Status:{each.status}</Text>
+                          </Stack>
+                          <VStack
+                            direction='row'
+                            spacing={2}
+                            justifyContent='flex-end'
                           >
-                            COUNTER
-                          </Button>
-                        )}
-                      </VStack>
-                    </Flex>
-                  </CardBody>
-                </Card>
-              ))}
-            </Container>
-          </Card>
+                            <Button w={'28vw'} colorScheme='teal' variant='outline'>
+                              ACCEPT
+                            </Button>
+                            {showField[each._id] ? (
+                              <Box>
+                                <InputGroup>
+                                  <InputLeftElement
+                                    pointerEvents='none'
+                                    color='gray.300'
+                                    fontWeight='bold'
+                                    fontSize='2em'
+                                    children='৳'
+                                  />
+                                  <Input
+                                    min={0}
+                                    maxWidth={'28vw'}
+                                    type='number'
+                                    autoFocus={true}
+                                    htmlSize={2}
+                                    onKeyDown={() => handleKeyDown(event, each._id)}
+                                  />
+                                </InputGroup>
+                              </Box>
+                            ) : (
+                              <Button
+                                w={'28vw'}
+                                onClick={() => handleCounterBtn(each._id)}
+                                colorScheme='red'
+                                variant='outline'
+                              >
+                                COUNTER
+                              </Button>
+                            )}
+                          </VStack>
+                        </Flex>
+                      </CardBody>
+                    </Card>
+                  </React.Fragment>
+                ))}
+              </Container>
+            </Card>
+          </React.Fragment>
+
           <br />
           <br />
-        </>
+        </div>
       ))}
     </div>
   );

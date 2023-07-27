@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Counter } from '../Interfaces/Offer.interface';
 import { Land } from '../Interfaces/Land.interface';
 const SERVER_PORT = 4000;
 const SERVER_ADDRESS = 'http://localhost';
@@ -114,6 +115,26 @@ export const rejectoffer = async (offerId: string, status: string) => {
     console.log('Error while getting land details:', error);
   }
 };
+
+export const counterOffer = async (counter: any) => {
+  try {
+    return await axios({
+      method: 'PUT',
+      withCredentials: true,
+      url: `${SERVER_URL}/counter-offer`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: counter,
+    })
+      .then((res) => res.data)
+      .catch((error) => console.log(error));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const allLands = async () => {
   try {
     return await axios({
