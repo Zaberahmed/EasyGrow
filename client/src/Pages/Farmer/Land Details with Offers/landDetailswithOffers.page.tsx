@@ -26,6 +26,7 @@ const initialUser: User = {
 const initialOffer: Offer = {
 	amount: '',
 	status: '',
+	address: '',
 };
 const initialLand: Land = {
 	name: '',
@@ -126,22 +127,23 @@ const LandDetailswithOffersPage = () => {
 				<TermsAndConditionsComponent />
 			</Card>
 
-			{/* {land && land._id && land.ownerId && user._id && !offer.amount && (
+			{land && land._id && land.ownerId && user._id && !offer.amount && (
 				<OfferAmountComponent
 					landId={land?._id}
 					landOwnerId={land?.ownerId}
 					userId={user._id}
 					setOffer={setOffer}
 				/>
-			)} */}
+			)}
 
-			{/* {offer.amount && (
+			{offer.amount && (
 				<OfferDetailsComponent
 					amount={offer.amount}
 					status={offer.status}
+					address={''}
 				/>
-			)} */}
-			<AlreadyPostedComponent amount="40,000" />
+			)}
+			{/* <AlreadyPostedComponent amount="40,000" /> */}
 
 			<div style={{ height: '15vh' }}></div>
 		</div>

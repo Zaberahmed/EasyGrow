@@ -146,7 +146,7 @@ export const FarmerMapcomponent = () => {
 					);
 				}
 
-				popUpRef.current.setLngLat([land.location[0].longitude, land.location[1].latitude]).setDOMContent(popupNode);
+				popUpRef.current.setLngLat([land.location[0].longitude, land.location[0].latitude]).setDOMContent(popupNode);
 
 				marker.setPopup(popUpRef.current);
 

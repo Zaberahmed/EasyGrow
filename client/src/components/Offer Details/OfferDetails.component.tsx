@@ -12,6 +12,7 @@ import { changeOffer } from '../../Services/farmer';
 const OfferDetailsComponent = ({ amount, status, address, counter_offer, countered, _id }: Offer) => {
 	const [edit, setEdit] = useState<boolean>(false);
 	const [input, setInput] = useState<string>('');
+	const [state, setState] = useState<boolean>(countered!);
 
 	const getStatusIcon = () => {
 		switch (status) {
@@ -41,10 +42,12 @@ const OfferDetailsComponent = ({ amount, status, address, counter_offer, counter
 
 	const handleClick = async () => {
 		setEdit(!edit);
+
 		if (input) {
 			try {
 				const changable = { amount: input };
 				const result = await changeOffer(_id!, changable);
+				setState(!state);
 				console.log(result);
 
 				setInput('');
@@ -144,7 +147,7 @@ const OfferDetailsComponent = ({ amount, status, address, counter_offer, counter
 								{getStatusIcon()}
 							</Box>
 
-							{countered ? (
+							{state ? (
 								<>
 									<Heading
 										size="xs"

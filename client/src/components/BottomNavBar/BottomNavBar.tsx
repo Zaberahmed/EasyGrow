@@ -67,7 +67,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 					whileHover={{ scale: 1.1 }}
 					whileTap={{ scale: 0.9 }}>
 					<IconButton
-						onClick={() => navigate(`${middle}`)}
+						onClick={() => navigate(`/${middle}`)}
 						aria-label="Search"
 						icon={<FaSearchLocation size={20} />}
 						variant="ghost"
