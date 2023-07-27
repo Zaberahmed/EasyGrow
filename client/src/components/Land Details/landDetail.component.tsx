@@ -1,12 +1,9 @@
-import { Card, CardHeader, Heading, CardBody, Stack, StackDivider, Text, Box, Center, Button, Flex } from '@chakra-ui/react';
-import TermsAndConditionsComponent from '../Terms & Conditions/TermsAndConditions.component';
+import { Heading, CardBody, Stack, StackDivider, Text, Box, Card, Button, Center, CardHeader } from '@chakra-ui/react';
 import { TbCurrencyTaka } from 'react-icons/tb';
 import formatMoney from './../../utils/formatMoney';
-import { FaArrowLeft } from 'react-icons/fa';
-import RecommendedCropComponent from '../Recommended Crop/RecommendedCrop.component';
-import { useNavigate } from 'react-router-dom';
 import { Land } from '../../Interfaces/Land.interface';
-import { Crop } from '../../Interfaces/Crops.interface';
+import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const LandDetailComponent = ({ land }: { land: Land }) => {
 	const navigate = useNavigate();
@@ -26,7 +23,6 @@ const LandDetailComponent = ({ land }: { land: Land }) => {
 					<Heading size="md">Land Details</Heading>
 				</CardHeader>
 			</Center>
-
 			<CardBody>
 				<Stack
 					divider={<StackDivider />}
@@ -44,7 +40,7 @@ const LandDetailComponent = ({ land }: { land: Land }) => {
 							<Text
 								pt="2"
 								fontSize={14}>
-								{land.size}
+								{land.size} acres
 							</Text>
 						</div>
 						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -74,7 +70,7 @@ const LandDetailComponent = ({ land }: { land: Land }) => {
 							<Text
 								pt="2"
 								fontSize={14}>
-								{land.duration} months
+								{land.duration}
 							</Text>
 						</div>
 						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
@@ -90,36 +86,6 @@ const LandDetailComponent = ({ land }: { land: Land }) => {
 								{formatMoney(land.price)} <TbCurrencyTaka size={17} />
 							</Text>
 						</div>
-					</Box>
-
-					<Box>
-						<Heading
-							size="xs"
-							mb={2}
-							textTransform="uppercase">
-							Recommended Crops
-						</Heading>
-						{land.crops &&
-							land.crops.map((crop: Crop, index: number) => {
-								return (
-									<RecommendedCropComponent
-										key={index}
-										crop={crop}
-										size={land.size}
-										amount={land.price}
-									/>
-								);
-							})}
-					</Box>
-
-					<Box>
-						<Heading
-							size="xs"
-							mb={2}
-							textTransform="uppercase">
-							Terms & Conditions
-						</Heading>
-						<TermsAndConditionsComponent />
 					</Box>
 				</Stack>
 			</CardBody>

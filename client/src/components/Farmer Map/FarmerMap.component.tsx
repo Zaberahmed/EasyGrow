@@ -7,11 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { getLandsByLocation } from '../../Services/farmer';
 import { Land } from '../../Interfaces/Land.interface';
 import ReactDOM from 'react-dom';
-
-interface SearchResult {
-	longitude: number;
-	latitude: number;
-}
+import { ObjectId } from 'mongodb';
 
 export const FarmerMapcomponent = () => {
 	const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -24,13 +20,7 @@ export const FarmerMapcomponent = () => {
 
 	const navigate = useNavigate();
 
-	// const dummyLand = {
-	// 	size: 1500,
-	// 	lease: 40000,
-	// 	duration: 6,
-	// 	address: 'Dhaka',
-	// };
-	const Popup = ({ size, price, duration, id }: { size: number; price: number; duration: string; id: string }) => (
+	const Popup = ({ size, price, duration, id }: { size: number; price: number; duration: string; id: ObjectId }) => (
 		<div className="popup">
 			<h3 className="route-name">Land Details</h3>
 			<div className="route-metric-row">
@@ -69,8 +59,8 @@ export const FarmerMapcomponent = () => {
 			mapRef.current = new mapboxgl.Map({
 				container: mapContainerRef.current,
 				style: 'mapbox://styles/mapbox/satellite-streets-v12?optimize=true',
-				center: [90.4125, 23.8103],
-				zoom: 14,
+				center: [90.30857818617242, 23.880958224097034],
+				zoom: 16,
 			});
 
 			const search = new MapboxSearchBox();
@@ -115,55 +105,57 @@ export const FarmerMapcomponent = () => {
 				// divElement.appendChild(btnElement);
 
 				// btnElement.addEventListener('click', () => console.log('Yes!!!'));
-				marker.getElement().addEventListener('mouseenter', () => {
-					mapRef.current!.getCanvas().style.cursor = 'pointer';
+				// marker.getElement().addEventListener('click', () => {
+				// 	mapRef.current!.getCanvas().style.cursor = 'pointer';
 
-					// 	popup
-					// 		.setLngLat([land.location[0].longitude, land.location[0].latitude])
-					// 		.setHTML(
-					// 			`<div class="popup">
+				// 	popup
+				// 		.setLngLat([land.location[0].longitude, land.location[0].latitude])
+				// 		.setHTML(
+				// 			`<div class="popup">
 
-					//   <h3 class="route-name">Land Details</h3>
-					//   <div class="route-metric-row">
-					//     <h4 class="row-title">Land size</h4>
-					//     <div class="row-value">${land.size}</div>
-					//   </div>
-					//   <div class="route-metric-row">
-					//     <h4 class="row-title">Lease amount</h4>
-					//     <div class="row-value">${land.price}</div>
-					//   </div>
-					//   <div class="route-metric-row">
-					//     <h4 class="row-title">Lease duration</h4>
-					//     <div class="row-value">${land.duration} m</div>
-					//   </div>
-					//   <p class="route-city">Dhaka</p>
-					//   <button class="popup-button" onclick= handleClick(${land._id})>See Details</button>
-					// </div>
-					//     `
-					// 		)
-					// 		.addTo(mapRef.current!);
+				//   <h3 class="route-name">Land Details</h3>
+				//   <div class="route-metric-row">
+				//     <h4 class="row-title">Land size</h4>
+				//     <div class="row-value">${land.size}</div>
+				//   </div>
+				//   <div class="route-metric-row">
+				//     <h4 class="row-title">Lease amount</h4>
+				//     <div class="row-value">${land.price}</div>
+				//   </div>
+				//   <div class="route-metric-row">
+				//     <h4 class="row-title">Lease duration</h4>
+				//     <div class="row-value">${land.duration} m</div>
+				//   </div>
+				//   <p class="route-city">Dhaka</p>
+				//   <button class="popup-button" onclick= handleClick(${land._id})>See Details</button>
+				// </div>
+				//     `
+				// 		)
+				// 		.addTo(mapRef.current!);
 
-					const popupNode = document.createElement('div');
-					if (land._id) {
-						ReactDOM.render(
-							<Popup
-								size={land.size}
-								price={land.price}
-								duration={land.duration}
-								id={land._id}
-							/>,
-							popupNode
-						);
-					}
+				const popupNode = document.createElement('div');
+				if (land._id) {
+					ReactDOM.render(
+						<Popup
+							size={land.size}
+							price={land.price}
+							duration={land.duration}
+							id={land._id}
+						/>,
+						popupNode
+					);
+				}
 
-					popUpRef.current.setLngLat([land.location[0].longitude, land.location[0].latitude]).setDOMContent(popupNode).addTo(mapRef.current!);
+				popUpRef.current.setLngLat([land.location[0].longitude, land.location[0].latitude]).setDOMContent(popupNode);
 
-					marker.getElement().addEventListener('mouseleave', () => {
-						mapRef.current!.getCanvas().style.cursor = '';
+				marker.setPopup(popUpRef.current);
 
-						// popup.remove();
-					});
-				});
+				// marker.getElement().addEventListener('mouseleave', () => {
+				// 	mapRef.current!.getCanvas().style.cursor = '';
+
+				// 	// popup.remove();
+				// });
+				// });
 			});
 		}
 	}, [lands]);

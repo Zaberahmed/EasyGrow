@@ -5,6 +5,7 @@ import * as accountController from '../controllers/account.controller';
 import * as farmerController from '../controllers/farmer.controller';
 import * as landOwnerController from '../controllers/landOwner.contorller';
 import * as cropsController from '../controllers/crops.contorller';
+import * as offerController from '../controllers/offer.controller';
 
 import { authenticator } from '../middlewares/authenticator';
 import { authorizer } from '../middlewares/authorizer';
@@ -32,10 +33,10 @@ router.post('/landSearchByLocation', farmerController.landSearchByLocation);
 router.get('/landSearchByCrops', farmerController.landSearchByCrops);
 
 // for offer
-// router.get('/OffersByLandId', farmerController.allOffersByLandId);
+router.post('/getOffer', farmerController.getOneOffer);
 router.post('/getOffers', farmerController.getOffers);
 router.post('/makeAnOffer', farmerController.makeAnOffer);
-router.post('/changeOffer', farmerController.changeOffer);
+// router.post('/changeOffer', farmerController.changeOffer);
 router.delete('/deleteOffer', farmerController.deleteOffer);
 
 // *land Owner controllers*
@@ -49,6 +50,8 @@ router.post('/allOffersForALand', landOwnerController.allOffersForALand);
 router.post('/acceptOffer', landOwnerController.acceptOffer);
 router.post('/rejectOffer', landOwnerController.rejectOffer);
 router.get('/allLand', landOwnerController.allLand);
+router.put('/counter-offer', offerController.changeAnOffer);
+
 // crops
 router.post('/crops', cropsController.createCrops);
 

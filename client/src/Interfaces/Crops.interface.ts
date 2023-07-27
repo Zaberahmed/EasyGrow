@@ -1,4 +1,7 @@
+import { ObjectId } from 'mongodb';
+
 export interface Crop {
+	_id?: ObjectId;
 	name: string;
 	pricePerTon?: number;
 	tonPerAcre?: number;

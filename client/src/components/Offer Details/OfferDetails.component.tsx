@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, CardHeader, Flex, FormControl, Heading, Input, Stack, StackDivider, Text } from '@chakra-ui/react';
+import { Box, Button, Card, CardBody, Flex, FormControl, Heading, Input, Stack, StackDivider, Text } from '@chakra-ui/react';
 import { Offer } from '../../Interfaces/Offer.interface';
 import { TbCurrencyTaka } from 'react-icons/tb';
 import { BsCheck2Circle } from 'react-icons/bs';
@@ -7,9 +7,13 @@ import { FaHourglassHalf } from 'react-icons/fa';
 import { FiEdit3 } from 'react-icons/fi';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { useState } from 'react';
+import { changeOffer } from '../../Services/farmer';
 
-const OfferDetailsComponent = ({ amount, status }: Offer) => {
+const OfferDetailsComponent = ({ amount, status, address, counter_offer, countered, _id }: Offer) => {
 	const [edit, setEdit] = useState<boolean>(false);
+	const [input, setInput] = useState<string>('');
+	const [state, setState] = useState<boolean>(countered!);
+
 	const getStatusIcon = () => {
 		switch (status) {
 			case 'Accepted':
@@ -36,11 +40,28 @@ const OfferDetailsComponent = ({ amount, status }: Offer) => {
 		}
 	};
 
+	const handleClick = async () => {
+		setEdit(!edit);
+
+		if (input) {
+			try {
+				const changable = { amount: input };
+				const result = await changeOffer(_id!, changable);
+				setState(!state);
+				console.log(result);
+
+				setInput('');
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	};
+
 	return (
 		<Card
 			boxShadow={'0 2px 4px grey'}
 			mb={3}>
-			<CardBody mb={3}>
+			<CardBody>
 				<Stack
 					divider={<StackDivider />}
 					spacing="1">
@@ -49,64 +70,68 @@ const OfferDetailsComponent = ({ amount, status }: Offer) => {
 						flexDirection={'row'}
 						justifyContent={'space-between'}>
 						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-							<Heading
+							<Text
 								size="xs"
-								textTransform="uppercase">
-								Amount
-							</Heading>
-							<Flex
-								alignItems="center"
-								pt="2"
-								fontSize="sm">
-								{edit ? (
-									<FormControl
-										width="100px"
-										mr={3}>
-										<Input
-											ml={2}
-											borderColor={'gray.400'}
-											type="text"
-										/>
-									</FormControl>
-								) : (
-									<>
-										<TbCurrencyTaka size={20} />
-										<Text pr={2}>{amount}</Text>
-									</>
-								)}
-
-								{status === 'Negotiating' ? (
-									<Button
-										size="sm"
-										onClick={() => setEdit(!edit)}>
-										{edit ? (
-											<>
-												<AiOutlineCheck
-													size={15}
-													color="green"
-												/>
-											</>
-										) : (
-											<>
-												<FiEdit3
-													size={15}
-													color="red"
-												/>
-											</>
-										)}
-									</Button>
-								) : (
-									''
-								)}
-							</Flex>
-						</div>
-						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-							<Heading
-								size="xs"
-								textTransform="uppercase"
 								mb={2}>
-								Status
-							</Heading>
+								{address}
+							</Text>
+							<Box mt={3}>
+								<Heading
+									size="xs"
+									textTransform="uppercase">
+									Your Offer
+								</Heading>
+								<Flex
+									alignItems="center"
+									pt="2"
+									fontSize="sm">
+									{edit ? (
+										<FormControl
+											width="100px"
+											mr={3}>
+											<Input
+												ml={2}
+												borderColor={'gray.400'}
+												type="text"
+												value={input}
+												onChange={(event) => setInput(event.target.value)}
+												// placeholder=`${amount}`
+											/>
+										</FormControl>
+									) : (
+										<>
+											<TbCurrencyTaka size={20} />
+											<Text pr={2}>{amount}</Text>
+										</>
+									)}
+
+									{status === 'Negotiating' && countered === true ? (
+										<Button
+											size="sm"
+											onClick={() => handleClick()}>
+											{edit ? (
+												<>
+													<AiOutlineCheck
+														size={15}
+														color="green"
+													/>
+												</>
+											) : (
+												<>
+													<FiEdit3
+														size={15}
+														color="red"
+													/>
+												</>
+											)}
+										</Button>
+									) : (
+										''
+									)}
+								</Flex>
+							</Box>
+						</div>
+						<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center', marginBottom: '30px' }}>
 							<Box
 								as="div"
 								display="flex"
@@ -121,6 +146,24 @@ const OfferDetailsComponent = ({ amount, status }: Offer) => {
 								</Text>
 								{getStatusIcon()}
 							</Box>
+
+							{state ? (
+								<>
+									<Heading
+										size="xs"
+										textTransform="uppercase"
+										mt={3}
+										mb={3}>
+										Counter Offer
+									</Heading>
+									<Flex>
+										<TbCurrencyTaka size={20} />
+										<Text pr={2}>{counter_offer}</Text>
+									</Flex>
+								</>
+							) : (
+								<></>
+							)}
 						</div>
 					</Box>
 				</Stack>

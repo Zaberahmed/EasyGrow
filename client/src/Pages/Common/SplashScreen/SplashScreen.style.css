@@ -1,86 +1,136 @@
-h1 {
-  color: var(--text-color);
-  line-height: 2;
+/* .splash-container {
+	box-sizing: border-box;
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	height: 100vh;
+}
+.splash-heading-h1 {
+	color: var(--text-color);
+	line-height: 2;
 }
 .accent-text {
-  color: var(--accent-color);
+	color: var(--accent-color);
 }
 
 .secondary-text {
-  color: var(--secondary-color);
+	color: var(--secondary-color);
 }
 
 .accent {
-  background-color: var(--accent-color);
-  width: 100%;
-  padding: 1rem;
+	background-color: var(--accent-color);
+	width: 100%;
+	padding: 1rem;
 }
 button:focus {
-  outline: none !important;
+	outline: none !important;
 }
 
-.container {
-  box-sizing: border-box;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 100vh;
+.splash-heading-h1 {
+	font-size: 2.5rem;
+	line-height: 1.1;
+	text-align: left;
+	color: text-color;
 }
 
-/*==================================== */
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-}
-
-h1 {
-  font-size: 2.5rem;
-  line-height: 1.1;
-  text-align: left;
-  color: text-color;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 1.5rem 2rem;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #cee3ff;
-  cursor: pointer;
-  transition: border-color 0.25s;
+.splash-button button {
+	border-radius: 8px;
+	border: 1px solid transparent;
+	padding: 1.5rem 2rem;
+	font-size: 1em;
+	font-weight: 500;
+	font-family: inherit;
+	background-color: #cee3ff;
+	cursor: pointer;
+	transition: border-color 0.25s;
 }
 /* button:hover {
   border-color: #646cff;
 } */
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* .splash-button button:focus,
+.splash-button button:focus-visible {
+	outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+	:root {
+		color: #213547;
+		background-color: #ffffff;
+	}
+	a:hover {
+		color: #747bff;
+	}
+	button {
+		background-color: #f9f9f9;
+	}
+} */
+*/
+
+/* styles.css */
+
+/* Container styles */
+.splash-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	padding: 20px;
+	background-color: #f8f8f8;
+}
+
+/* Heading styles */
+.splash-container h1 {
+	font-size: 36px;
+	text-align: center;
+	margin-bottom: 20px;
+	margin-top: 10px;
+}
+
+/* Secondary text styles */
+.splash-container .secondary-text {
+	color: #4caf50; /* or any color of your choice */
+}
+
+/* Accent text styles */
+.splash-container .accent-text {
+	color: #ff5722; /* or any color of your choice */
+}
+
+/* Animation container styles */
+.splash-container .animation-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px;
+}
+.splash-button-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+/* Button styles */
+.splash-container button {
+	padding: 10px 20px;
+	margin-bottom: 20px;
+	font-size: 18px;
+	background-color: #ff5722; /* or any color of your choice */
+	color: #ffffff; /* or any color that contrasts well with the background */
+	border: none;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	width: 150px;
+}
+
+.splash-container button.accent {
+	background-color: #4caf50; /* or any color of your choice */
+}
+
+/* Button hover styles */
+.splash-container button:hover {
+	background-color: #e64a19; /* or any darker shade of the main color */
 }

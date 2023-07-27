@@ -6,31 +6,18 @@ import { Center, Heading } from '@chakra-ui/react';
 import BottomNavBar from '../../../components/BottomNavBar/BottomNavBar';
 import { getOffers } from '../../../Services/farmer';
 import { profile } from '../../../Services/user';
-// import User from '../../../Interfaces/User.interface';
+import { User } from '../../../Interfaces/User.interface';
 
 const initialOffer: Offer[] = [
 	{
-		amount: '0',
-		status: 'Negotiating',
+		amount: '',
+		status: '',
+		counter_offer: '',
+		address: '',
 	},
 ];
 
-const dummyOffers: Offer[] = [
-	{
-		amount: '40000',
-		status: 'Negotiating',
-	},
-	{
-		amount: '50000',
-		status: 'Accepted',
-	},
-	{
-		amount: '30000',
-		status: 'Rejected',
-	},
-];
 const initialUser: User = {
-	_id: '',
 	name: '',
 	email: '',
 	password: '',
@@ -39,22 +26,39 @@ const initialUser: User = {
 	role: '',
 };
 
+// const dummyOffers: Offer[] = [
+// 	{
+// 		amount: '14000',
+// 		status: 'Negotiating',
+// 		counter_offer: '1200',
+// 		address: 'Savar, Dhaka',
+// 		countered: true,
+// 	},
+// ];
+
 const MyOffersPage = () => {
 	const [offers, setOffers] = useState<Offer[]>(initialOffer);
 	const [user, setUser] = useState<User>(initialUser);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		const fetchOffers = async () => {
+			let results: Offer[];
 			try {
-				const results = await getOffers(user._id!);
+				results = await getOffers(user._id!);
 				console.log(results);
-				setOffers(results);
+				const sortedResults = results.sort((a: Offer, b: Offer) => {
+					return results.indexOf(b) - results.indexOf(a);
+				});
+				setOffers(sortedResults);
+				if (offers) setLoading(false);
 			} catch (error) {
 				console.log(error);
 			}
 		};
 		fetchOffers();
-	}, []);
+	}, [user._id]);
+
 	useEffect(() => {
 		const fetchProfile = async () => {
 			try {
@@ -67,30 +71,44 @@ const MyOffersPage = () => {
 		};
 		fetchProfile();
 	}, []);
+	if (loading) {
+		return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', alignContent: 'center' }}>Loding...</div>;
+	}
 
 	return (
 		<div className="all-offers-container">
 			<Center>
 				<Heading
 					size="md"
-					mt={5}>
+					mt={5}
+					mb={5}>
 					{' '}
 					My Offers{' '}
 				</Heading>
 			</Center>
-			{offers.map((offer, index) => (
-				<OfferDetailsComponent
-					key={index}
-					amount={formatMoney(offer.amount)}
-					status={offer.status}
-				/>
-			))}
+
+			{offers.length > 0 ? (
+				offers.map((offer, index) => (
+					<OfferDetailsComponent
+						key={index}
+						amount={formatMoney(offer.amount)}
+						status={offer.status}
+						address={offer.address}
+						counter_offer={offer.counter_offer}
+						countered={offer.countered}
+						_id={offer._id}
+					/>
+				))
+			) : (
+				<Center>No offers yet</Center>
+			)}
 
 			<BottomNavBar
 				leftSide="farmer"
 				middle="farmer/map"
 				rightSide="farmer/offer-details"
 				userRole="farmer"></BottomNavBar>
+			<div style={{ height: '18vh' }}></div>
 		</div>
 	);
 };

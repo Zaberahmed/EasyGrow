@@ -1,19 +1,18 @@
 import './Login.style.css';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { userLogin } from '../../../Services/user';
 import { useNavigate } from 'react-router-dom';
-
+import EasyGrowLogo from '../../../assets/EasyGrow.component';
 
 const initialState = {
 	email: '',
 	password: '',
 };
 
-
 export const validateInput = (str = '') => str.includes('@');
 
 const Login = () => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const [formData, setFomData] = useState(initialState);
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -25,6 +24,7 @@ const Login = () => {
 
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		// const [token, setToken] = useState<string>('');
 
 		const form = e.currentTarget;
 
@@ -36,18 +36,32 @@ const Login = () => {
 		console.log(token);
 
 		if (token) {
-			navigate('/home')
+			navigate('/home');
 		}
 	};
 	const validateForm = () => {
 		return !formData.email || !formData.password;
 	};
 
+	// 	useEffect(() => {
+	// 		const fetchProfile=()=>{
+	// try{
+
+	// }
+	// catch(error){
+	// 	console.log(error)
+	// }
+	// 		}
+	// 		fetchProfile()
+	// 	}, [token]);
+
 	return (
-		<div>
-			<h2>Login</h2>
+		<div className="login-form-container">
+			<figure className="logo">
+				<EasyGrowLogo />
+			</figure>
 			<form
-				name="login-form"
+				className="login-form"
 				onSubmit={handleSubmit}>
 				<label htmlFor="email">Email:</label>
 				<input
@@ -58,9 +72,8 @@ const Login = () => {
 					value={formData.email}
 					onChange={handleChange}
 				/>
-				<br />
-				<br />
-				{formData.email && !validateInput(formData.email) ? <p className="">Email not valid</p> : null}
+
+				{formData.email && !validateInput(formData.email) ? <p className="error-message">Email not valid</p> : null}
 				<label htmlFor="password">Password:</label>
 				<input
 					id="password"
@@ -70,13 +83,14 @@ const Login = () => {
 					value={formData.password}
 					onChange={handleChange}
 				/>
-				{/* {formData.password && !passwordValidate(formData.password) ? <p className="">Password not stronger</p> : null} */}
-				<button
-					role="button"
-					type="submit"
-					disabled={validateForm()}>
-					Log in
-				</button>
+				<div className="login-button">
+					<button
+						role="button"
+						type="submit"
+						disabled={validateForm()}>
+						Log in
+					</button>
+				</div>
 			</form>
 		</div>
 	);

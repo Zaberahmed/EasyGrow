@@ -23,7 +23,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 	const location = useLocation();
 	const activeRoute = location.pathname;
 	return (
-		<div>
+		<>
 			<Flex
 				mx={12}
 				zIndex={10}
@@ -36,7 +36,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 				py={1}
 				px={6}
 				borderRadius="30px"
-				bgColor={bgColor}
+				bgColor={'gray.200'}
 				boxShadow={'0px 0px 15px -8px rgba(0,0,0,0.9)'}>
 				<motion.div
 					whileHover={{ scale: 1.1 }}
@@ -47,10 +47,10 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 						icon={<AiOutlineHome size={20} />}
 						variant="ghost"
 						size="lg"
-						colorScheme={activeRoute === '/' ? 'gray' : 'green'}
-						color={activeRoute === '/' ? selectedColor : activeColor}
-						transform={activeRoute === '/' ? 'scale(1.2)' : 'scale(1.0)'}
-						bg={activeRoute === '/' ? selectedBgColor : 'transparent'}
+						colorScheme={activeRoute === `/${leftSide}` ? 'gray' : 'green'}
+						color={activeRoute === `/${leftSide}` ? selectedColor : activeColor}
+						transform={activeRoute === `/${leftSide}` ? 'scale(1.2)' : 'scale(1.0)'}
+						bg={activeRoute === `/${leftSide}` ? selectedBgColor : 'transparent'}
 						_active={{
 							bg: selectedBgColor,
 						}}
@@ -67,15 +67,15 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 					whileHover={{ scale: 1.1 }}
 					whileTap={{ scale: 0.9 }}>
 					<IconButton
-						onClick={() => navigate(`${middle}`)}
+						onClick={() => navigate(`/${middle}`)}
 						aria-label="Search"
 						icon={<FaSearchLocation size={20} />}
 						variant="ghost"
 						size="lg"
-						colorScheme={activeRoute === '/dashboard' ? 'gray' : 'green'}
-						color={activeRoute === '/dashboard' ? selectedColor : activeColor}
-						transform={activeRoute === '/dashboard' ? 'scale(1.2)' : 'scale(1.0)'}
-						bg={activeRoute === '/dashboard' ? selectedBgColor : 'transparent'}
+						colorScheme={activeRoute === `/${middle}` ? 'gray' : 'green'}
+						color={activeRoute === `/${middle}` ? selectedColor : activeColor}
+						transform={activeRoute === `/${middle}` ? 'scale(1.2)' : 'scale(1.0)'}
+						bg={activeRoute === `/${middle}` ? selectedBgColor : 'transparent'}
 						_active={{
 							bg: selectedBgColor,
 						}}
@@ -100,10 +100,10 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 						icon={<AiOutlineMenuFold size={20} />}
 						variant="ghost"
 						size="lg"
-						colorScheme={activeRoute === '/' ? 'gray' : 'green'}
-						color={activeRoute === '/' ? selectedColor : activeColor}
-						transform={activeRoute === '/' ? 'scale(1.2)' : 'scale(1.0)'}
-						bg={activeRoute === '/' ? selectedBgColor : 'transparent'}
+						colorScheme={activeRoute === `/${rightSide}` ? 'gray' : 'green'}
+						color={activeRoute === `/${rightSide}` ? selectedColor : activeColor}
+						transform={activeRoute === `/${rightSide}` ? 'scale(1.2)' : 'scale(1.0)'}
+						bg={activeRoute === `/${rightSide}` ? selectedBgColor : 'transparent'}
 						_active={{
 							bg: selectedBgColor,
 						}}
@@ -116,7 +116,7 @@ const BottomNavBar = ({ leftSide, middle, rightSide, userRole }: NavbarProps) =>
 					/>{' '}
 				</motion.div>
 			</Flex>
-		</div>
+		</>
 	);
 };
 

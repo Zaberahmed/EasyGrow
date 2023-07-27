@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { ObjectId } from 'mongodb';
 const SERVER_PORT = 4000;
 const SERVER_ADDRESS = 'http://localhost';
 const SERVER_URL = `${SERVER_ADDRESS}:${SERVER_PORT}`;
 
 const token = localStorage.getItem('accessToken');
 
-const getLandDetails = async (landId: string) => {
+const getLandDetails = async (landId: unknown) => {
 	try {
 		return await axios({
 			method: 'POST',
@@ -79,7 +80,7 @@ const getLandByCrop = async () => {
 	}
 };
 
-const makeAnOffer = async (landId: string, landOwnerId: string, farmerId: string, newamount: string) => {
+const makeAnOffer = async (landId: ObjectId, landOwnerId: ObjectId, farmerId: ObjectId, newamount: string) => {
 	try {
 		const amount = Number(newamount);
 		return await axios({
@@ -104,11 +105,11 @@ const makeAnOffer = async (landId: string, landOwnerId: string, farmerId: string
 	}
 };
 
-const changeOffer = async (offerId: string, status: string, amount: number) => {
+const changeOffer = async (offerId: ObjectId, changable: { amount?: string; counter_offer?: string }) => {
 	try {
 		return await axios({
-			method: 'POST',
-			url: `${SERVER_URL}/changeOffer`,
+			method: 'PUT',
+			url: `${SERVER_URL}/counter-offer`,
 			withCredentials: true,
 			headers: {
 				'Content-Type': 'application/json',
@@ -116,8 +117,7 @@ const changeOffer = async (offerId: string, status: string, amount: number) => {
 			},
 			data: {
 				offerId,
-				status,
-				amount,
+				changable,
 			},
 		})
 			.then((res) => res.data)
@@ -127,7 +127,7 @@ const changeOffer = async (offerId: string, status: string, amount: number) => {
 	}
 };
 
-const deleteOffer = async (landId: string, offerId: string) => {
+const deleteOffer = async (landId: ObjectId, offerId: ObjectId) => {
 	try {
 		return await axios({
 			method: 'DELETE',
@@ -148,7 +148,7 @@ const deleteOffer = async (landId: string, offerId: string) => {
 		console.log('Error message:', error);
 	}
 };
-const getOffers = async (farmerId: string) => {
+const getOffers = async (farmerId: ObjectId) => {
 	try {
 		return await axios({
 			method: 'POST',
@@ -159,7 +159,28 @@ const getOffers = async (farmerId: string) => {
 				authorization: `Bearer ${token}`,
 			},
 			data: {
-				farmerId: '64bbb393c7f2aab37546c5e9',
+				farmerId,
+			},
+		})
+			.then((res) => res.data)
+			.catch((error) => window.alert(`${error.response.data}`));
+	} catch (error) {
+		console.log('Error message:', error);
+	}
+};
+const getOffer = async (farmerId: ObjectId, landId: ObjectId) => {
+	try {
+		return await axios({
+			method: 'POST',
+			url: `${SERVER_URL}/getOffers`,
+			withCredentials: true,
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: `Bearer ${token}`,
+			},
+			data: {
+				farmerId,
+				landId,
 			},
 		})
 			.then((res) => res.data)
@@ -169,4 +190,4 @@ const getOffers = async (farmerId: string) => {
 	}
 };
 
-export { getLandDetails, getAllLands, getLandsByLocation, getLandByCrop, makeAnOffer, changeOffer, deleteOffer, getOffers };
+export { getLandDetails, getAllLands, getLandsByLocation, getLandByCrop, makeAnOffer, changeOffer, deleteOffer, getOffers, getOffer };

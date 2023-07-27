@@ -1,14 +1,13 @@
+import { ObjectId } from 'mongodb';
+
 export interface Offer {
-  _id?: string;
-  farmerId?: string;
-  landId?: string;
-  landOwnerId?: string;
+  _id?: ObjectId;
+  farmerId?: ObjectId;
+  landId?: ObjectId;
+  landOwnerId?: ObjectId;
   amount: string;
   status: string;
-}
-export interface Counter {
-  offerId: string;
-  changeable: {
-    counter_offer: number;
-  };
+  counter_offer?: string;
+  countered?: boolean;
+  address: string;
 }

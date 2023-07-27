@@ -1,4 +1,4 @@
-import { Card, Heading, CardBody, Stack, StackDivider, Text, Box } from '@chakra-ui/react';
+import { Card, Heading, CardBody, Stack, StackDivider, Text, Box, Center, CardHeader } from '@chakra-ui/react';
 import formatMoney from './../../utils/formatMoney';
 import { TbCurrencyTaka } from 'react-icons/tb';
 import { Crop } from '../../Interfaces/Crops.interface';
@@ -8,7 +8,9 @@ const RecommendedCropComponent = ({ crop, size, amount }: { crop: Crop; size: nu
 	const revenue = calculateRevenue(size, amount, crop.pricePerTon!, crop.tonPerAcre!);
 
 	return (
-		<Card boxShadow={'0 1px 2px grey'}>
+		<Card
+			boxShadow={'0 0 1px 2px grey'}
+			mb={1.5}>
 			<CardBody>
 				<Stack
 					divider={<StackDivider />}
@@ -49,7 +51,7 @@ const RecommendedCropComponent = ({ crop, size, amount }: { crop: Crop; size: nu
 							<Heading
 								size="xs"
 								textTransform="uppercase">
-								Yield (TK)
+								Revenue(TK)
 							</Heading>
 							<Text
 								pt="2"
